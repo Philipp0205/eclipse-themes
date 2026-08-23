@@ -1,0 +1,90 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* AI Neon preference based recoloring.
+ * Preference values are strings, they cannot reference color tokens,
+ * so the values here are literals matching neon_palette.css.
+ */
+
+/* ############################## Editors ############################## */
+
+IEclipsePreferences#org-eclipse-ui-editors:org-eclipse-ui-themes {
+	preferences:
+		'AbstractTextEditor.Color.Background.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionForeground.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionBackground.SystemDefault=false'
+		'AbstractTextEditor.Color.Foreground.SystemDefault=false'
+		'AbstractTextEditor.Color.Background=30,31,44'
+		'AbstractTextEditor.Color.Foreground=214,225,255'
+		'AbstractTextEditor.Color.SelectionBackground=27,53,80'
+		'AbstractTextEditor.Color.SelectionForeground=234,246,255'
+		'AbstractTextEditor.Color.FindScope=27,60,90'
+		'asOccurencesIndicationColor=30,39,64'
+		'breakpointIndicationColor=255,47,185'
+		'currentIPColor=0,229,255'
+		'currentLineColor=22,28,44'
+		'deletionIndicationColor=214,225,255'
+		'filteredSearchResultIndicationColor=27,60,90'
+		'hyperlinkColor=77,159,255'
+		'hyperlinkColor.SystemDefault=false'
+		'infoIndicationColor=57,255,136'
+		'lineNumberColor=122,136,176'
+		'linked.slave.color=0,184,212'
+		'matchingTagIndicationColor=30,39,64'
+		'occurrenceIndicationColor=27,60,90'
+		'overrideIndicatorColor=122,136,176'
+		'printMarginColor=30,39,64'
+		'searchResultHighlighting=false'
+		'searchResultIndication=true'
+		'searchResultIndicationColor=27,60,90'
+		'searchResultTextStyle=BOX'
+		'secondaryIPColor=0,184,212'
+		'spellingIndicationColor=255,200,87'
+		'writeOccurrenceIndicationColor=27,60,90'
+		'org.eclipse.ui.editors.stickyLinesSeparatorColor=30,39,64'
+}
+
+/* ############################## Workbench ############################## */
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-ui-themes {
+	preferences:
+		'ACTIVE_HYPERLINK_COLOR=0,229,255'
+		'CONFLICTING_COLOR=255,47,185'
+		'CONTENT_ASSIST_BACKGROUND_COLOR=22,27,43'
+		'CONTENT_ASSIST_FOREGROUND_COLOR=214,225,255'
+		'org.eclipse.ui.workbench.INFORMATION_BACKGROUND=22,27,43'
+		'org.eclipse.ui.workbench.INFORMATION_FOREGROUND=214,225,255'
+		'org.eclipse.ui.workbench.HOVER_BACKGROUND=22,27,43'
+		'org.eclipse.ui.workbench.HOVER_FOREGROUND=214,225,255'
+		'org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR=255,110,160'
+		'org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR=255,200,87'
+		'org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR=122,136,176'
+		'ERROR_COLOR=255,47,185'
+		'HYPERLINK_COLOR=77,159,255'
+		'INCOMING_COLOR=57,255,136'
+		'OUTGOING_COLOR=214,225,255'
+		'RESOLVED_COLOR=57,255,136'
+		'EDITION_COLOR=214,225,255'
+		'org.eclipse.search.ui.match.highlight=255,200,87'
+		'org.eclipse.ui.editors.rangeIndicatorColor=0,184,212'
+		'org.eclipse.jface.REVISION_NEWEST_COLOR=57,255,136'
+		'org.eclipse.jface.REVISION_OLDEST_COLOR=255,47,185'
+}
+
+/* ############################## Console stream colors ############################## */
+
+IEclipsePreferences#org-eclipse-debug-ui:org-eclipse-ui-themes {
+	preferences:
+		'org.eclipse.debug.ui.consoleBackground=16,20,31'
+		'org.eclipse.debug.ui.outColor=214,225,255'
+		'org.eclipse.debug.ui.inColor=57,255,136'
+		'org.eclipse.debug.ui.errorColor=255,47,185'
+}

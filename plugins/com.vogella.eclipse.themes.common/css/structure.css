@@ -1,0 +1,341 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     vogella GmbH - initial API and implementation
+ *******************************************************************************/
+
+/* Structural widget rules shared by every vogella theme.
+ *
+ * All colors are written against the '#com-vogella-themes-*' tokens that the
+ * active theme's palette file registers before this file is imported.
+ * The selector set mirrors the platform dark stylesheets of org.eclipse.ui.themes;
+ * this file loads after them, so equal-specificity rules win by import order.
+ */
+
+/* ############################## Global surfaces ############################## */
+
+Shell,
+Composite, ScrolledComposite, ExpandableComposite, Canvas, TabFolder, CLabel, Label,
+CoolBar, Sash, Group, Link, FilteredTree,
+Splitter, ScrolledPageContent, ViewForm,
+ProgressMonitorPart, MessageLine,
+Button /* SWT-BUG: checkbox inner label font color is not accessible */,
+Composite > *,
+Composite > * > * {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Inputs ############################## */
+
+Combo,
+List,
+Text,
+Spinner,
+CCombo {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
+Text[style~='SWT.SEARCH'],
+Text[style~='SWT.SEARCH'] + Label /* SWT-BUG: adjacent sibling selector is ignored (CSS2.1) */ {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
+Text[style~='SWT.READ_ONLY'] {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+Button.disabled {
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+Composite > StyledText,
+Shell [style~='SWT.DROP_DOWN'] > StyledText,
+SashForm > StyledText {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Trees and tables ############################## */
+
+Shell Tree, Shell Table, Shell List {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+Table,
+Tree,
+RegistryFilteredTree {
+	background-color: inherit;
+	color: '#com-vogella-themes-FG';
+	swt-header-color: '#com-vogella-themes-FG_MUTED';
+	swt-header-background-color: '#com-vogella-themes-BG_WINDOW';
+}
+
+ViewerPane,
+DrillDownComposite {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Parts ############################## */
+
+.MPart {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPart.busy {
+	font-style: italic;
+}
+
+.MPart.highlighted {
+	font-weight: bold;
+}
+
+.MPart Composite,
+.MPart Composite > *,
+.MPart Composite > * > *,
+.MPart Label,
+.MPart ScrolledForm,
+.MPart Form,
+.MPart Section,
+.MPart FormText,
+.MPart Link,
+.MPart Sash,
+.MPart Button,
+.MPart Group,
+.MPart SashForm,
+.MPart Tree,
+.MPart FilteredTree,
+.MPart RegistryFilteredTree,
+.MPart Text[style~='SWT.READ_ONLY'],
+.MPart FigureCanvas,
+.MPart ListEditorComposite,
+.MPart ScrolledComposite {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPart Table,
+.MPart Browser,
+.MPart ViewForm,
+.MPart ViewForm > CLabel,
+.MPart PageBook > Label,
+.MPart PageBook > SashForm {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPartSashContainer {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
+}
+
+#org-eclipse-e4-ui-compatibility-editor Canvas,
+#org-eclipse-e4-ui-compatibility-editor Canvas > * {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+}
+
+/* ############################## Tabs ############################## */
+
+.MPartStack {
+	font-family: '#org-eclipse-ui-workbench-TAB_TEXT_FONT';
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+	swt-draw-custom-tab-content-background: true;
+	swt-selected-highlight-top: false;
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT_2';
+	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
+}
+
+.MPartStack.active {
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
+}
+
+CTabFolder {
+	color: '#com-vogella-themes-FG_MUTED';
+	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+	swt-tab-outline: '#com-vogella-themes-BORDER';
+	swt-outer-keyline-color: '#com-vogella-themes-BORDER';
+	swt-inner-keyline-color: '#com-vogella-themes-BORDER';
+	swt-unselected-tabs-color: '#com-vogella-themes-BG_WINDOW' '#com-vogella-themes-BG_WINDOW' 100% 100%;
+	swt-selected-tab-fill: '#com-vogella-themes-BG_PART';
+	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
+}
+
+CTabFolder Canvas {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPartStack.active CTabFolder Canvas {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+CTabItem,
+CTabItem CLabel {
+	/* HACK for background of CTabFolder inner Toolbars, mirrors e4-dark_tabstyle.css */
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+CTabItem:selected,
+CTabItem:selected CLabel {
+	color: '#com-vogella-themes-FG';
+}
+
+.MPartStack.active > CTabItem,
+.MPartStack.active > CTabItem CLabel {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+.MPartStack.active > CTabItem:selected,
+.MPartStack.active > CTabItem:selected CLabel {
+	color: '#com-vogella-themes-FG';
+}
+
+CTabItem.busy {
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+CTabFolder > Composite#ToolbarComposite {
+	background-color: '#com-vogella-themes-BG_PART';
+}
+
+/* Editor area: selected tab follows the editor surface, not the part surface */
+#org-eclipse-ui-editorss CTabFolder {
+	swt-selected-tab-fill: '#com-vogella-themes-BG_EDITOR';
+	swt-selected-highlight-top: true;
+	swt-draw-custom-tab-content-background: true;
+	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
+}
+
+#org-eclipse-ui-editorss CTabFolder.active {
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
+}
+
+#org-eclipse-ui-editorss CTabItem:selected {
+	color: '#com-vogella-themes-FG';
+}
+
+CTabFolder.MArea CTabItem,
+CTabFolder.MArea CTabItem CLabel {
+	/* Disable HACK for background of CTabFolder inner Toolbars */
+	background-color: '#com-vogella-themes-BG_WINDOW';
+}
+
+/* ############################## Toolbars, status line, progress ############################## */
+
+ToolBar {
+	background-color: inherit;
+}
+
+StatusLine,
+ImageBasedFrame,
+#org-eclipse-ui-StatusLine,
+#org-eclipse-ui-StatusLine CLabel,
+#org-eclipse-ui-ProgressBar,
+#org-eclipse-ui-ProgressBar Canvas {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+HeapStatus {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
+}
+
+ProgressIndicator {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
+ProgressInfoItem,
+ProgressInfoItem > *,
+CompareViewerPane,
+CompareViewerPane > * {
+	background-color: inherit;
+	color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Forms and sections ############################## */
+
+Form {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+	text-background-color: '#com-vogella-themes-BG_PART';
+
+	tb-toggle-hover-color: '#com-vogella-themes-BG_RAISED';
+	tb-toggle-color: '#com-vogella-themes-BG_RAISED';
+	h-hover-full-color: '#com-vogella-themes-BG_RAISED';
+	h-hover-light-color: '#com-vogella-themes-BG_RAISED';
+	h-bottom-keyline-2-color: '#com-vogella-themes-BORDER';
+	h-bottom-keyline-1-color: '#com-vogella-themes-BORDER';
+}
+
+FormHeading {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+ScrolledFormText,
+FormText {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+Section {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+	background-color-titlebar: '#com-vogella-themes-BG_PART';
+	background-color-gradient-titlebar: '#com-vogella-themes-BG_PART';
+	border-color-titlebar: '#com-vogella-themes-BORDER';
+	swt-titlebar-color: '#com-vogella-themes-FG';
+	tb-toggle-hover-color: '#com-vogella-themes-FG';
+	tb-toggle-color: '#com-vogella-themes-FG';
+}
+
+Twistie {
+	color: '#com-vogella-themes-FG';
+}
+
+ExpandableComposite {
+	swt-titlebar-color: '#com-vogella-themes-FG';
+	tb-toggle-hover-color: '#com-vogella-themes-FG';
+	tb-toggle-color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Links ############################## */
+
+Hyperlink,
+ImageHyperlink {
+	background-color: inherit;
+	color: '#com-vogella-themes-LINK';
+}
+
+Link {
+	swt-link-foreground-color: '#com-vogella-themes-LINK';
+}
+
+/* ############################## Drag feedback ############################## */
+
+.DragFeedback {
+	background-color: '#com-vogella-themes-ACCENT_2';
+}
+
+.ModifiedDragFeedback {
+	background-color: '#com-vogella-themes-ACCENT';
+}

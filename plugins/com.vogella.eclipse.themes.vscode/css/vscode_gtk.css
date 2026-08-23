@@ -1,0 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* VS Code Dark base stylesheet, GTK.
+ *
+ * Import order is load bearing:
+ * 1. platform dark stylesheet, so every later import overrides it
+ * 2. VS Code palette, registering the shared tokens with the VS Code values
+ * 3. shared structural rules, resolved against the palette values
+ * 4. preference based recoloring
+ * 5. Java syntax colors (Dark+ mapping)
+ * 6. tab styling overrides, last because they refine structure.css for the
+ *    VS Code Dark Modern tab look (top accent keyline on active tabs)
+ */
+
+@import url("platform:/plugin/org.eclipse.ui.themes/css/e4-dark_linux.css");
+@import url("platform:/plugin/com.vogella.eclipse.themes.vscode/css/vscode_palette.css");
+@import url("platform:/plugin/com.vogella.eclipse.themes.common/css/structure.css");
+@import url("platform:/plugin/com.vogella.eclipse.themes.vscode/css/vscode_preferences.css");
+@import url("platform:/plugin/com.vogella.eclipse.themes.vscode/css/vscode_jdt.css");
+@import url("platform:/plugin/com.vogella.eclipse.themes.vscode/css/vscode_tabs.css");

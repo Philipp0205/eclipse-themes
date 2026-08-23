@@ -1,0 +1,135 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* AI Neon Java syntax highlighting.
+ * The key list mirrors the platform's e4-dark_jdt_syntaxhighlighting.css;
+ * only the values change. JDT is intentionally not a dependency: writing into
+ * a preference node whose owner is not installed is harmless.
+ */
+
+/* ############################## JDT syntax highlighting ############################## */
+
+IEclipsePreferences#org-eclipse-jdt-ui:org-eclipse-jdt-ui {
+	preferences:
+		'content_assist_completion_replacement_background=27,53,80'
+		'content_assist_completion_replacement_foreground=0,229,255'
+		'content_assist_parameters_background=22,27,43'
+		'content_assist_parameters_foreground=214,225,255'
+		'content_assist_proposals_background=22,27,43'
+		'content_assist_proposals_foreground=214,225,255'
+		'java_bracket=0,229,255'
+		'java_comment_task_tag=122,136,176'
+		'java_default=214,225,255'
+		'java_doc_default=95,112,153'
+		'java_doc_keyword=0,184,212'
+		'java_doc_link=77,159,255'
+		'java_doc_tag=0,184,212'
+		'java_keyword=255,47,185'
+		'java_keyword_bold=false'
+		'java_keyword_return=255,47,185'
+		'java_keyword_return_bold=false'
+		'java_multi_line_comment=76,90,122'
+		'java_operator=166,180,216'
+		'java_single_line_comment=76,90,122'
+		'java_string=57,255,136'
+		'matchingBracketsColor=0,229,255'
+		'pf_coloring_argument=255,47,185'
+		'pf_coloring_assignment=214,225,255'
+		'pf_coloring_comment=76,90,122'
+		'pf_coloring_key=214,225,255'
+		'pf_coloring_value=57,255,136'
+		'semanticHighlighting.abstractClass.color=125,227,255'
+		'semanticHighlighting.abstractClass.enabled=true'
+		'semanticHighlighting.abstractMethodInvocation.color=168,85,247'
+		'semanticHighlighting.abstractMethodInvocation.enabled=true'
+		'semanticHighlighting.annotation.color=168,85,247'
+		'semanticHighlighting.annotation.enabled=true'
+		'semanticHighlighting.annotation.italic=true'
+		'semanticHighlighting.annotationElementReference.color=0,184,212'
+		'semanticHighlighting.annotationElementReference.enabled=true'
+		'semanticHighlighting.class.color=0,229,255'
+		'semanticHighlighting.class.enabled=true'
+		'semanticHighlighting.deprecatedMember.color=90,100,125'
+		'semanticHighlighting.deprecatedMember.enabled=true'
+		'semanticHighlighting.deprecatedMember.underline=false'
+		'semanticHighlighting.deprecatedMember.strikethrough=true'
+		'semanticHighlighting.enum.color=0,229,255'
+		'semanticHighlighting.enum.enabled=true'
+		'semanticHighlighting.enum.italic=true'
+		'semanticHighlighting.field.color=255,200,87'
+		'semanticHighlighting.field.enabled=true'
+		'semanticHighlighting.inheritedField.color=179,150,74'
+		'semanticHighlighting.inheritedMethodInvocation.color=168,85,247'
+		'semanticHighlighting.inheritedMethodInvocation.enabled=true'
+		'semanticHighlighting.interface.color=0,229,255'
+		'semanticHighlighting.interface.enabled=true'
+		'semanticHighlighting.localVariable.color=166,180,216'
+		'semanticHighlighting.localVariable.enabled=true'
+		'semanticHighlighting.localVariableDeclaration.color=166,180,216'
+		'semanticHighlighting.localVariableDeclaration.enabled=true'
+		'semanticHighlighting.localVariableDeclaration.bold=false'
+		'semanticHighlighting.method.color=168,85,247'
+		'semanticHighlighting.method.enabled=true'
+		'semanticHighlighting.methodDeclarationName.color=168,85,247'
+		'semanticHighlighting.methodDeclarationName.enabled=true'
+		'semanticHighlighting.methodDeclarationName.bold=false'
+		'semanticHighlighting.number.color=57,255,136'
+		'semanticHighlighting.number.enabled=true'
+		'semanticHighlighting.parameterVariable.color=166,180,216'
+		'semanticHighlighting.parameterVariable.enabled=true'
+		'semanticHighlighting.staticField.color=255,200,87'
+		'semanticHighlighting.staticField.enabled=true'
+		'semanticHighlighting.staticFinalField.color=255,200,87'
+		'semanticHighlighting.staticFinalField.enabled=true'
+		'semanticHighlighting.staticMethodInvocation.color=168,85,247'
+		'semanticHighlighting.staticMethodInvocation.enabled=true'
+		'semanticHighlighting.typeArgument.color=0,184,212'
+		'semanticHighlighting.typeArgument.enabled=true'
+		'semanticHighlighting.typeParameter.color=0,184,212'
+		'semanticHighlighting.typeParameter.enabled=true'
+		'semanticHighlighting.typeParameter.bold=false'
+		'semanticHighlighting.restrictedKeywords.color=255,47,185'
+		'semanticHighlighting.restrictedKeywords.bold=false'
+		'sourceHoverBackgroundColor=16,20,31'
+		'javadocElementsStyling.darkModeDefaultColors=true'
+}
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-jdt-ui {
+	preferences:
+		'org.eclipse.jdt.ui.ColoredLabels.inherited=122,136,176'
+		'org.eclipse.jdt.ui.Javadoc.backgroundColor=16,20,31'
+		'org.eclipse.jdt.ui.Javadoc.foregroundColor=214,225,255'
+		'org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight=255,47,185'
+}
+
+/* ############################## JDT widgets ############################## */
+
+BulletListBlock > StyledText {
+	background-color: #161B2B;
+	color: #7A88B0;
+}
+
+FormatterPreferenceSectionComposite {
+	background-color: #10141F;
+	color: #D6E1FF;
+	swt-titlebar-color: #D6E1FF;
+}
+
+#BreadcrumbComposite > Composite,
+#BreadcrumbItemComposite,
+#BreadcrumbItemDetailComposite,
+#BreadcrumbItemDetailTextComposite,
+#BreadcrumbItemDetailTextLabel,
+#BreadcrumbItemDetailImageLabel,
+#BreadcrumbItemDropDownToolBar {
+	background-color: #0A0E17;
+	color: #D6E1FF;
+}

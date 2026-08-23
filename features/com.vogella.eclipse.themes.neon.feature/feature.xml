@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.vogella.eclipse.themes.neon.feature"
+      label="AI Neon Theme"
+      version="1.0.0.qualifier"
+      provider-name="vogella GmbH">
+
+   <description>
+      The AI Neon theme for the Eclipse IDE: near black surfaces with cyan
+      and magenta accents on the active elements.
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 vogella GmbH and others.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License 2.0
+   </license>
+
+   <plugin id="com.vogella.eclipse.themes.common" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.vogella.eclipse.themes.neon" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+</feature>

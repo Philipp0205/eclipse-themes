@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.vogella.eclipse.themes.vscode.feature"
+      label="VS Code Dark Theme"
+      version="1.0.0.qualifier"
+      provider-name="vogella GmbH">
+
+   <description>
+      The VS Code Dark theme for the Eclipse IDE, matching the VS Code
+      Dark Modern default look including its tab styling and Dark+ syntax colors.
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 vogella GmbH and others.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License 2.0
+   </license>
+
+   <plugin id="com.vogella.eclipse.themes.common" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.vogella.eclipse.themes.vscode" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+</feature>

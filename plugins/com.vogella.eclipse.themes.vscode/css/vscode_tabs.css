@@ -1,0 +1,46 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* VS Code tab styling, loaded after structure.css so these rules win.
+ * The tab strip is the most recognisable part of VS Code: flat colors,
+ * active tab #1F1F1F on #181818 chrome with a #0078D4 keyline on top,
+ * no gradients.
+ */
+
+.MPartStack,
+.MPartStack.active,
+#org-eclipse-ui-editorss CTabFolder {
+	swt-selected-highlight-top: true;
+}
+
+.MPartStack.active,
+#org-eclipse-ui-editorss CTabFolder.active {
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
+}
+
+/* Active tab uses the editor surface, inactive tabs stay on the chrome color */
+CTabFolder {
+	swt-unselected-tabs-color: '#com-vogella-themes-BG_WINDOW' '#com-vogella-themes-BG_WINDOW' 100% 100%;
+	swt-selected-tab-fill: '#com-vogella-themes-BG_EDITOR';
+	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
+}
+
+#org-eclipse-ui-editorss CTabFolder {
+	swt-selected-tab-fill: '#com-vogella-themes-BG_EDITOR';
+}
+
+CTabItem:selected,
+CTabItem:selected CLabel,
+.MPartStack.active > CTabItem:selected,
+.MPartStack.active > CTabItem:selected CLabel,
+#org-eclipse-ui-editorss CTabItem:selected {
+	color: '#com-vogella-themes-SELECTION_FG';
+}
