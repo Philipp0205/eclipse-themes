@@ -1,0 +1,181 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* GitHub Dark palette.
+ *
+ * Colors follow Primer's dark theme: canvas inset #010409 for window chrome,
+ * canvas default #0D1117 for parts and editors, canvas subtle #161B22 for
+ * raised surfaces, border colors #21262D/#30363D, foreground #E6EDF3 with
+ * #8B949E as the muted shade. One blue does most of the work: #58A6FF is
+ * accent, hyperlink and link color at once, like on github.com.
+ *
+ * This file registers the shared '#com-vogella-themes-*' tokens and redefines the
+ * platform's '#org-eclipse-ui-workbench-*' color definitions, so the imported
+ * platform widget rules follow this palette without being rewritten.
+ */
+
+/* SELECTION_BG, ERROR, WARNING and SUCCESS carry no CSS rule: the engine has no
+ * property for them. They are the source the preference sheet literals repeat. */
+ThemesExtension { color-definition:
+    '#com-vogella-themes-BG_WINDOW',
+    '#com-vogella-themes-BG_PART',
+    '#com-vogella-themes-BG_EDITOR',
+    '#com-vogella-themes-BG_RAISED',
+    '#com-vogella-themes-BORDER',
+    '#com-vogella-themes-FG',
+    '#com-vogella-themes-FG_MUTED',
+    '#com-vogella-themes-ACCENT',
+    '#com-vogella-themes-ACCENT_2',
+    '#com-vogella-themes-SELECTION_BG',
+    '#com-vogella-themes-SELECTION_FG',
+    '#com-vogella-themes-LINK',
+    '#com-vogella-themes-ERROR',
+    '#com-vogella-themes-WARNING',
+    '#com-vogella-themes-SUCCESS',
+    '#org-eclipse-ui-workbench-DARK_BACKGROUND',
+    '#org-eclipse-ui-workbench-DARK_FOREGROUND',
+    '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START',
+    '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_UNSELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_SELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START',
+    '#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_END',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-LINK_COLOR';
+}
+
+ColorDefinition#com-vogella-themes-BG_WINDOW {
+	color: #010409;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=BG_WINDOW');
+}
+ColorDefinition#com-vogella-themes-BG_PART {
+	color: #0D1117;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=BG_PART');
+}
+ColorDefinition#com-vogella-themes-BG_EDITOR {
+	color: #0D1117;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=BG_EDITOR');
+}
+ColorDefinition#com-vogella-themes-BG_RAISED {
+	color: #161B22;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=BG_RAISED');
+}
+ColorDefinition#com-vogella-themes-BORDER {
+	color: #30363D;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=BORDER');
+}
+ColorDefinition#com-vogella-themes-FG {
+	color: #E6EDF3;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=FG');
+}
+ColorDefinition#com-vogella-themes-FG_MUTED {
+	color: #8B949E;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=FG_MUTED');
+}
+ColorDefinition#com-vogella-themes-ACCENT {
+	color: #58A6FF;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=ACCENT');
+}
+ColorDefinition#com-vogella-themes-ACCENT_2 {
+	color: #A371F7;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=ACCENT_2');
+}
+ColorDefinition#com-vogella-themes-SELECTION_BG {
+	/* The editor selection blue of GitHub's own VS Code port. */
+	color: #264F78;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=SELECTION_BG');
+}
+ColorDefinition#com-vogella-themes-SELECTION_FG {
+	color: #F0F6FC;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=SELECTION_FG');
+}
+ColorDefinition#com-vogella-themes-LINK {
+	color: #58A6FF;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=LINK');
+}
+ColorDefinition#com-vogella-themes-ERROR {
+	color: #F85149;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=ERROR');
+}
+ColorDefinition#com-vogella-themes-WARNING {
+	color: #D29922;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=WARNING');
+}
+ColorDefinition#com-vogella-themes-SUCCESS {
+	color: #3FB950;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.github?message=SUCCESS');
+}
+
+/* Platform definitions recolored so inherited platform rules follow the palette */
+
+ColorDefinition#org-eclipse-ui-workbench-DARK_BACKGROUND { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-DARK_FOREGROUND { color: #E6EDF3; }
+
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #21262D; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR { color: #21262D; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR { color: #21262D; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_TEXT_COLOR { color: #8B949E; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #8B949E; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_SELECTED_TEXT_COLOR { color: #E6EDF3; }
+
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START { color: #0D1117; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END { color: #0D1117; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #21262D; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR { color: #58A6FF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR { color: #58A6FF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_TEXT_COLOR { color: #8B949E; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #8B949E; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR { color: #F0F6FC; }
+
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_END { color: #010409; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_TEXT_COLOR { color: #E6EDF3; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR { color: #E6EDF3; }
+
+ColorDefinition#org-eclipse-ui-workbench-LINK_COLOR { color: #58A6FF; }

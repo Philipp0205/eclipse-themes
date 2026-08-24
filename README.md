@@ -10,6 +10,8 @@ The themes are pure resource plugins: CSS and preference definitions only, no Ja
 | AI Neon | Near black surfaces with cyan and magenta accents on active elements. |
 | VS Code Dark | The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors. |
 | Nord | Calm arctic blues and frost accents on Polar Night surfaces, following the official Nord palette. |
+| GitHub Dark | GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent and GitHub syntax colors. |
+| Dracula | The official Dracula palette on purple tinted surfaces with pink and purple accents. |
 
 Both themes build on the platform dark stylesheet of `org.eclipse.ui.themes` and recolor it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
 

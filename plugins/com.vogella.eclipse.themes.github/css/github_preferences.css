@@ -1,0 +1,113 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* GitHub Dark preference based recoloring.
+ * Preference values are strings, they cannot reference color tokens, so the
+ * values here are literals from the same palette family. Most repeat a token
+ * value; the ones specific to this layer deliberately do not.
+ */
+
+/* ############################## Editors ############################## */
+
+IEclipsePreferences#org-eclipse-ui-editors:org-eclipse-ui-themes {
+	preferences:
+		'AbstractTextEditor.Color.Background.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionForeground.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionBackground.SystemDefault=false'
+		'AbstractTextEditor.Color.Foreground.SystemDefault=false'
+		'AbstractTextEditor.Color.Background=13,17,23'
+		'AbstractTextEditor.Color.Foreground=230,237,243'
+		'AbstractTextEditor.Color.SelectionBackground=38,79,120'
+		'AbstractTextEditor.Color.SelectionForeground=240,246,252'
+		'AbstractTextEditor.Color.FindScope=55,109,167'
+		'asOccurencesIndicationColor=48,54,61'
+		'breakpointIndicationColor=248,81,73'
+		'currentIPColor=88,166,255'
+		'currentLineColor=22,27,34'
+		'deletionIndicationColor=230,237,243'
+		'filteredSearchResultIndicationColor=55,109,167'
+		'hyperlinkColor=88,166,255'
+		'hyperlinkColor.SystemDefault=false'
+		'infoIndicationColor=63,185,80'
+		'lineNumberColor=110,118,129'
+		'linked.slave.color=163,113,247'
+		'matchingTagIndicationColor=48,54,61'
+		'occurrenceIndicationColor=55,109,167'
+		'overrideIndicatorColor=110,118,129'
+		'printMarginColor=48,54,61'
+		'searchResultHighlighting=false'
+		'searchResultIndication=true'
+		'searchResultIndicationColor=55,109,167'
+		'searchResultTextStyle=BOX'
+		'secondaryIPColor=163,113,247'
+		'spellingIndicationColor=210,153,34'
+		'writeOccurrenceIndicationColor=55,109,167'
+		'org.eclipse.ui.editors.stickyLinesSeparatorColor=48,54,61'
+}
+
+/* ############################## Workbench ############################## */
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-ui-themes {
+	preferences:
+		'ACTIVE_HYPERLINK_COLOR=88,166,255'
+		'CONFLICTING_COLOR=248,81,73'
+		'CONTENT_ASSIST_BACKGROUND_COLOR=22,27,34'
+		'CONTENT_ASSIST_FOREGROUND_COLOR=230,237,243'
+		'org.eclipse.ui.workbench.INFORMATION_BACKGROUND=22,27,34'
+		'org.eclipse.ui.workbench.INFORMATION_FOREGROUND=230,237,243'
+		'org.eclipse.ui.workbench.HOVER_BACKGROUND=22,27,34'
+		'org.eclipse.ui.workbench.HOVER_FOREGROUND=230,237,243'
+		'org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR=248,81,73'
+		'org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR=210,153,34'
+		'org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR=139,148,158'
+		'ERROR_COLOR=248,81,73'
+		'HYPERLINK_COLOR=88,166,255'
+		'INCOMING_COLOR=63,185,80'
+		'OUTGOING_COLOR=230,237,243'
+		'RESOLVED_COLOR=63,185,80'
+		'EDITION_COLOR=230,237,243'
+		'org.eclipse.search.ui.match.highlight=227,179,65'
+		'org.eclipse.ui.editors.rangeIndicatorColor=163,113,247'
+		'org.eclipse.jface.REVISION_NEWEST_COLOR=63,185,80'
+		'org.eclipse.jface.REVISION_OLDEST_COLOR=248,81,73'
+}
+
+/* ############################## Console stream colors ############################## */
+
+IEclipsePreferences#org-eclipse-debug-ui:org-eclipse-ui-themes {
+	preferences:
+		'org.eclipse.debug.ui.consoleBackground=13,17,23'
+		'org.eclipse.debug.ui.outColor=230,237,243'
+		'org.eclipse.debug.ui.inColor=63,185,80'
+		'org.eclipse.debug.ui.errorColor=248,81,73'
+}
+
+/* ############################## EGit ############################## */
+/* EGit binds its dark preference values to the platform dark theme id alone, so a
+ * third party theme falls back to COLOR_LIST_FOREGROUND on COLOR_LIST_BACKGROUND,
+ * which is black on white. Own pseudo attribute so EGit's own block still applies. */
+
+IEclipsePreferences#org-eclipse-ui-workbench:com-vogella-themes-egit {
+	preferences:
+		'org.eclipse.egit.ui.CommitMessageCommentColor=110,118,129'
+		'org.eclipse.egit.ui.DiffAddBackgroundColor=22,47,33'
+		'org.eclipse.egit.ui.DiffAddForegroundColor=230,237,243'
+		'org.eclipse.egit.ui.DiffHeadlineBackgroundColor=22,27,34'
+		'org.eclipse.egit.ui.DiffHeadlineForegroundColor=230,237,243'
+		'org.eclipse.egit.ui.DiffHunkBackgroundColor=38,79,120'
+		'org.eclipse.egit.ui.DiffHunkForegroundColor=240,246,252'
+		'org.eclipse.egit.ui.DiffRemoveBackgroundColor=55,29,32'
+		'org.eclipse.egit.ui.DiffRemoveForegroundColor=251,168,164'
+		'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=13,17,23'
+		'org.eclipse.egit.ui.IgnoredResourceForegroundColor=110,118,129'
+		'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=13,17,23'
+		'org.eclipse.egit.ui.UncommittedChangeForegroundColor=88,166,255'
+}
