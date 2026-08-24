@@ -22,5 +22,12 @@
 @import url("platform:/plugin/org.eclipse.ui.themes/css/e4-dark_mac.css");
 @import url("platform:/plugin/com.vogella.eclipse.themes.neon/css/neon_palette.css");
 @import url("platform:/plugin/com.vogella.eclipse.themes.common/css/structure.css");
+@import url("platform:/plugin/com.vogella.eclipse.themes.common/css/egit.css");
 @import url("platform:/plugin/com.vogella.eclipse.themes.neon/css/neon_preferences.css");
 @import url("platform:/plugin/com.vogella.eclipse.themes.neon/css/neon_jdt.css");
+
+/* e4-dark_mac.css unsets this so cocoa keeps drawing buttons natively;
+ * structure.css re-imposes a background, so restore the unset last. */
+Button {
+	background-color: unset;
+}

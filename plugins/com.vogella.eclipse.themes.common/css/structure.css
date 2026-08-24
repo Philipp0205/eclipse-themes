@@ -120,7 +120,6 @@ DrillDownComposite {
 .MPart Tree,
 .MPart FilteredTree,
 .MPart RegistryFilteredTree,
-.MPart Text[style~='SWT.READ_ONLY'],
 .MPart FigureCanvas,
 .MPart ListEditorComposite,
 .MPart ScrolledComposite {
@@ -155,7 +154,7 @@ DrillDownComposite {
 	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
 	swt-draw-custom-tab-content-background: true;
 	swt-selected-highlight-top: false;
-	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT_2';
+	swt-selected-tab-highlight: '#com-vogella-themes-BORDER';
 	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
 }
 
@@ -164,7 +163,9 @@ DrillDownComposite {
 }
 
 CTabFolder {
-	color: '#com-vogella-themes-FG_MUTED';
+	/* No color here: the platform tab rules resolve the palette's
+	 * '#org-eclipse-ui-workbench-*_TAB_TEXT_COLOR' definitions. Re-declaring it
+	 * would shadow them at equal specificity, since this file is imported later. */
 	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
 	swt-tab-outline: '#com-vogella-themes-BORDER';
 	swt-outer-keyline-color: '#com-vogella-themes-BORDER';
@@ -188,23 +189,11 @@ CTabItem,
 CTabItem CLabel {
 	/* HACK for background of CTabFolder inner Toolbars, mirrors e4-dark_tabstyle.css */
 	background-color: '#com-vogella-themes-BG_PART';
-	color: '#com-vogella-themes-FG_MUTED';
-}
-
-CTabItem:selected,
-CTabItem:selected CLabel {
-	color: '#com-vogella-themes-FG';
 }
 
 .MPartStack.active > CTabItem,
 .MPartStack.active > CTabItem CLabel {
 	background-color: '#com-vogella-themes-BG_PART';
-	color: '#com-vogella-themes-FG_MUTED';
-}
-
-.MPartStack.active > CTabItem:selected,
-.MPartStack.active > CTabItem:selected CLabel {
-	color: '#com-vogella-themes-FG';
 }
 
 CTabItem.busy {
@@ -238,6 +227,30 @@ CTabFolder.MArea CTabItem CLabel {
 }
 
 /* ############################## Toolbars, status line, progress ############################## */
+
+/* A toggled ToolItem is a GTK toggle button, so on a light desktop theme its checked
+ * state is painted light. ToolItemElement offers a ':checked' pseudo-class, but it is
+ * dead unless -Dorg.eclipse.e4.ui.css.dynamic=true is set: the listener that maintains
+ * it is skipped otherwise. So set the background unconditionally instead. */
+/* Two rules rather than 'inherit': inherit falls back to the SWT default, which is
+ * white, wherever the parent has no CSS background, and that paints a white box behind
+ * every icon. The trim toolbar sits on BG_WINDOW, a view toolbar on BG_PART. */
+ToolItem {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
+}
+
+/* Pin the ToolBar as well as its items: 'inherit' on the ToolBar resolves to
+ * BG_WINDOW rather than to the BG_PART of the enclosing ToolbarComposite, and the
+ * mismatch shows as a lighter box around every icon. */
+CTabFolder ToolBar,
+.MPartStack ToolBar,
+Composite#ToolbarComposite ToolBar,
+CTabFolder ToolItem,
+.MPartStack ToolItem,
+Composite#ToolbarComposite ToolItem {
+	background-color: '#com-vogella-themes-BG_PART';
+}
 
 ToolBar {
 	background-color: inherit;
@@ -338,4 +351,40 @@ Link {
 
 .ModifiedDragFeedback {
 	background-color: '#com-vogella-themes-ACCENT';
+}
+
+/* ############################## Platform leaks ############################## */
+/* e4-dark_partstyle.css styles these with hardcoded greys at a specificity our
+ * general part rules cannot reach, so without equally specific counter-rules the
+ * stock dark theme shows through inside parts. Mirrors of its selectors, in palette. */
+
+.MPart DatePicker,
+.MPart DatePicker > Text,
+.MPart ScheduleDatePicker,
+.MPart ScheduleDatePicker > Text,
+.MPart CCombo,
+.MPart Spinner,
+.MPart Composite > StyledText,
+.MPart PageBook > SashForm Label,
+.MPart SashForm > Text[style~='SWT.BORDER'] {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPart Section Tree {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+#org-eclipse-jdt-ui-SourceView StyledText,
+#org-eclipse-wst-jsdt-ui-SourceView StyledText {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
+}
+
+#org-eclipse-ui-console-ConsoleView .MPart > Composite,
+#org-eclipse-ui-console-ConsoleView .MPart StyledText,
+#org-eclipse-ui-console-ConsoleView .MPart PageBook Label {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
 }

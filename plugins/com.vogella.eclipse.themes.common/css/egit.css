@@ -1,0 +1,42 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* EGit compatibility.
+ *
+ * org.eclipse.egit.ui/css/egit.css is contributed without a themeid, so it applies
+ * to every theme and paints the staging view trees and the commit and diff component
+ * #FFFFFF. The correction lives in e4-dark_egit_prefstyle.css, which EGit binds to
+ * org.eclipse.e4.ui.css.theme.e4_dark alone, so any other dark theme keeps the white.
+ * These rules mirror EGit's own dark selectors, which outrank the white ones.
+ * Harmless when EGit is not installed: the selectors match nothing.
+ */
+
+.MPart Table.org-eclipse-egit-ui-GitHistoryPage {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPart ScrolledComposite Composite StyledText.org-eclipse-egit-ui-CommitAndDiffComponent {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
+}
+
+#org-eclipse-egit-ui-StagingView Composite Section Composite,
+#org-eclipse-egit-ui-StagingView Composite Composite Section Composite Tree {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+/* EGit lightens the trees while the view has focus; keep that cue, in palette. */
+#org-eclipse-egit-ui-StagingView.active Composite Section Composite Tree {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}

@@ -26,10 +26,13 @@
 	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
 }
 
-/* Active tab uses the editor surface, inactive tabs stay on the chrome color */
+/* Inactive tabs stay on the chrome color.
+ * No swt-selected-tab-fill here: this rule matches view stacks too, and the fill also
+ * paints the strip behind the view toolbar, which then no longer matched
+ * Composite#ToolbarComposite. Views keep BG_PART from structure.css; only the editor
+ * stack below takes the editor surface. */
 CTabFolder {
 	swt-unselected-tabs-color: '#com-vogella-themes-BG_WINDOW' '#com-vogella-themes-BG_WINDOW' 100% 100%;
-	swt-selected-tab-fill: '#com-vogella-themes-BG_EDITOR';
 	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
 }
 

@@ -10,8 +10,9 @@
  *******************************************************************************/
 
 /* AI Neon preference based recoloring.
- * Preference values are strings, they cannot reference color tokens,
- * so the values here are literals matching neon_palette.css.
+ * Preference values are strings, they cannot reference color tokens, so the
+ * values here are literals from the same palette family. Most repeat a token
+ * value; the ones specific to this layer deliberately do not.
  */
 
 /* ############################## Editors ############################## */
@@ -87,4 +88,26 @@ IEclipsePreferences#org-eclipse-debug-ui:org-eclipse-ui-themes {
 		'org.eclipse.debug.ui.outColor=214,225,255'
 		'org.eclipse.debug.ui.inColor=57,255,136'
 		'org.eclipse.debug.ui.errorColor=255,47,185'
+}
+
+/* ############################## EGit ############################## */
+/* EGit binds its dark preference values to the platform dark theme id alone, so a
+ * third party theme falls back to COLOR_LIST_FOREGROUND on COLOR_LIST_BACKGROUND,
+ * which is black on white. Own pseudo attribute so EGit's own block still applies. */
+
+IEclipsePreferences#org-eclipse-ui-workbench:com-vogella-themes-egit {
+	preferences:
+		'org.eclipse.egit.ui.CommitMessageCommentColor=122,136,176'
+		'org.eclipse.egit.ui.DiffAddBackgroundColor=11,58,40'
+		'org.eclipse.egit.ui.DiffAddForegroundColor=214,225,255'
+		'org.eclipse.egit.ui.DiffHeadlineBackgroundColor=22,27,43'
+		'org.eclipse.egit.ui.DiffHeadlineForegroundColor=214,225,255'
+		'org.eclipse.egit.ui.DiffHunkBackgroundColor=27,53,80'
+		'org.eclipse.egit.ui.DiffHunkForegroundColor=214,225,255'
+		'org.eclipse.egit.ui.DiffRemoveBackgroundColor=74,12,46'
+		'org.eclipse.egit.ui.DiffRemoveForegroundColor=255,214,238'
+		'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=16,20,31'
+		'org.eclipse.egit.ui.IgnoredResourceForegroundColor=122,136,176'
+		'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=16,20,31'
+		'org.eclipse.egit.ui.UncommittedChangeForegroundColor=77,159,255'
 }

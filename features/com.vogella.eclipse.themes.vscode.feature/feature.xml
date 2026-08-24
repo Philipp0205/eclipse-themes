@@ -18,7 +18,7 @@
       Eclipse Public License 2.0
    </license>
 
-   <plugin id="com.vogella.eclipse.themes.common" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="com.vogella.eclipse.themes.vscode" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="com.vogella.eclipse.themes.common" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
+   <plugin id="com.vogella.eclipse.themes.vscode" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
 
 </feature>

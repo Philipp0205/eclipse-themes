@@ -21,6 +21,8 @@
  * platform widget rules follow this palette without being rewritten.
  */
 
+/* SELECTION_BG, ERROR, WARNING and SUCCESS carry no CSS rule: the engine has no
+ * property for them. They are the source the preference sheet literals repeat. */
 ThemesExtension { color-definition:
     '#com-vogella-themes-BG_WINDOW',
     '#com-vogella-themes-BG_PART',

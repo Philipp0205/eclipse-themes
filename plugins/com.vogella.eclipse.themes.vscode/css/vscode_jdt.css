@@ -116,14 +116,14 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-jdt-ui {
 /* ############################## JDT widgets ############################## */
 
 BulletListBlock > StyledText {
-	background-color: #252526;
-	color: #CCCCCC;
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
 }
 
 FormatterPreferenceSectionComposite {
-	background-color: #1F1F1F;
-	color: #CCCCCC;
-	swt-titlebar-color: #CCCCCC;
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
+	swt-titlebar-color: '#com-vogella-themes-FG';
 }
 
 #BreadcrumbComposite > Composite,
@@ -133,6 +133,6 @@ FormatterPreferenceSectionComposite {
 #BreadcrumbItemDetailTextLabel,
 #BreadcrumbItemDetailImageLabel,
 #BreadcrumbItemDropDownToolBar {
-	background-color: #181818;
-	color: #CCCCCC;
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
 }
