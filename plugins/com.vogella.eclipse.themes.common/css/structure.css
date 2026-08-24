@@ -200,7 +200,9 @@ CTabItem.busy {
 	color: '#com-vogella-themes-FG_MUTED';
 }
 
-CTabFolder > Composite#ToolbarComposite {
+/* .ToolbarComposite, not #: it is a CSS class, and the id selector never matched,
+ * which left the composite behind a view's toolbar at the GTK default. */
+CTabFolder > Composite.ToolbarComposite {
 	background-color: '#com-vogella-themes-BG_PART';
 }
 
@@ -240,15 +242,18 @@ ToolItem {
 	color: '#com-vogella-themes-FG';
 }
 
-/* Pin the ToolBar as well as its items: 'inherit' on the ToolBar resolves to
- * BG_WINDOW rather than to the BG_PART of the enclosing ToolbarComposite, and the
- * mismatch shows as a lighter box around every icon. */
-CTabFolder ToolBar,
-.MPartStack ToolBar,
-Composite#ToolbarComposite ToolBar,
-CTabFolder ToolItem,
-.MPartStack ToolItem,
-Composite#ToolbarComposite ToolItem {
+/* Everything in a stack's tab row sits on the CTabFolder, which is BG_PART, so the
+ * bars and their items all take that. Selector notes, both established by inspecting
+ * computed values rather than by reading the cascade:
+ *  - '.ToolbarComposite ToolItem' does NOT match, though the same selector matches a
+ *    ToolBar: an item does not resolve a class two ancestors up. 'CTabFolder ToolItem'
+ *    does match, so use that.
+ *  - 'CTabFolder > ToolBar' is the only way to reach CTabFolder's internal min/max bar,
+ *    which has no cssId and no cssClass. The child combinator excludes the view
+ *    toolbars, which sit one level deeper inside ToolbarComposite. */
+.ToolbarComposite ToolBar,
+CTabFolder > ToolBar,
+CTabFolder ToolItem {
 	background-color: '#com-vogella-themes-BG_PART';
 }
 
