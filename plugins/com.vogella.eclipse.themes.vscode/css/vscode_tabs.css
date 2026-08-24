@@ -32,7 +32,9 @@
  * Composite#ToolbarComposite. Views keep BG_PART from structure.css; only the editor
  * stack below takes the editor surface. */
 CTabFolder {
-	swt-unselected-tabs-color: '#com-vogella-themes-BG_WINDOW' '#com-vogella-themes-BG_WINDOW' 100% 100%;
+	/* One colour, not two: see the note in structure.css. Two values take the gradient
+	 * path and leave the min/max and chevron bars grey. */
+	swt-unselected-tabs-color: '#com-vogella-themes-BG_WINDOW';
 	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
 }
 
