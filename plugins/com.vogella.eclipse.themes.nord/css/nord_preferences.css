@@ -80,6 +80,21 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-ui-themes {
 		'org.eclipse.jface.REVISION_OLDEST_COLOR=180,142,173'
 }
 
+/* ############################## Heap status ############################## */
+/* Hidden rather than styled. HeapStatus.getForeground() returns a hardcoded
+ * usedMemCol = new Color(160, 160, 160) whatever a theme sets, so the used
+ * memory bar paints light grey on every dark surface here and reads as broken.
+ * Fixed upstream by deriving the colours from the control's own background and
+ * foreground; once that is in the target platform, drop this block and the two
+ * rules in structure.css become sufficient on their own.
+ * The node is org.eclipse.ui, not org.eclipse.ui.workbench, and WorkbenchWindow
+ * reads it once while building the window, so it applies from the next start. */
+
+IEclipsePreferences#org-eclipse-ui:org-eclipse-ui-themes {
+	preferences:
+		'SHOW_MEMORY_MONITOR=false'
+}
+
 /* ############################## Console stream colors ############################## */
 
 IEclipsePreferences#org-eclipse-debug-ui:org-eclipse-ui-themes {
