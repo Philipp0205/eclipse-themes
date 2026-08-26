@@ -1,0 +1,139 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* GitHub Light Java syntax highlighting.
+ * The key list mirrors the platform's e4-dark_jdt_syntaxhighlighting.css;
+ * only the values change. The roles follow GitHub's own code highlighting and
+ * keep the GitHub Dark role assignment, one light Primer shade per role:
+ * keywords red, strings dark blue, types brown, methods purple,
+ * constants and fields blue, comments the muted gray.
+ * JDT is intentionally not a dependency: writing into a preference node whose
+ * owner is not installed is harmless.
+ */
+
+/* ############################## JDT syntax highlighting ############################## */
+
+IEclipsePreferences#org-eclipse-jdt-ui:org-eclipse-jdt-ui {
+	preferences:
+		'content_assist_completion_replacement_background=182,227,255'
+		'content_assist_completion_replacement_foreground=9,105,218'
+		'content_assist_parameters_background=255,255,255'
+		'content_assist_parameters_foreground=31,35,40'
+		'content_assist_proposals_background=255,255,255'
+		'content_assist_proposals_foreground=31,35,40'
+		'java_bracket=31,35,40'
+		'java_comment_task_tag=89,99,110'
+		'java_default=31,35,40'
+		'java_doc_default=110,118,129'
+		'java_doc_keyword=207,34,46'
+		'java_doc_link=9,105,218'
+		'java_doc_tag=207,34,46'
+		'java_keyword=207,34,46'
+		'java_keyword_bold=false'
+		'java_keyword_return=207,34,46'
+		'java_keyword_return_bold=false'
+		'java_multi_line_comment=110,118,129'
+		'java_operator=207,34,46'
+		'java_single_line_comment=110,118,129'
+		'java_string=10,48,105'
+		'matchingBracketsColor=9,105,218'
+		'pf_coloring_argument=207,34,46'
+		'pf_coloring_assignment=31,35,40'
+		'pf_coloring_comment=110,118,129'
+		'pf_coloring_key=31,35,40'
+		'pf_coloring_value=10,48,105'
+		'semanticHighlighting.abstractClass.color=149,56,0'
+		'semanticHighlighting.abstractClass.enabled=true'
+		'semanticHighlighting.abstractMethodInvocation.color=130,80,223'
+		'semanticHighlighting.abstractMethodInvocation.enabled=true'
+		'semanticHighlighting.annotation.color=149,56,0'
+		'semanticHighlighting.annotation.enabled=true'
+		'semanticHighlighting.annotation.italic=true'
+		'semanticHighlighting.annotationElementReference.color=10,48,105'
+		'semanticHighlighting.annotationElementReference.enabled=true'
+		'semanticHighlighting.class.color=149,56,0'
+		'semanticHighlighting.class.enabled=true'
+		'semanticHighlighting.deprecatedMember.color=110,118,129'
+		'semanticHighlighting.deprecatedMember.enabled=true'
+		'semanticHighlighting.deprecatedMember.underline=false'
+		'semanticHighlighting.deprecatedMember.strikethrough=true'
+		'semanticHighlighting.enum.color=149,56,0'
+		'semanticHighlighting.enum.enabled=true'
+		'semanticHighlighting.enum.italic=true'
+		'semanticHighlighting.field.color=5,80,174'
+		'semanticHighlighting.field.enabled=true'
+		'semanticHighlighting.inheritedField.color=61,98,153'
+		'semanticHighlighting.inheritedMethodInvocation.color=130,80,223'
+		'semanticHighlighting.inheritedMethodInvocation.enabled=true'
+		'semanticHighlighting.interface.color=149,56,0'
+		'semanticHighlighting.interface.enabled=true'
+		'semanticHighlighting.localVariable.color=31,35,40'
+		'semanticHighlighting.localVariable.enabled=true'
+		'semanticHighlighting.localVariableDeclaration.color=31,35,40'
+		'semanticHighlighting.localVariableDeclaration.enabled=true'
+		'semanticHighlighting.localVariableDeclaration.bold=false'
+		'semanticHighlighting.method.color=130,80,223'
+		'semanticHighlighting.method.enabled=true'
+		'semanticHighlighting.methodDeclarationName.color=130,80,223'
+		'semanticHighlighting.methodDeclarationName.enabled=true'
+		'semanticHighlighting.methodDeclarationName.bold=false'
+		'semanticHighlighting.number.color=5,80,174'
+		'semanticHighlighting.number.enabled=true'
+		'semanticHighlighting.parameterVariable.color=31,35,40'
+		'semanticHighlighting.parameterVariable.enabled=true'
+		'semanticHighlighting.staticField.color=5,80,174'
+		'semanticHighlighting.staticField.enabled=true'
+		'semanticHighlighting.staticFinalField.color=5,80,174'
+		'semanticHighlighting.staticFinalField.enabled=true'
+		'semanticHighlighting.staticMethodInvocation.color=130,80,223'
+		'semanticHighlighting.staticMethodInvocation.enabled=true'
+		'semanticHighlighting.typeArgument.color=149,56,0'
+		'semanticHighlighting.typeArgument.enabled=true'
+		'semanticHighlighting.typeParameter.color=149,56,0'
+		'semanticHighlighting.typeParameter.enabled=true'
+		'semanticHighlighting.typeParameter.bold=false'
+		'semanticHighlighting.restrictedKeywords.color=207,34,46'
+		'semanticHighlighting.restrictedKeywords.bold=false'
+		'sourceHoverBackgroundColor=246,248,250'
+		'javadocElementsStyling.darkModeDefaultColors=false'
+}
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-jdt-ui {
+	preferences:
+		'org.eclipse.jdt.ui.ColoredLabels.inherited=89,99,110'
+		'org.eclipse.jdt.ui.Javadoc.backgroundColor=255,255,255'
+		'org.eclipse.jdt.ui.Javadoc.foregroundColor=31,35,40'
+		'org.eclipse.jdt.ui.ColoredLabels.writeaccess_highlight=207,34,46'
+}
+
+/* ############################## JDT widgets ############################## */
+
+BulletListBlock > StyledText {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+FormatterPreferenceSectionComposite {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+	swt-titlebar-color: '#com-vogella-themes-FG';
+}
+
+#BreadcrumbComposite > Composite,
+#BreadcrumbItemComposite,
+#BreadcrumbItemDetailComposite,
+#BreadcrumbItemDetailTextComposite,
+#BreadcrumbItemDetailTextLabel,
+#BreadcrumbItemDetailImageLabel,
+#BreadcrumbItemDropDownToolBar {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
+}

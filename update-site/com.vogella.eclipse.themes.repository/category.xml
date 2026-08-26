@@ -15,6 +15,9 @@
    <feature id="com.vogella.eclipse.themes.dracula.feature" version="0.0.0">
       <category name="com.vogella.eclipse.themes"/>
    </feature>
+   <feature id="com.vogella.eclipse.themes.githublight.feature" version="0.0.0">
+      <category name="com.vogella.eclipse.themes"/>
+   </feature>
    <category-def name="com.vogella.eclipse.themes" label="vogella Eclipse Themes">
       <description>
          Additional themes for the Eclipse IDE.

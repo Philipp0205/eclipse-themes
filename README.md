@@ -1,6 +1,6 @@
 # vogella Eclipse Themes
 
-Additional dark themes for the Eclipse IDE, shipped as an installable p2 update site.
+Additional themes for the Eclipse IDE, shipped as an installable p2 update site.
 The themes are pure resource plugins: CSS and preference definitions only, no Java code.
 
 ## Themes
@@ -12,8 +12,9 @@ The themes are pure resource plugins: CSS and preference definitions only, no Ja
 | Nord | Calm arctic blues and frost accents on Polar Night surfaces, following the official Nord palette. |
 | GitHub Dark | GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent and GitHub syntax colors. |
 | Dracula | The official Dracula palette on purple tinted surfaces with pink and purple accents. |
+| GitHub Light | GitHub's Primer light palette: white surfaces on a soft grey chrome, with the familiar blue accent and GitHub syntax colors. |
 
-Both themes build on the platform dark stylesheet of `org.eclipse.ui.themes` and recolor it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
+Every theme builds on a platform stylesheet of `org.eclipse.ui.themes`, the dark one or the light one, and recolors it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
 
 ## Installing
 
@@ -51,6 +52,9 @@ The resulting p2 repository lands in
 
 Copy an existing bundle under `plugins/` and replace the old bundle symbolic name everywhere
 in the copy.
+Copy a dark theme for a dark one and `com.vogella.eclipse.themes.githublight` for a light one:
+the two differ in which platform stylesheet the `*_gtk.css`, `*_win.css` and `*_mac.css` files
+import, and in whether `javadocElementsStyling.darkModeDefaultColors` is `true` or `false`.
 That last part is the step that is easy to miss: the base stylesheets import the palette and
 the preference sheets through `platform:/plugin/<bundle>/css/...` URIs, and every
 `ColorDefinition` label is a `platform:/plugin/<bundle>?message=...` URI.
@@ -58,6 +62,9 @@ A copy that keeps the old name silently renders with the old theme's palette whe
 is installed, and renders black when it is not.
 
 Then rename the theme id and the `%theme.*` key pair in `plugin.xml` and `plugin.properties`,
+keeping in mind that `ThemeEngine` decides whether to put GTK itself into dark mode by testing
+whether the theme id contains `dark`, so a dark theme needs it in the id and a light theme must
+not have it,
 rename the `.project` name and `Automatic-Module-Name`, replace the palette values and the
 preference stylesheets (`*_preferences.css` and `*_jdt.css`, plus `vscode_tabs.css` if you
 copied the VS Code theme), add a feature under `features/` and list it in the update site
