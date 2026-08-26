@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="com.vogella.eclipse.themes.githublight.feature"
-      label="GitHub Light Theme"
+      id="com.vogella.eclipse.themes.onelight.feature"
+      label="One Light Theme"
       version="1.0.0.qualifier"
       provider-name="vogella GmbH">
 
    <description>
-      The GitHub Light theme for the Eclipse IDE: GitHub&apos;s Primer light
-      palette with white surfaces, a soft grey chrome and the familiar blue accent.
+      The One Light theme for the Eclipse IDE: Atom&apos;s One Light palette,
+      a near white editor on a soft grey chrome with purple keywords and green strings.
    </description>
 
    <copyright>
@@ -19,6 +19,6 @@
    </license>
 
    <plugin id="com.vogella.eclipse.themes.common" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
-   <plugin id="com.vogella.eclipse.themes.githublight" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
+   <plugin id="com.vogella.eclipse.themes.onelight" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
 
 </feature>

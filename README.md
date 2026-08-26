@@ -12,9 +12,20 @@ The themes are pure resource plugins: CSS and preference definitions only, no Ja
 | Nord | Calm arctic blues and frost accents on Polar Night surfaces, following the official Nord palette. |
 | GitHub Dark | GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent and GitHub syntax colors. |
 | Dracula | The official Dracula palette on purple tinted surfaces with pink and purple accents. |
-| GitHub Light | GitHub's Primer light palette: white surfaces on a soft grey chrome, with the familiar blue accent and GitHub syntax colors. |
+| One Light | Atom's One Light palette: a near white editor on a soft grey chrome, with purple keywords, green strings and the blue accent. |
 
 Every theme builds on a platform stylesheet of `org.eclipse.ui.themes`, the dark one or the light one, and recolors it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
+
+### One Light
+
+The workbench, and a Java editor with the One Light syntax colors.
+
+![One Light workbench](docs/images/one-light-workbench.png)
+
+![One Light Java editor](docs/images/one-light-editor.png)
+
+Captured on GTK at 200% scaling.
+The orange row selection in the tree is the desktop accent color, not the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
 
 ## Installing
 
@@ -52,7 +63,7 @@ The resulting p2 repository lands in
 
 Copy an existing bundle under `plugins/` and replace the old bundle symbolic name everywhere
 in the copy.
-Copy a dark theme for a dark one and `com.vogella.eclipse.themes.githublight` for a light one:
+Copy a dark theme for a dark one and `com.vogella.eclipse.themes.onelight` for a light one:
 the two differ in which platform stylesheet the `*_gtk.css`, `*_win.css` and `*_mac.css` files
 import, and in whether `javadocElementsStyling.darkModeDefaultColors` is `true` or `false`.
 That last part is the step that is easy to miss: the base stylesheets import the palette and

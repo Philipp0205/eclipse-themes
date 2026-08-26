@@ -1,0 +1,192 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* One Light palette.
+ *
+ * The colors of Atom's one-light-syntax and one-light-ui packages (MIT).
+ * Syntax background #FAFAFA, mono-1 #383A42 as foreground, mono-2 #696C77 as
+ * the muted shade and mono-3 #A0A1A7 for comments. The UI packages derive
+ * their surfaces from one base, hsl(230, 1%, 90%) = #E5E5E6, which is the
+ * window chrome here, with its 6% lighter step #F4F4F5 for parts. Accents are
+ * hue-2 blue #4078F2 and hue-3 purple #A626A4.
+ *
+ * This file registers the shared '#com-vogella-themes-*' tokens and redefines the
+ * platform's '#org-eclipse-ui-workbench-*' color definitions, so the imported
+ * platform widget rules follow this palette without being rewritten.
+ */
+
+/* SELECTION_BG, ERROR, WARNING and SUCCESS carry no CSS rule: the engine has no
+ * property for them. They are the source the preference sheet literals repeat. */
+ThemesExtension { color-definition:
+    '#com-vogella-themes-BG_WINDOW',
+    '#com-vogella-themes-BG_PART',
+    '#com-vogella-themes-BG_EDITOR',
+    '#com-vogella-themes-BG_RAISED',
+    '#com-vogella-themes-BORDER',
+    '#com-vogella-themes-FG',
+    '#com-vogella-themes-FG_MUTED',
+    '#com-vogella-themes-ACCENT',
+    '#com-vogella-themes-ACCENT_2',
+    '#com-vogella-themes-SELECTION_BG',
+    '#com-vogella-themes-SELECTION_FG',
+    '#com-vogella-themes-LINK',
+    '#com-vogella-themes-ERROR',
+    '#com-vogella-themes-WARNING',
+    '#com-vogella-themes-SUCCESS',
+    '#org-eclipse-ui-workbench-SECONDARY_BACKGROUND',
+    '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START',
+    '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_UNSELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_TAB_SELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-INACTIVE_NOFOCUS_TAB_BG_START',
+    '#org-eclipse-ui-workbench-INACTIVE_NOFOCUS_TAB_BG_END',
+    '#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START',
+    '#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_END',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR',
+    '#org-eclipse-ui-workbench-LINK_COLOR';
+}
+
+ColorDefinition#com-vogella-themes-BG_WINDOW {
+	color: #E5E5E6;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=BG_WINDOW');
+}
+ColorDefinition#com-vogella-themes-BG_PART {
+	color: #F4F4F5;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=BG_PART');
+}
+ColorDefinition#com-vogella-themes-BG_EDITOR {
+	color: #FAFAFA;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=BG_EDITOR');
+}
+ColorDefinition#com-vogella-themes-BG_RAISED {
+	/* Popups and inputs sit above every other surface here, so raised is pure
+	 * white: lighter than the #FAFAFA editor, which is lighter than the parts,
+	 * which are lighter than the chrome. One Light stacks its greys that way. */
+	color: #FFFFFF;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=BG_RAISED');
+}
+ColorDefinition#com-vogella-themes-BORDER {
+	color: #D3D3D4;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=BORDER');
+}
+ColorDefinition#com-vogella-themes-FG {
+	color: #383A42;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=FG');
+}
+ColorDefinition#com-vogella-themes-FG_MUTED {
+	color: #696C77;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=FG_MUTED');
+}
+ColorDefinition#com-vogella-themes-ACCENT {
+	color: #4078F2;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=ACCENT');
+}
+ColorDefinition#com-vogella-themes-ACCENT_2 {
+	color: #A626A4;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=ACCENT_2');
+}
+ColorDefinition#com-vogella-themes-SELECTION_BG {
+	/* Derived from Atom's @syntax-accent, hsl(230, 100%, 66%). Atom's own
+	 * selection is darken(@syntax-bg, 8%) = #E5E5E6, which is exactly this
+	 * palette's window chrome and reads as no selection at all. */
+	color: #D5DDFF;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=SELECTION_BG');
+}
+ColorDefinition#com-vogella-themes-SELECTION_FG {
+	color: #383A42;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=SELECTION_FG');
+}
+ColorDefinition#com-vogella-themes-LINK {
+	color: #4078F2;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=LINK');
+}
+ColorDefinition#com-vogella-themes-ERROR {
+	color: #E45649;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=ERROR');
+}
+ColorDefinition#com-vogella-themes-WARNING {
+	color: #C18401;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=WARNING');
+}
+ColorDefinition#com-vogella-themes-SUCCESS {
+	color: #50A14F;
+	category: '#org-eclipse-ui-presentation-default';
+	label: url('platform:/plugin/com.vogella.eclipse.themes.onelight?message=SUCCESS');
+}
+
+/* Platform definitions recolored so inherited platform rules follow the palette */
+
+/* The light stylesheets route the whole chrome through SECONDARY_BACKGROUND:
+ * trim bars, part sash containers, the MArea folder and the .View surfaces.
+ * It takes the place DARK_BACKGROUND holds in the dark palettes. */
+ColorDefinition#org-eclipse-ui-workbench-SECONDARY_BACKGROUND { color: #E5E5E6; }
+
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #D3D3D4; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR { color: #D3D3D4; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR { color: #D3D3D4; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_TEXT_COLOR { color: #696C77; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #696C77; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_SELECTED_TEXT_COLOR { color: #383A42; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_NOFOCUS_TAB_BG_START { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_NOFOCUS_TAB_BG_END { color: #E5E5E6; }
+
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START { color: #F4F4F5; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END { color: #F4F4F5; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #D3D3D4; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR { color: #4078F2; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR { color: #4078F2; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_TEXT_COLOR { color: #696C77; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #696C77; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR { color: #383A42; }
+
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_END { color: #E5E5E6; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_TEXT_COLOR { color: #383A42; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR { color: #383A42; }
+
+ColorDefinition#org-eclipse-ui-workbench-LINK_COLOR { color: #4078F2; }
