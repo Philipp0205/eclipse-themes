@@ -213,7 +213,7 @@ CTabItem.busy {
 /* .ToolbarComposite, not #: it is a CSS class, and the id selector never matched,
  * which left the composite behind a view's toolbar at the GTK default. */
 CTabFolder > Composite.ToolbarComposite {
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 /* Editor area: selected tab follows the editor surface, not the part surface */
@@ -246,13 +246,13 @@ CTabFolder.MArea CTabItem CLabel {
  * it is skipped otherwise. So set the background unconditionally instead. */
 /* Two rules rather than 'inherit': inherit falls back to the SWT default, which is
  * white, wherever the parent has no CSS background, and that paints a white box behind
- * every icon. The trim toolbar sits on BG_WINDOW, a view toolbar on BG_PART. */
+ * every icon. Both the trim toolbar and a view toolbar sit on BG_WINDOW. */
 ToolItem {
 	background-color: '#com-vogella-themes-BG_WINDOW';
 	color: '#com-vogella-themes-FG';
 }
 
-/* Everything in a stack's tab row sits on the CTabFolder, which is BG_PART, so the
+/* Everything in a stack's tab row sits on the CTabFolder, which is BG_WINDOW, so the
  * bars and their items all take that. Selector notes:
  *  - 'CTabFolder ToolBar' DOES match the view menu bar; an earlier note here claimed
  *    otherwise and was wrong. Verified by applying 'CTabFolder ToolBar {background-color:
@@ -265,31 +265,38 @@ ToolItem {
  *    every tab control the folder background, and would overwrite a CSS colour on the
  *    next layout anyway. Keeping the folder background off the gradient path, which
  *    the swt-unselected-tabs-color note above is about, is what keeps them right.
+ *  - BG_WINDOW, not BG_PART. Measured in a running IDE: the empty part of the tab
+ *    row paints the folder colour, which swt-unselected-tabs-color sets to BG_WINDOW,
+ *    so a toolbar on BG_PART draws a lighter rectangle behind the icons and the
+ *    min/max buttons. Invisible where the two tokens are close, obvious in a light
+ *    palette (#E5E5E6 row against #F4F4F5 toolbar). A scratch-pad snippet cannot
+ *    test this: CTabFolderElement.getVisibleChildNodes omits getChildren(), so a
+ *    re-style never revisits these bars and only a theme activation applies them.
  *  - Do NOT key on '.ToolbarComposite': the main trim bar carries that class too
  *    ("MTrimBar ToolbarComposite"), so it matches the trim toolbars as well and left
- *    their bars on BG_PART while their items stayed BG_WINDOW. Key on the CTabFolder
+ *    their bars on a different colour from their items. Key on the CTabFolder
  *    for a view stack and on .MTrimBar for the trim. */
 /* One selector per rule on purpose: grouping a bare class selector with these made
  * the whole group stop matching, so a selector the engine rejects appears to take its
  * neighbours down with it. Every class selector is qualified by an element type. */
 Composite.ToolbarComposite {
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 /* A trim bar carries MToolBar too, which the .MTrimBar rule below takes back. */
 ToolBar.MToolBar {
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 /* The view menu bar: StackRenderer.addTopRight creates it with no CSS class and no id,
  * so the ancestor is the only handle on it. Without this it falls to the bare 'ToolBar'
  * rule below, whose 'inherit' freezes whatever the parent happened to be. */
 CTabFolder ToolBar {
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 CTabFolder ToolItem {
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 /* The main trim is "MTrimBar ToolbarComposite", so the two rules above match it too.
