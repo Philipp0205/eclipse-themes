@@ -25,6 +25,10 @@ Atom's One Light palette: a near white editor on a soft grey chrome, with purple
 
 ![One Light](docs/images/one-light.png)
 
+Known issue on GTK: One Light currently renders the whole IDE with a noticeably larger UI font than the five dark themes, which is why fewer views fit in its screenshot above.
+It is reproducible from a freshly started IDE and it flips the moment you switch between One Light and any of the dark themes, so it is the theme and not the workspace.
+None of the stylesheets set a font size, so the cause is not in this repository's CSS; the working theory is the GTK theme reload that `ThemeEngine` triggers through `Display.setDarkThemePreferred` for a theme whose id does not contain `dark`.
+
 ### Nord
 
 Calm arctic blues and frost accents on Polar Night surfaces, following the official Nord palette.
@@ -43,7 +47,8 @@ The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors.
 
 ![VS Code Dark](docs/images/vscode-dark.png)
 
-All six are the same workspace and the same file, captured on GTK at 200% scaling, so the differences are the themes and nothing else.
+All six are the same workspace, the same file and the same maximized window, captured on GTK at 200% scaling.
+The five dark ones differ from each other only in the theme; One Light differs in layout too, for the reason noted above.
 The orange row selection in the tree and the outline is the desktop accent color rather than the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
 
 ## Installing
