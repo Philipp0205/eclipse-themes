@@ -5,27 +5,46 @@ The themes are pure resource plugins: CSS and preference definitions only, no Ja
 
 ## Themes
 
-| Theme | Description |
-| --- | --- |
-| AI Neon | Near black surfaces with cyan and magenta accents on active elements. |
-| VS Code Dark | The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors. |
-| Nord | Calm arctic blues and frost accents on Polar Night surfaces, following the official Nord palette. |
-| GitHub Dark | GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent and GitHub syntax colors. |
-| Dracula | The official Dracula palette on purple tinted surfaces with pink and purple accents. |
-| One Light | Atom's One Light palette: a near white editor on a soft grey chrome, with purple keywords, green strings and the blue accent. |
-
 Every theme builds on a platform stylesheet of `org.eclipse.ui.themes`, the dark one or the light one, and recolors it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
 
 ### One Light
 
-The workbench, and a Java editor with the One Light syntax colors.
+Atom's One Light palette: a near white editor on a soft grey chrome, with purple keywords, green strings and the blue accent.
 
-![One Light workbench](docs/images/one-light-workbench.png)
+![One Light](docs/images/one-light.png)
 
-![One Light Java editor](docs/images/one-light-editor.png)
+### GitHub Dark
 
-Captured on GTK at 200% scaling.
-The orange row selection in the tree is the desktop accent color, not the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
+GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent and GitHub syntax colors.
+
+![GitHub Dark](docs/images/github-dark.png)
+
+### Dracula
+
+The official Dracula palette on purple tinted surfaces with pink and purple accents.
+
+![Dracula](docs/images/dracula.png)
+
+### Nord
+
+Calm arctic blues and frost accents on Polar Night surfaces, following the official Nord palette.
+
+![Nord](docs/images/nord.png)
+
+### AI Neon
+
+Near black surfaces with cyan and magenta accents on active elements.
+
+![AI Neon](docs/images/ai-neon.png)
+
+### VS Code Dark
+
+The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors.
+
+![VS Code Dark](docs/images/vscode-dark.png)
+
+All six are the same workspace and the same file, captured on GTK at 200% scaling, so the differences are the themes and nothing else.
+The orange row selection in the tree and the outline is the desktop accent color rather than the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
 
 ## Installing
 
@@ -87,3 +106,9 @@ No pom changes are needed, the pomless aggregator picks up new directories autom
 ## License
 
 Eclipse Public License 2.0, see [LICENSE](LICENSE).
+
+## Commercial support
+
+[vogella GmbH](https://vogella.com/services/) builds and maintains these themes and offers training and consulting around Eclipse, the Eclipse platform and its tooling.
+
+If you use these themes in earnest and something looks wrong, saying so is welcome either way: the issues and pull requests here are open, and the commercial route exists for work that wants a schedule attached.
