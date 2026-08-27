@@ -7,12 +7,6 @@ The themes are pure resource plugins: CSS and preference definitions only, no Ja
 
 Every theme builds on a platform stylesheet of `org.eclipse.ui.themes`, the dark one or the light one, and recolors it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
 
-### One Light
-
-Atom's One Light palette: a near white editor on a soft grey chrome, with purple keywords, green strings and the blue accent.
-
-![One Light](docs/images/one-light.png)
-
 ### GitHub Dark
 
 GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent and GitHub syntax colors.
@@ -24,6 +18,12 @@ GitHub's Primer dark palette: blue-black surfaces with the familiar blue accent 
 The official Dracula palette on purple tinted surfaces with pink and purple accents.
 
 ![Dracula](docs/images/dracula.png)
+
+### One Light
+
+Atom's One Light palette: a near white editor on a soft grey chrome, with purple keywords, green strings and the blue accent.
+
+![One Light](docs/images/one-light.png)
 
 ### Nord
 
