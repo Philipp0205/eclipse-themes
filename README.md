@@ -53,16 +53,23 @@ The orange row selection in the tree and the outline is the desktop accent color
 
 ## Installing
 
-There is no hosted update site yet, so build the p2 repository locally first, see [Building](#building).
+In Eclipse: *Help > Install New Software*, and add this update site:
 
-In Eclipse: *Help > Install New Software > Add > Local*, point at
+```
+https://vogellacompany.github.io/eclipse.themes/
+```
+
+Every theme is a feature of its own, so install one, several or all six.
+Then switch under *Preferences > General > Appearance* to the installed theme.
+
+That URL always offers the newest build, published from `main` by the [Release workflow](.github/workflows/release.yml).
+To pin a build instead, use its own site under `https://vogellacompany.github.io/eclipse.themes/releases/<version>/`; the [site index](https://vogellacompany.github.io/eclipse.themes/) lists what is currently there.
+
+To install from your own build rather than the hosted site, see [Building](#building), then point *Add > Local* at
 
 ```
 update-site/com.vogella.eclipse.themes.repository/target/repository
 ```
-
-and select one or both features.
-Then switch under *Preferences > General > Appearance* to the installed theme.
 
 Note on preference based colors: when you switch to a theme, the theme writes its values into the affected preferences (editor colors, Java syntax highlighting, console colors), overwriting whatever was set before, including hand tuned settings.
 The built-in dark theme behaves the same way.
@@ -82,6 +89,10 @@ Maven has to run on JDK 25 or newer, because the target platform is resolved aga
 The build is pomless Tycho (5.0.4) against the Eclipse 2026-06 release train target platform.
 The resulting p2 repository lands in
 `update-site/com.vogella.eclipse.themes.repository/target/repository/`.
+
+Pushing to `main` runs that same build and publishes the result to the hosted update site, on the `gh-pages` branch.
+The site carries one build at a time: `releng/update-composite-site.sh` writes the p2 composite metadata that points the root URL at it, and drops what came before.
+A tag of the form `v*` additionally attaches the repository archive to a GitHub release.
 
 ## Adding a theme
 
