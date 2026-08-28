@@ -469,6 +469,33 @@ Link {
 	color: '#com-vogella-themes-FG';
 }
 
+/* The debug breadcrumb. org.eclipse.debug.ui paints these ids with hardcoded greys
+ * in a sheet bound to the platform dark theme id, so a third party theme gets neither
+ * that nor a rule of its own and the strip falls to the GTK default. */
+.View #DebugBreadcrumbComposite > Composite,
+.View #DebugBreadcrumbItemComposite,
+.View #DebugBreadcrumbItemDetailComposite,
+.View #DebugBreadcrumbItemDetailTextComposite,
+.View #DebugBreadcrumbItemDetailImageComposite,
+.View #DebugBreadcrumbItemDetailTextLabel,
+.View #DebugBreadcrumbItemDetailImageLabel,
+.View #DebugBreadcrumbItemDropDownToolBar {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	color: '#com-vogella-themes-FG';
+}
+
+.Editor #DebugBreadcrumbComposite > Composite,
+.Editor #DebugBreadcrumbItemComposite,
+.Editor #DebugBreadcrumbItemDetailComposite,
+.Editor #DebugBreadcrumbItemDetailTextComposite,
+.Editor #DebugBreadcrumbItemDetailImageComposite,
+.Editor #DebugBreadcrumbItemDetailTextLabel,
+.Editor #DebugBreadcrumbItemDetailImageLabel,
+.Editor #DebugBreadcrumbItemDropDownToolBar {
+	background-color: '#com-vogella-themes-BG_EDITOR';
+	color: '#com-vogella-themes-FG';
+}
+
 #org-eclipse-jdt-ui-SourceView StyledText,
 #org-eclipse-wst-jsdt-ui-SourceView StyledText {
 	background-color: '#com-vogella-themes-BG_EDITOR';
