@@ -3,7 +3,8 @@
       id="com.vogella.eclipse.themes.neon.feature"
       label="AI Neon Theme"
       version="1.0.0.qualifier"
-      provider-name="vogella GmbH">
+      provider-name="vogella GmbH"
+      plugin="com.vogella.eclipse.themes.common">
 
    <description>
       The AI Neon theme for the Eclipse IDE: near black surfaces with cyan

@@ -3,7 +3,8 @@
       id="com.vogella.eclipse.themes.nord.feature"
       label="Nord Theme"
       version="1.0.0.qualifier"
-      provider-name="vogella GmbH">
+      provider-name="vogella GmbH"
+      plugin="com.vogella.eclipse.themes.common">
 
    <description>
       The Nord theme for the Eclipse IDE: calm arctic blues and frost

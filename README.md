@@ -1,3 +1,5 @@
+<img src="docs/images/logo.png" alt="vogella Eclipse Themes logo" width="128" align="right">
+
 # vogella Eclipse Themes
 
 Additional themes for the Eclipse IDE, shipped as an installable p2 update site.

@@ -3,7 +3,8 @@
       id="com.vogella.eclipse.themes.dracula.feature"
       label="Dracula Theme"
       version="1.0.0.qualifier"
-      provider-name="vogella GmbH">
+      provider-name="vogella GmbH"
+      plugin="com.vogella.eclipse.themes.common">
 
    <description>
       The Dracula theme for the Eclipse IDE: the official Dracula colors on

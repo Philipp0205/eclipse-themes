@@ -3,7 +3,8 @@
       id="com.vogella.eclipse.themes.onelight.feature"
       label="One Light Theme"
       version="1.0.0.qualifier"
-      provider-name="vogella GmbH">
+      provider-name="vogella GmbH"
+      plugin="com.vogella.eclipse.themes.common">
 
    <description>
       The One Light theme for the Eclipse IDE: Atom&apos;s One Light palette,
