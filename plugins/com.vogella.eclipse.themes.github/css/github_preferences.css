@@ -216,17 +216,17 @@ IEclipsePreferences#org-eclipse-ui-genericeditor:org-eclipse-ui-genericeditor {
 IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-mylyn-tasks-ui {
 	preferences:
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled=88,166,255'
-		'org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled=88,166,255'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled=139,148,158'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled=248,81,73'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.past.due=248,81,73'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.overdue.for.others=210,153,34'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.completed=63,185,80'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.completed=139,148,158'
-		'org.eclipse.mylyn.tasks.ui.colors.foreground.task.active=163,113,247'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.task.active=88,166,255'
 		'org.eclipse.mylyn.tasks.ui.colors.incoming.background=22,27,34'
 		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.start=22,27,34'
 		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.end=48,54,61'
-		'org.eclipse.mylyn.tasks.ui.color.text.quoted=139,148,158'
+		'org.eclipse.mylyn.tasks.ui.color.text.quoted=230,237,243'
 }
 
 /* The WikiText markup editor. These values are CSS fragment strings rather than
