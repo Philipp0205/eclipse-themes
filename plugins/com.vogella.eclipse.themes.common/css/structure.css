@@ -195,15 +195,22 @@ CTabFolder Canvas {
 	color: '#com-vogella-themes-FG';
 }
 
+/* This does NOT color the tab label. CSSPropertyBackgroundSWTHandler sees a CTabItem
+ * and calls folder.setBackground() instead, so the value here is the FOLDER background,
+ * which CTabFolder.updateBkImages() then pushes onto every child control: the
+ * ToolbarComposite, the view toolbar, the view menu bar and the min/max bar.
+ * It must be BG_WINDOW, the same colour swt-unselected-tabs-color paints the tab row
+ * with. On BG_PART the bars ended up one shade off their own items: a ToolItem is not
+ * a Control, so updateBkImages never reaches it and it keeps the BG_WINDOW the
+ * 'ToolItem' rule below gives it, which drew a visible chiclet behind every icon. */
 CTabItem,
 CTabItem CLabel {
-	/* HACK for background of CTabFolder inner Toolbars, mirrors e4-dark_tabstyle.css */
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 .MPartStack.active > CTabItem,
 .MPartStack.active > CTabItem CLabel {
-	background-color: '#com-vogella-themes-BG_PART';
+	background-color: '#com-vogella-themes-BG_WINDOW';
 }
 
 CTabItem.busy {
@@ -232,12 +239,6 @@ CTabFolder > Composite.ToolbarComposite {
 	color: '#com-vogella-themes-FG';
 }
 
-CTabFolder.MArea CTabItem,
-CTabFolder.MArea CTabItem CLabel {
-	/* Disable HACK for background of CTabFolder inner Toolbars */
-	background-color: '#com-vogella-themes-BG_WINDOW';
-}
-
 /* ############################## Toolbars, status line, progress ############################## */
 
 /* A toggled ToolItem is a GTK toggle button, so on a light desktop theme its checked
@@ -252,8 +253,9 @@ ToolItem {
 	color: '#com-vogella-themes-FG';
 }
 
-/* Everything in a stack's tab row sits on the CTabFolder, which is BG_WINDOW, so the
- * bars and their items all take that. Selector notes:
+/* Everything in a stack's tab row sits on the CTabFolder, whose background the
+ * CTabItem rule above sets to BG_WINDOW, so the bars and their items all take that.
+ * Selector notes:
  *  - 'CTabFolder ToolBar' DOES match the view menu bar; an earlier note here claimed
  *    otherwise and was wrong. Verified by applying 'CTabFolder ToolBar {background-color:
  *    #00ff00}' to a running IDE: the view menu bar turned green.
@@ -265,13 +267,10 @@ ToolItem {
  *    every tab control the folder background, and would overwrite a CSS colour on the
  *    next layout anyway. Keeping the folder background off the gradient path, which
  *    the swt-unselected-tabs-color note above is about, is what keeps them right.
- *  - BG_WINDOW, not BG_PART. Measured in a running IDE: the empty part of the tab
- *    row paints the folder colour, which swt-unselected-tabs-color sets to BG_WINDOW,
- *    so a toolbar on BG_PART draws a lighter rectangle behind the icons and the
- *    min/max buttons. Invisible where the two tokens are close, obvious in a light
- *    palette (#E5E5E6 row against #F4F4F5 toolbar). A scratch-pad snippet cannot
- *    test this: CTabFolderElement.getVisibleChildNodes omits getChildren(), so a
- *    re-style never revisits these bars and only a theme activation applies them.
+ *  - BG_WINDOW, not BG_PART, and it has to agree with the CTabItem rule above:
+ *    updateBkImages overwrites the bars with the folder colour but cannot reach a
+ *    ToolItem, so any disagreement between the two shows up as a chiclet behind
+ *    every icon.
  *  - Do NOT key on '.ToolbarComposite': the main trim bar carries that class too
  *    ("MTrimBar ToolbarComposite"), so it matches the trim toolbars as well and left
  *    their bars on a different colour from their items. Key on the CTabFolder
