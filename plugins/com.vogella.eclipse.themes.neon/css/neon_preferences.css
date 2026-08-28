@@ -189,9 +189,59 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-pde-genericeditor-exten
 		'org.eclipse.pde.genericeditor.extension.editor.color.header=122,136,176'
 }
 
+/* The XMI tab of the e4 model editor. Its five XML colours were hardcoded light
+ * values in the bundle's resources.properties and unreachable for CSS, so tags came
+ * out dark navy on a dark surface. They are colorDefinitions since the bundle learned
+ * to follow the active theme, and this block is what fills them in for us. */
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-e4-tools-emf-ui {
+	preferences:
+		'org.eclipse.e4.tools.emf.ui.color.default=214,225,255'
+		'org.eclipse.e4.tools.emf.ui.color.tag=255,47,185'
+		'org.eclipse.e4.tools.emf.ui.color.string=57,255,136'
+		'org.eclipse.e4.tools.emf.ui.color.comment=76,90,122'
+		'org.eclipse.e4.tools.emf.ui.color.procInstr=168,85,247'
+}
+
 IEclipsePreferences#org-eclipse-ui-genericeditor:org-eclipse-ui-genericeditor {
 	preferences:
 		'matchingBracketsColor=0,229,255'
+}
+
+/* ############################## Mylyn ############################## */
+/* See css/mylyn.css for why this is needed. The Task List colours are registered
+ * as colorDefinitions by org.eclipse.mylyn.tasks.ui, twelve of them, of which
+ * Mylyn's own dark sheet fills only seven, so the remaining five stand on their
+ * light defaults even under the stock dark theme. All twelve are covered here. */
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-mylyn-tasks-ui {
+	preferences:
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled=0,229,255'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled=77,159,255'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled=255,47,185'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.past.due=255,47,185'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.overdue.for.others=255,200,87'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.completed=57,255,136'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.completed=122,136,176'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.task.active=255,47,185'
+		'org.eclipse.mylyn.tasks.ui.colors.incoming.background=22,27,43'
+		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.start=22,27,43'
+		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.end=30,39,64'
+		'org.eclipse.mylyn.tasks.ui.color.text.quoted=122,136,176'
+}
+
+/* The WikiText markup editor. These values are CSS fragment strings rather than
+ * the R,G,B of every other preference block here, so they carry hex colours. */
+
+IEclipsePreferences#org-eclipse-mylyn-wikitext-ui {
+	preferences:
+		'block-h1=font-size: 120%; font-weight: bold; color: #ff2fb9;'
+		'block-h2=font-size: 110%; font-weight: bold; color: #ff2fb9;'
+		'block-h3=font-size: 105%; font-weight: bold; color: #ff2fb9;'
+		'block-h4=font-weight: bold; color: #ff2fb9;'
+		'block-h5=font-size: 90%; font-weight: bold; color: #ff2fb9;'
+		'block-h6=font-size: 80%; font-weight: bold; color: #ff2fb9;'
+		'phrase-code=font-family: monospace; color: #39ff88;'
+		'block-bc=font-family: monospace; color: #39ff88;'
 }
 
 /* ############################## EGit ############################## */
