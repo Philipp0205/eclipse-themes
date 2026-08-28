@@ -78,6 +78,7 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-ui-themes {
 		'org.eclipse.ui.editors.rangeIndicatorColor=4,125,147'
 		'org.eclipse.jface.REVISION_NEWEST_COLOR=57,255,136'
 		'org.eclipse.jface.REVISION_OLDEST_COLOR=255,47,185'
+		'org.eclipse.ui.editors.inlineAnnotationColor=122,136,176'
 }
 
 /* ############################## Heap status ############################## */
@@ -103,6 +104,94 @@ IEclipsePreferences#org-eclipse-debug-ui:org-eclipse-ui-themes {
 		'org.eclipse.debug.ui.outColor=214,225,255'
 		'org.eclipse.debug.ui.inColor=57,255,136'
 		'org.eclipse.debug.ui.errorColor=255,47,185'
+		'org.eclipse.debug.ui.changedDebugElement=255,47,185'
+		'org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND=27,53,80'
+		'org.eclipse.debug.ui.MemoryHistoryKnownColor=214,225,255'
+		'org.eclipse.debug.ui.MemoryHistoryUnknownColor=122,136,176'
+}
+
+/* Ant colours its build output itself, and org.eclipse.ant.ui binds its dark values
+ * to the platform dark theme id alone, so a third party theme keeps the raw defaults:
+ * pure blue on the information stream, which carries the ordinary build output, and
+ * black on debug. Information follows outColor above, so Ant reads like any other
+ * console. */
+IEclipsePreferences#org-eclipse-ant-ui:org-eclipse-ui-themes {
+	preferences:
+		'org.eclipse.ant.ui.errorColor=255,47,185'
+		'org.eclipse.ant.ui.warningColor=255,200,87'
+		'org.eclipse.ant.ui.informationColor=214,225,255'
+		'org.eclipse.ant.ui.verboseColor=57,255,136'
+		'org.eclipse.ant.ui.debugColor=122,136,176'
+		'org.eclipse.ant.ui.textColor=214,225,255'
+		'org.eclipse.ant.ui.commentsColor=76,90,122'
+		'org.eclipse.ant.ui.tagsColor=255,47,185'
+		'org.eclipse.ant.ui.tagsColor_bold=true'
+		'org.eclipse.ant.ui.constantStringsColor=57,255,136'
+		'org.eclipse.ant.ui.constantStringsColor_italic=true'
+		'org.eclipse.ant.ui.processingInstructionsColor=168,85,247'
+		'org.eclipse.ant.ui.processingInstructionsColor_bold=true'
+		'org.eclipse.ant.ui.dtdColor=122,136,176'
+}
+
+/* ############################## Compare and inline diff ############################## */
+/* Compare binds its dark values to the platform dark theme id, so without this the
+ * inline diff highlights stay the pale pastels of the light defaults. The subtle
+ * shade is the EGit diff background mixed halfway into the editor surface, the
+ * detailed one is that background itself. */
+
+IEclipsePreferences#org-eclipse-ui-editors:com-vogella-themes-compare {
+	preferences:
+		'inlineDiffColor=11,36,33'
+		'detailedInlineDiffColor=11,58,40'
+		'deletionInlineDiffColor=42,14,36'
+		'detailedDeletionInlineDiffColor=74,12,46'
+		'org.eclipse.egit.ui.commitEditor.diffAddedColor=11,58,40'
+		'org.eclipse.egit.ui.commitEditor.diffRemovedColor=74,12,46'
+		'TextOccurrenceIndicationColor=27,53,80'
+}
+
+/* ############################## Manifest, target and generic editors ############################## */
+/* Same trap as Ant: PDE and the generic editor ship dark values bound to the platform
+ * dark theme id alone, so a third party theme keeps the light defaults, down to
+ * 'editor.color.default=0,0,0'. The roles follow the Java syntax colours of this
+ * theme, so a MANIFEST.MF reads like the Java editor next to it. */
+
+IEclipsePreferences#org-eclipse-pde-ui:org-eclipse-pde-ui {
+	preferences:
+		'editor.color.default=214,225,255'
+		'editor.color.xml_comment=76,90,122'
+		'editor.color.string=57,255,136'
+		'editor.color.string_italic=true'
+		'editor.color.externalized_string=168,85,247'
+		'editor.color.externalized_string_italic=true'
+		'editor.color.tag=255,47,185'
+		'editor.color.tag_bold=true'
+		'editor.color.instr=168,85,247'
+		'editor.color.instr_bold=true'
+		'editor.color.header_key=255,47,185'
+		'editor.color.header_key_bold=true'
+		'editor.color.header_osgi=168,85,247'
+		'editor.color.header_assignment=0,229,255'
+		'editor.color.header_assignment_bold=true'
+		'editor.color.header_attributes=255,200,87'
+		'editor.color.header_attributes_italic=true'
+		'editor.color.header_value=57,255,136'
+		'editor.color.header_value_italic=true'
+}
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-pde-genericeditor-extension {
+	preferences:
+		'org.eclipse.pde.genericeditor.extension.editor.color.text=214,225,255'
+		'org.eclipse.pde.genericeditor.extension.editor.color.comment=76,90,122'
+		'org.eclipse.pde.genericeditor.extension.editor.color.quote=57,255,136'
+		'org.eclipse.pde.genericeditor.extension.editor.color.tag=255,47,185'
+		'org.eclipse.pde.genericeditor.extension.editor.color.attribute=255,200,87'
+		'org.eclipse.pde.genericeditor.extension.editor.color.header=122,136,176'
+}
+
+IEclipsePreferences#org-eclipse-ui-genericeditor:org-eclipse-ui-genericeditor {
+	preferences:
+		'matchingBracketsColor=0,229,255'
 }
 
 /* ############################## EGit ############################## */
