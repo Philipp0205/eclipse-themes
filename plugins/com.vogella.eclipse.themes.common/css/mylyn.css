@@ -1,0 +1,41 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* Mylyn compatibility.
+ *
+ * Mylyn ships its dark values in two stylesheets that it binds to
+ * org.eclipse.e4.ui.css.theme.e4_dark alone, so no other theme ever sees them:
+ * org.eclipse.mylyn.tasks.ui/css/e4-dark_mylyn_prefstyle.css and
+ * org.eclipse.mylyn.wikitext.ui/css/dark_prefstyle.css. Same trap as EGit, Ant,
+ * PDE, Compare and the generic editor.
+ *
+ * Only the widget rule lives here. The colours belong to preference keys, and an
+ * IEclipsePreferences block takes literal values rather than tokens, so those sit
+ * in each theme's own preference sheet next to the EGit block.
+ * Harmless when Mylyn is not installed: the selector matches nothing.
+ *
+ * Out of reach for any theme, and only fixable in Mylyn itself: the constants in
+ * org.eclipse.mylyn.internal.context.ui.ColorMap, which recolour the Package
+ * Explorer while a task is active, TaskEditorFindSupport's highlight colours, and
+ * the SWT.COLOR_WHITE backgrounds in ScheduleDatePicker, PlanningPart, DatePicker
+ * and AbstractNotificationPopup.
+ */
+
+DatePickerPanel {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
+DatePickerPanel Table,
+DatePickerPanel Composite {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
