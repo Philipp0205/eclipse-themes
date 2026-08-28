@@ -398,6 +398,22 @@ Section {
 	tb-toggle-color: '#com-vogella-themes-FG';
 }
 
+/* A field in a form has to read as a field. The '.MPart Composite > *' rule in the
+ * parts section is (0,1,2) and outranks the bare 'Text' rule, so without this an
+ * editable form field takes the form background and its value is indistinguishable
+ * from the label next to it, which is what the PDE manifest editor shows. */
+.MPart Section Text,
+.MPart Section Combo,
+.MPart Section CCombo,
+.MPart Section Spinner,
+.MPart Form Text,
+.MPart Form Combo,
+.MPart Form CCombo,
+.MPart Form Spinner {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
 Twistie {
 	color: '#com-vogella-themes-FG';
 }
