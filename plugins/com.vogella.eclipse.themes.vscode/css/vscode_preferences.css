@@ -244,6 +244,39 @@ IEclipsePreferences#org-eclipse-mylyn-wikitext-ui {
 		'block-bc=font-family: monospace; color: #ce9178;'
 }
 
+/* ############################## Spring Tools ############################## */
+/* Spring Tools binds all three of its dark stylesheets to
+ * org.eclipse.e4.ui.css.theme.e4_dark alone, so under any other theme the Boot
+ * Dashboard decorations, the Boot marker highlight and the embedded terminal keep
+ * their light defaults. Same trap as EGit, Ant, PDE, Compare, the generic editor
+ * and Mylyn. Harmless when Spring Tools is not installed: nothing reads the keys. */
+
+IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-ide-eclipse-boot-dash {
+	preferences:
+		'org.springframework.ide.eclipse.boot.dash.TextDecorColor=137,209,133'
+		'org.springframework.ide.eclipse.boot.dash.AltTextDecorColor=77,170,252'
+		'org.springframework.ide.eclipse.boot.dash.MutedTextDecorColor=110,118,129'
+}
+
+/* A line highlight rather than text, so it takes the same subdued green as an
+ * added line in a diff instead of a foreground token. */
+IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-tooling-ls-eclipse-commons {
+	preferences:
+		'org.springframework.tooling.ls.eclipse.commons.STS4BootMarkerIndicationColor=27,58,36'
+}
+
+/* cursorAccent is the glyph UNDER the block cursor, so it has to be the terminal
+ * background. Spring Tools sets it to the same white as the cursor itself, which
+ * makes that character disappear; this deviates from their values on purpose. */
+IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-ide-eclipse-xterm {
+	preferences:
+		'org.springframework.ide.eclipse.xterm.background=31,31,31'
+		'org.springframework.ide.eclipse.xterm.foreground=204,204,204'
+		'org.springframework.ide.eclipse.xterm.selection=38,79,120'
+		'org.springframework.ide.eclipse.xterm.cursor=204,204,204'
+		'org.springframework.ide.eclipse.xterm.cursorAccent=31,31,31'
+}
+
 /* ############################## EGit ############################## */
 /* EGit binds its dark preference values to the platform dark theme id alone, so a
  * third party theme falls back to COLOR_LIST_FOREGROUND on COLOR_LIST_BACKGROUND,
