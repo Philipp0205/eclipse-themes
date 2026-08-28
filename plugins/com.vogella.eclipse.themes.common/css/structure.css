@@ -344,6 +344,23 @@ CompareViewerPane > * {
 	color: '#com-vogella-themes-FG';
 }
 
+/* A progress entry sits on the part surface, not on the window chrome, so its job
+ * name, its icon and its cancel button all take BG_PART. Without this the bare
+ * 'ToolItem' rule above paints the cancel button BG_WINDOW and leaves a rounded
+ * rectangle around the icon.
+ * The '.MPart' prefix is what makes the rule stick, and it is needed for the labels
+ * even on a dark theme's terms: e4_default_gtk.css, which only a LIGHT theme imports,
+ * carries '.View Composite Label' and '.View ToolBar' on the platform's
+ * SECONDARY_BACKGROUND. '.View Composite Label' is (0,1,2) and beats our '.MPart
+ * Label' at (0,1,1), so an unqualified 'ProgressInfoItem Label' at (0,0,2) would lose
+ * as well and the light themes would keep a grey band behind the job name. At (0,1,2)
+ * this ties and wins on import order, because structure.css loads last. */
+.MPart ProgressInfoItem Label,
+.MPart ProgressInfoItem ToolBar,
+.MPart ProgressInfoItem ToolItem {
+	background-color: '#com-vogella-themes-BG_PART';
+}
+
 /* ############################## Forms and sections ############################## */
 
 Form {
