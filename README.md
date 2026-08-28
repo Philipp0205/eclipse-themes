@@ -62,8 +62,8 @@ https://vogellacompany.github.io/eclipse.themes/
 Every theme is a feature of its own, so install one, several or all six.
 Then switch under *Preferences > General > Appearance* to the installed theme.
 
-That URL always offers the newest build, published from `main` by the [Release workflow](.github/workflows/release.yml).
-To pin a build instead, use its own site under `https://vogellacompany.github.io/eclipse.themes/releases/<version>/`; the [site index](https://vogellacompany.github.io/eclipse.themes/) lists what is currently there.
+The site carries the newest build and nothing else, published from `main` by the [Release workflow](.github/workflows/release.yml).
+Older versions are not supported: the previous build is dropped when a new one is published, so update rather than pin.
 
 To install from your own build rather than the hosted site, see [Building](#building), then point *Add > Local* at
 

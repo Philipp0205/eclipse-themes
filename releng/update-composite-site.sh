@@ -140,11 +140,12 @@ base_url=https://vogellacompany.github.io/eclipse.themes
 <p>Install them in Eclipse with <em>Help &gt; Install New Software</em>, using the update site</p>
 <p><code>$base_url/</code></p>
 <p>Each theme is a feature of its own, so you can install one, several or all six.</p>
-<p>That URL always offers the newest build. To pin one, use its own site instead:</p>
+<p>This site carries the newest build and nothing else. Older versions are not supported: the previous build is dropped when a new one is published, so update rather than pin.</p>
+<p>Currently published:</p>
 <ul>
 EOF
 	for version in "${versions[@]}"; do
-		printf '  <li><code>%s/releases/%s/</code></li>\n' "$base_url" "$version"
+		printf '  <li><code>%s</code></li>\n' "$version"
 	done
 	cat <<EOF
 </ul>
