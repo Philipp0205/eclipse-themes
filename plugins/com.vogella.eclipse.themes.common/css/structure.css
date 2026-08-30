@@ -156,7 +156,20 @@ DrillDownComposite {
 .MPartStack {
 	font-family: '#org-eclipse-ui-workbench-TAB_TEXT_FONT';
 	swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
-	swt-draw-custom-tab-content-background: true;
+	/* false, and it is what keeps a wrapped view toolbar on its own colour.
+	 * CTabRendering.draw() sends PART_BACKGROUND to drawCustomBackground() when this is
+	 * true, which fills the header band with the SELECTED TAB FILL, BG_PART. The band is
+	 * getTabHeight() + 4 tall, and getTabHeight() grows to cover the extra row a view
+	 * toolbar wraps onto, so that row came out BG_PART while the toolbar on it stays
+	 * BG_WINDOW: a dark block on a lighter strip. With false the band falls through to
+	 * CTabFolderRenderer's own PART_BACKGROUND, which uses the folder background,
+	 * BG_WINDOW, and the wrapped row reads as one piece with the tab row above it.
+	 * Everywhere else the band is covered by the tabs, so nothing else changes: measured
+	 * on a whole-shell capture, the only pixels that differ are the two wrapped strips.
+	 * The selected tab keeps BG_PART, drawSelectedTab() paints it from the same fill
+	 * without going through PART_BACKGROUND. The editor stack keeps true through its own
+	 * id rule below; editors have no view toolbar and so no wrapped row. */
+	swt-draw-custom-tab-content-background: false;
 	swt-selected-highlight-top: false;
 	swt-selected-tab-highlight: '#com-vogella-themes-BORDER';
 	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
@@ -204,9 +217,15 @@ CTabFolder Canvas {
  * which CTabFolder.updateBkImages() then pushes onto every child control: the
  * ToolbarComposite, the view toolbar, the view menu bar and the min/max bar.
  * It must be BG_WINDOW, the same colour swt-unselected-tabs-color paints the tab row
- * with. On BG_PART the bars ended up one shade off their own items: a ToolItem is not
- * a Control, so updateBkImages never reaches it and it keeps the BG_WINDOW the
- * 'ToolItem' rule below gives it, which drew a visible chiclet behind every icon. */
+ * with, because that is where those bars sit whenever they fit, and it is the colour
+ * they keep on the row they wrap onto as well. Matching the toolbar to its position is
+ * not possible from CSS: the engine has no way to say "no background" and let SWT
+ * decide, since every value ends up as a Color (CSSSWTColorHelper.getSWTColor falls
+ * back to black, which is what 'transparent' resolves to), 'inherit' is a read of the
+ * parent WIDGET's live background at apply time rather than a cascade lookup, ':not()'
+ * does not parse, and the global surface rule at the top of this file reaches the whole
+ * chain regardless. So the strip is moved to the toolbar instead of the other way
+ * round: see swt-draw-custom-tab-content-background in .MPartStack above. */
 CTabItem,
 CTabItem CLabel {
 	background-color: '#com-vogella-themes-BG_WINDOW';
@@ -251,7 +270,10 @@ CTabFolder > Composite.ToolbarComposite {
  * it is skipped otherwise. So set the background unconditionally instead. */
 /* Two rules rather than 'inherit': inherit falls back to the SWT default, which is
  * white, wherever the parent has no CSS background, and that paints a white box behind
- * every icon. Both the trim toolbar and a view toolbar sit on BG_WINDOW. */
+ * every icon. Both the trim toolbar and a view toolbar sit on BG_WINDOW.
+ * On GTK3 the value never reaches the button at all: painting every ToolItem magenta
+ * in a running IDE left no magenta pixel anywhere in the shell. It is kept for the
+ * platforms where it does paint, and so bar and items cannot disagree there. */
 ToolItem {
 	background-color: '#com-vogella-themes-BG_WINDOW';
 	color: '#com-vogella-themes-FG';
