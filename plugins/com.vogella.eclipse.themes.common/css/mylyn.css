@@ -39,3 +39,18 @@ DatePickerPanel Composite {
 	background-color: '#com-vogella-themes-BG_PART';
 	color: '#com-vogella-themes-FG';
 }
+
+/* A date picker is a field, and its Text carries SWT.READ_ONLY, so the read-only rule
+ * in structure.css would paint the value on the form surface while the picker around
+ * it keeps the field shade. The selector has to outrank that rule, hence the prefix. */
+DatePicker,
+ScheduleDatePicker {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
+.MPart DatePicker > Text[style~='SWT.READ_ONLY'],
+.MPart ScheduleDatePicker > Text[style~='SWT.READ_ONLY'] {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}

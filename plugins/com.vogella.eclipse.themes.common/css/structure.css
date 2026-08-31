@@ -179,6 +179,19 @@ DrillDownComposite {
 	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
 }
 
+/* The page tabs of a multi page editor, the PDE manifest editor and the Mylyn task
+ * editor among them. The platform binds them with this exact selector and a literal
+ * blue, which the .MPartStack rules above never reach because an attribute selector
+ * outranks a class. */
+.MPartStack CTabFolder[style~='SWT.DOWN'][style~='SWT.BOTTOM'] {
+	swt-selected-tab-highlight: '#com-vogella-themes-BORDER';
+	swt-unselected-hot-tab-color-background: '#com-vogella-themes-BG_RAISED';
+}
+
+.MPartStack.active CTabFolder[style~='SWT.DOWN'][style~='SWT.BOTTOM'] {
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
+}
+
 CTabFolder {
 	/* No color here: the platform tab rules resolve the palette's
 	 * '#org-eclipse-ui-workbench-*_TAB_TEXT_COLOR' definitions. Re-declaring it
@@ -407,6 +420,13 @@ FormHeading {
 	color: '#com-vogella-themes-FG';
 }
 
+/* The bare ToolBar rule paints BG_WINDOW, which shows as a chiclet behind the title
+ * image and behind the toolbar of a form heading. */
+FormHeading ToolBar {
+	background-color: '#com-vogella-themes-BG_PART';
+	color: '#com-vogella-themes-FG';
+}
+
 ScrolledFormText,
 FormText {
 	background-color: '#com-vogella-themes-BG_PART';
@@ -437,6 +457,15 @@ Section {
 .MPart Form CCombo,
 .MPart Form Spinner {
 	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
+/* A read-only value, the created date of a Mylyn task for one, sits on the form
+ * surface like a label. The platform's e4-dark_partstyle.css pins it to a literal
+ * grey with this selector, so the same selector is needed to take it back. FG rather
+ * than FG_MUTED: the muted tone fails WCAG AA on BG_PART in half the palettes. */
+.MPart Text[style~='SWT.READ_ONLY'] {
+	background-color: '#com-vogella-themes-BG_PART';
 	color: '#com-vogella-themes-FG';
 }
 
