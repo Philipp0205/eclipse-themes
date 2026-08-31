@@ -370,11 +370,6 @@ HeapStatus {
 	color: '#com-vogella-themes-FG';
 }
 
-ProgressIndicator {
-	background-color: '#com-vogella-themes-BG_RAISED';
-	color: '#com-vogella-themes-FG';
-}
-
 ProgressInfoItem,
 ProgressInfoItem > *,
 CompareViewerPane,
@@ -398,6 +393,41 @@ CompareViewerPane > * {
 .MPart ProgressInfoItem ToolBar,
 .MPart ProgressInfoItem ToolItem {
 	background-color: '#com-vogella-themes-BG_PART';
+}
+
+/* The bar itself: the progress region in the trim, a progress dialog, and an entry in
+ * the Progress view. 'color' is the filled part and 'background-color' is the trough;
+ * win32 maps the pair to PBM_SETBARCOLOR and PBM_SETBKCOLOR, GTK to the widget's
+ * 'progress' and 'trough' nodes.
+ *
+ * Without a rule of its own the bar falls to the 'Composite > * > *' catch-all at the
+ * top of this file and is painted in FG on BG_WINDOW: a near-white fill on the same
+ * shade as the chrome around it, so an idle bar reads as missing and a running one as
+ * a white block. The platform dark sheet carries no such catch-all and puts the
+ * ProgressIndicator on a plain #777, which is why its progress bar looked better.
+ *
+ * BORDER is the trough because it is the one palette shade that separates from
+ * BG_WINDOW, BG_PART and BG_EDITOR alike, in the light palette as well as the dark
+ * ones. ACCENT is the fill, so a running job carries the colour the active tab
+ * keyline and the focus border already use.
+ *
+ * Placement and the '.MPart' copies are both about specificity:
+ *  - 'ProgressInfoItem > *' above is (0,0,1) and would take the Progress view's bar
+ *    back to 'inherit', so this rule has to sit after it rather than beside the other
+ *    progress rules.
+ *  - '.MPart Composite > * > *' is (0,1,1) and outranks a bare 'ProgressBar' at
+ *    (0,0,1). '.MPart ProgressBar' ties it and wins on order, being later in the file.
+ *
+ * On Windows this is a no-op unless the ProgressBar was created with its visual style
+ * switched off, which SWT only does when the application sets the Display data key
+ * 'org.eclipse.swt.internal.win32.ProgressBar.useColors'; the IDE does not, so there
+ * the native bar keeps painting itself. */
+ProgressIndicator,
+ProgressBar,
+.MPart ProgressIndicator,
+.MPart ProgressBar {
+	background-color: '#com-vogella-themes-BORDER';
+	color: '#com-vogella-themes-ACCENT';
 }
 
 /* ############################## Forms and sections ############################## */
