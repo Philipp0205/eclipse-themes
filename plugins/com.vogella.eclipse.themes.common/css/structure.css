@@ -395,16 +395,27 @@ CompareViewerPane > * {
 	background-color: '#com-vogella-themes-BG_PART';
 }
 
-/* The bar itself: the progress region in the trim, a progress dialog, and an entry in
- * the Progress view. 'color' is the filled part and 'background-color' is the trough;
- * win32 maps the pair to PBM_SETBARCOLOR and PBM_SETBKCOLOR, GTK to the widget's
- * 'progress' and 'trough' nodes.
+/* The bar itself: the progress region in the trim, a progress dialog, a wizard's
+ * ProgressMonitorPart and an entry in the Progress view. 'color' is the filled part and
+ * 'background-color' is the trough; win32 maps the pair to PBM_SETBARCOLOR and
+ * PBM_SETBKCOLOR, GTK to the widget's 'progress' and 'trough' nodes.
  *
  * Without a rule of its own the bar falls to the 'Composite > * > *' catch-all at the
  * top of this file and is painted in FG on BG_WINDOW: a near-white fill on the same
  * shade as the chrome around it, so an idle bar reads as missing and a running one as
  * a white block. The platform dark sheet carries no such catch-all and puts the
  * ProgressIndicator on a plain #777, which is why its progress bar looked better.
+ *
+ * That #777 is the whole of the platform's strategy: it darkens the container and
+ * leaves the bar alone. The dark sheet never names a ProgressBar anywhere, and its
+ * 'Composite > *' rules do not reach one either, because WidgetElement.computeLocalName
+ * returns the exact simple class name with no walk up the superclasses. Element
+ * selectors in this engine are exact match, so a ProgressBar under JFace's
+ * ProgressIndicator, itself under a ProgressMonitorPart, is outside every 'Composite'
+ * rule in the theme. The Progress view's bar is the sole exception, and only by
+ * accident, through the 'ProgressInfoItem > *' wildcard above. Naming the leaf widget,
+ * as this rule does, is what makes it hold in the SmartImport and p2 install wizards
+ * too, where the containers are subclasses nobody enumerated.
  *
  * BORDER is the trough because it is the one palette shade that separates from
  * BG_WINDOW, BG_PART and BG_EDITOR alike, in the light palette as well as the dark
@@ -417,14 +428,25 @@ CompareViewerPane > * {
  *    progress rules.
  *  - '.MPart Composite > * > *' is (0,1,1) and outranks a bare 'ProgressBar' at
  *    (0,0,1). '.MPart ProgressBar' ties it and wins on order, being later in the file.
+ *  - The 'ProgressIndicator > *' pair carries the same colours by container, so a bar
+ *    that is not an SWT ProgressBar, or one under a bundle sheet that names ProgressBar
+ *    itself at (0,0,1), is still covered.
  *
- * On Windows this is a no-op unless the ProgressBar was created with its visual style
- * switched off, which SWT only does when the application sets the Display data key
- * 'org.eclipse.swt.internal.win32.ProgressBar.useColors'; the IDE does not, so there
- * the native bar keeps painting itself. */
+ * On win32 the two colours are honoured, but only because every dark theme here has an
+ * id containing 'dark'. ThemeEngine.setTheme reads that substring, calls
+ * Display.setDarkThemePreferred, and OS.setTheme sets the Display data key
+ * 'org.eclipse.swt.internal.win32.ProgressBar.useColors'. SWT then calls
+ * SetWindowTheme(handle, "", "") in ProgressBar.createHandle, which is what makes
+ * PBM_SETBKCOLOR and PBM_SETBARCOLOR take effect at all: with visual styles on,
+ * msctls_progress32 paints itself and ignores both. Two consequences. A bar created
+ * before the theme was applied keeps its visual style and stays OS coloured. And the
+ * light theme, whose id carries no 'dark', keeps the native themed bar, which is the
+ * right look there anyway. See docs/platform-styling-bugs.md on the id substring. */
 ProgressIndicator,
+ProgressIndicator > *,
 ProgressBar,
 .MPart ProgressIndicator,
+.MPart ProgressIndicator > *,
 .MPart ProgressBar {
 	background-color: '#com-vogella-themes-BORDER';
 	color: '#com-vogella-themes-ACCENT';

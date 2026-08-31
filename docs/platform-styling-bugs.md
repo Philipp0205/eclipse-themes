@@ -144,6 +144,54 @@ goes for any item the CSS engine did not reach.
 A fix in the platform would be to maintain the selection listener regardless of the property,
 or to drop the pseudo-class rather than ship one that cannot work by default.
 
+## The dark theme styles the progress bar's container, never the bar
+
+`e4-dark_globalstyle.css` names `ProgressMonitorPart` (line 34) and `ProgressIndicator`
+(line 145, `background-color: #777`), and no `ProgressBar` anywhere.
+
+The tempting assumption is that `Composite > *` (line 40) catches the bars inside.
+It does not.
+`WidgetElement.computeLocalName` returns the exact simple class name of the widget with no
+walk up the superclasses:
+
+```java
+Class<?> clazz = widget.getClass();
+return ClassUtils.getSimpleName(clazz);
+```
+
+Element selectors in this engine are exact match, so subclassing a `Composite` drops the
+widget out of every `Composite` rule in the theme.
+That is what the hand maintained list of `ProxyEntriesComposite`, `NonProxyHostsComposite`,
+`DelayedFilterCheckboxTree` and the rest at lines 27 to 37 is for: every subclass has to be
+enumerated by name, forever.
+
+A JFace progress bar sits two subclasses deep and is therefore unreachable:
+
+```
+ProgressMonitorPart   (Composite)   ProgressMonitorPart.java:254
+  ProgressIndicator   (Composite)   creates two bars in its constructor
+    ProgressBar       determinate   ProgressIndicator.java:72
+    ProgressBar       indeterminate ProgressIndicator.java:73
+```
+
+Every `ProgressBar` in the platform is unmatched by the dark theme except the Progress
+view's, and that one only by accident, through the `ProgressInfoItem > *` wildcard at line
+138.
+The `#777` on the container is the strategy made visible: darken the box so the trough edges
+and the stack layout gap do not glow white around a bar that keeps its own colours.
+
+Measured under AI Neon on Windows: the SmartImport wizard bar rendered `#F0F0F0` with a
+classic sunken `#A0A0A0` / `#FFFFFF` edge, `COLOR_BTNFACE` on an unthemed `msctls_progress32`,
+across the full width of a `#0A0E17` dialog.
+The p2 Installing Software wizard is the same widget chain and the same result.
+
+The platform fix is a rule that names the leaf widget, or a selector model that matches
+superclasses.
+
+Handled here by naming `ProgressBar` and `ProgressIndicator > *` in
+`plugins/com.vogella.eclipse.themes.common/css/structure.css`, which reaches the bar whatever
+its containers are called.
+
 ## Whether GTK goes dark is decided by a substring match on the theme id
 
 `ThemeEngine.setTheme` decides whether to put GTK itself into dark mode like this:
