@@ -120,7 +120,7 @@ EOF
 # keeps GitHub Pages from running the content through Jekyll
 touch "$site/.nojekyll"
 
-base_url=https://vogellacompany.github.io/eclipse.themes
+base_url=https://vogellacompany.github.io/eclipse-themes
 {
 	cat <<EOF
 <!doctype html>

@@ -58,7 +58,7 @@ The orange row selection in the tree and the outline is the desktop accent color
 In Eclipse: *Help > Install New Software*, and add this update site:
 
 ```
-https://vogellacompany.github.io/eclipse.themes/
+https://vogellacompany.github.io/eclipse-themes/
 ```
 
 Every theme is a feature of its own, so install one, several or all six.
