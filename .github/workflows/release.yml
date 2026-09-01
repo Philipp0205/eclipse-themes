@@ -35,8 +35,25 @@ jobs:
       - name: Check token references
         run: ./releng/check-tokens.sh
 
-      - name: Build
-        run: mvn -B clean verify
+      # The vogella release key, an organization secret. An unsigned site would
+      # make p2 warn every user who installs from it, so a missing key fails the
+      # release rather than publishing one.
+      - name: Prepare the PGP signing key
+        env:
+          MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
+        run: |
+          if [ -z "$MAVEN_GPG_KEY" ]; then
+            echo "MAVEN_GPG_KEY is not set, refusing to publish an unsigned site" >&2
+            exit 1
+          fi
+          printf '%s\n' "$MAVEN_GPG_KEY" > "$RUNNER_TEMP/signing-key.asc"
+
+      - name: Build and sign
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        run: |
+          mvn -B clean verify -Dgpg.skip=false \
+            -Dtycho.pgp.signer.bc.secretKeys=$RUNNER_TEMP/signing-key.asc
 
       # The directory is named after what was actually built, qualifier included,
       # so a rebuild of the same version never lands on an existing URL. All six
