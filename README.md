@@ -5,6 +5,33 @@
 Additional themes for the Eclipse IDE, shipped as an installable p2 update site.
 The themes are pure resource plugins: CSS and preference definitions only, no Java code.
 
+## Installing
+
+In Eclipse: *Help > Install New Software*, and add this update site:
+
+```
+https://vogellacompany.github.io/eclipse-themes/
+```
+
+Every theme is a feature of its own, so install one, several or all six.
+Then switch under *Preferences > General > Appearance* to the installed theme.
+
+The site carries the newest build and nothing else, published from `main` by the [Release workflow](.github/workflows/release.yml).
+Older versions are not supported: the previous build is dropped when a new one is published, so update rather than pin.
+
+To install from your own build rather than the hosted site, see [Building](#building), then point *Add > Local* at
+
+```
+update-site/com.vogella.eclipse.themes.repository/target/repository
+```
+
+Note on preference based colors: when you switch to a theme, the theme writes its values into the affected preferences (editor colors, Java syntax highlighting, console colors), overwriting whatever was set before, including hand tuned settings.
+The built-in dark theme behaves the same way.
+If you want your own colors back, re-tune them under *Preferences > General > Appearance > Colors and Fonts* after switching.
+
+The Linux stylesheets are the ones exercised by this repository's build and testing.
+The Windows and macOS variants ship untested until someone runs them there.
+
 ## Themes
 
 Every theme builds on a platform stylesheet of `org.eclipse.ui.themes`, the dark one or the light one, and recolors it through shared `ColorDefinition` tokens, so a theme change is a palette change, not a rewrite.
@@ -52,33 +79,6 @@ The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors.
 All six are the same workspace, the same file and the same maximized window, captured on GTK at 200% scaling.
 The five dark ones differ from each other only in the theme; One Light differs in layout too, for the reason noted above.
 The orange row selection in the tree and the outline is the desktop accent color rather than the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
-
-## Installing
-
-In Eclipse: *Help > Install New Software*, and add this update site:
-
-```
-https://vogellacompany.github.io/eclipse-themes/
-```
-
-Every theme is a feature of its own, so install one, several or all six.
-Then switch under *Preferences > General > Appearance* to the installed theme.
-
-The site carries the newest build and nothing else, published from `main` by the [Release workflow](.github/workflows/release.yml).
-Older versions are not supported: the previous build is dropped when a new one is published, so update rather than pin.
-
-To install from your own build rather than the hosted site, see [Building](#building), then point *Add > Local* at
-
-```
-update-site/com.vogella.eclipse.themes.repository/target/repository
-```
-
-Note on preference based colors: when you switch to a theme, the theme writes its values into the affected preferences (editor colors, Java syntax highlighting, console colors), overwriting whatever was set before, including hand tuned settings.
-The built-in dark theme behaves the same way.
-If you want your own colors back, re-tune them under *Preferences > General > Appearance > Colors and Fonts* after switching.
-
-The Linux stylesheets are the ones exercised by this repository's build and testing.
-The Windows and macOS variants ship untested until someone runs them there.
 
 ## Building
 
