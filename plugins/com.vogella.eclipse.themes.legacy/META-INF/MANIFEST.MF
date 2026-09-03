@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Eclipse-BundleShape: dir
+Bundle-SymbolicName: com.vogella.eclipse.themes.legacy;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.e4.ui.css.core;bundle-version="[0,0.14.800)"
+Automatic-Module-Name: com.vogella.eclipse.themes.legacy

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<!-- Target of the modern variant bundle, its feature and the update site: the first release
+     train whose CSS engine (org.eclipse.e4.ui.css.core 0.14.800) is the platform's own parser.
+     Everything else builds against the default target. -->
+<target name="com.vogella.eclipse.themes.target.modern" sequenceNumber="1">
+  <locations>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+      <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
+      <repository location="https://download.eclipse.org/releases/2026-09/"/>
+    </location>
+  </locations>
+</target>

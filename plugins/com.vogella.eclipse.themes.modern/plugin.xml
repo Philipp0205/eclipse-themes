@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension point="org.eclipse.e4.ui.css.swt.theme">
+      <stylesheet uri="css/github_modern.css">
+         <themeid refid="com.vogella.eclipse.themes.githubdark"/>
+      </stylesheet>
+      <stylesheet uri="css/dracula_modern.css">
+         <themeid refid="com.vogella.eclipse.themes.draculadark"/>
+      </stylesheet>
+      <stylesheet uri="css/onelight_modern.css">
+         <themeid refid="com.vogella.eclipse.themes.onelight"/>
+      </stylesheet>
+      <stylesheet uri="css/nord_modern.css">
+         <themeid refid="com.vogella.eclipse.themes.norddark"/>
+      </stylesheet>
+      <stylesheet uri="css/vscode_modern.css">
+         <themeid refid="com.vogella.eclipse.themes.vscodedark"/>
+      </stylesheet>
+      <stylesheet uri="css/neon_modern.css">
+         <themeid refid="com.vogella.eclipse.themes.neondark"/>
+      </stylesheet>
+   </extension>
+</plugin>

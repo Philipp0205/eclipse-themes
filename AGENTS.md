@@ -70,6 +70,40 @@ This is what turned "is the header colour wanted" into an answer: it was wanted,
 Compute it for every palette before changing a shared rule.
 Several tokens read well in one theme and fail in another, and `ACCENT_2` in particular is a dark blue in VS Code Dark and unusable as a foreground.
 
+## Two CSS engines, three kinds of stylesheet
+
+Eclipse up to 2026-06 parses theme CSS with Batik (`org.eclipse.e4.ui.css.core` below 0.14.800).
+Eclipse 2026-09 and later parse it with the platform's own parser (0.14.800 and up).
+Neither engine skips syntax it does not know: one unknown selector or at-rule fails the whole sheet.
+So new syntax lives in a sheet that the old engine never loads, and the gate is OSGi resolution, never CSS.
+
+- `plugins/com.vogella.eclipse.themes.<theme>` and `.common`: the base sheets, loaded by both engines.
+- `plugins/com.vogella.eclipse.themes.legacy`: `css/<theme>_legacy.css`, one per theme id, resolves only against css.core `[0,0.14.800)`.
+- `plugins/com.vogella.eclipse.themes.modern`: `css/<theme>_modern.css`, one per theme id, resolves only against css.core `[0.14.800,1.0.0)`.
+
+Only the modern sheets may use what the new engine adds: `@media` blocks (including the `-eclipse-os` and `-eclipse-bundle-version` queries of eclipse-platform/eclipse.platform.ui#4323), `:not()` (#4322) and every other functional pseudo-class, and anything else Batik rejects.
+The base sheets and the legacy sheets must stay free of all of it.
+The lower bound 0.14.800 is the first css.core with the new parser; if `@media` and `:not()` ship in a later version, move both ranges (the two `MANIFEST.MF` files) to that version, do not bump any `Bundle-Version` by hand.
+
+The two bundles sit in features of their own, `com.vogella.eclipse.themes.legacy.feature` and `.modern.feature`, and every theme feature includes both with `optional="true"`.
+p2 turns the `Require-Bundle` range into an install requirement, so a feature listing both bundles directly would install nowhere; with optional includes p2 installs the one that resolves and silently drops the other, and a dropins install gets the same result from plain OSGi resolution.
+An unresolved variant bundle is therefore intended and produces no error and no warning; it shows only in Help > About > Installation Details > Plug-ins.
+After a release, install a theme feature once on an Eclipse before 2026-09 and once on 2026-09 or later and confirm through Installation Details, and through a measured rule, that the right variant is active.
+The p2 director does the same check without an IDE, `-verifyOnly` against the built repository plus the release train, once per variant and train; the variant that does not belong must fail with a missing requirement on css.core.
+
+Order between a base sheet and a contributed sheet is extension registry order, not declaration order.
+An override in a legacy or modern sheet therefore needs higher specificity or `!important`; "later wins" is not available.
+
+### Why the build has two targets and two repositories
+
+One p2 resolution holds one version of css.core, because the bundle is a singleton, and the two variants need one version each.
+So the modern bundle, its feature and the main update site carry a `pom.xml` that points `target-platform-configuration` at `com.vogella.eclipse.themes.target.modern.target` (the 2026-09 train); everything else stays on the default target (2026-06).
+Putting both trains into one target file does not work: the planner refuses the second css.core, and slicer mode drops Batik and Felix SCR because their SimRel units carry an empty filter.
+
+The same singleton rule drops one variant from a repository: the main update site resolves against the modern target and lists the modern feature as an explicit root, so the legacy variant is assembled in `update-site/com.vogella.eclipse.themes.repository.legacy` against the default target and mirrored into the main repository before signing and archiving.
+The mirror logs `Problems resolving provisioning plan` for the legacy bundle's css.core range on every build; that is expected, the range is unsatisfiable in the modern target and the artifacts are mirrored anyway.
+The main repository has xz index files switched off because the mirror step would leave them stale, and stale xz indexes are what p2 reads first.
+
 ## The recurring platform bug
 
 A bundle ships its dark values in a stylesheet bound with `themeid refid="org.eclipse.e4.ui.css.theme.e4_dark"`.

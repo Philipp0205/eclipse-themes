@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- One p2 resolution holds one version of org.eclipse.e4.ui.css.core, so the legacy
+     variant is assembled here against the default target and mirrored into the main
+     repository, which resolves against the modern target. -->
+<site>
+   <feature id="com.vogella.eclipse.themes.legacy.feature" version="0.0.0"/>
+</site>

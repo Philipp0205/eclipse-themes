@@ -88,7 +88,7 @@ mvn clean verify
 
 Maven has to run on JDK 25 or newer, because the target platform is resolved against the
 `JavaSE-25` execution environment configured in `pom.xml`.
-The build is pomless Tycho (5.0.4) against the Eclipse 2026-06 release train target platform.
+The build is pomless Tycho (5.0.4) against the Eclipse 2026-06 release train target platform, with the modern CSS variant bundle and the update site resolved against 2026-09 (see [AGENTS.md](AGENTS.md)).
 The resulting p2 repository lands in
 `update-site/com.vogella.eclipse.themes.repository/target/repository/`.
 

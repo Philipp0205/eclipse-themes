@@ -14,8 +14,53 @@
   <artifactId>com.vogella.eclipse.themes.repository</artifactId>
   <packaging>eclipse-repository</packaging>
 
+  <!-- Build order only: the legacy repository is mirrored into this one below -->
+  <dependencies>
+    <dependency>
+      <groupId>com.vogella.eclipse.themes</groupId>
+      <artifactId>com.vogella.eclipse.themes.repository.legacy</artifactId>
+      <version>${project.version}</version>
+      <type>eclipse-repository</type>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
+      <!-- Resolves against the modern target, so the modern variant is the one this
+           resolution keeps; the legacy variant is merged in from its own repository -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <configuration>
+          <target>
+            <file>${maven.multiModuleProjectDirectory}/target-platform/com.vogella.eclipse.themes.target/com.vogella.eclipse.themes.target.modern.target</file>
+          </target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-p2-extras-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <executions>
+          <execution>
+            <id>merge-legacy-repository</id>
+            <phase>package</phase>
+            <goals>
+              <goal>mirror</goal>
+            </goals>
+            <configuration>
+              <source>
+                <repository>
+                  <url>file:${maven.multiModuleProjectDirectory}/update-site/com.vogella.eclipse.themes.repository.legacy/target/repository</url>
+                </repository>
+              </source>
+              <destination>${project.build.directory}/repository</destination>
+              <append>true</append>
+              <xzCompress>false</xzCompress>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <!-- PGP signs the artifacts of the update site, the key file comes from
            -Dtycho.pgp.signer.bc.secretKeys, the passphrase from MAVEN_GPG_PASSPHRASE -->
       <plugin>
@@ -31,6 +76,22 @@
             <configuration>
               <signer>bc</signer>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- No xz index files: the mirror step above would leave them stale. The archive
+           must contain the merged and signed repository, so it runs after both. -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-repository-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <configuration>
+          <xzCompress>false</xzCompress>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-archive-repository</id>
+            <phase>verify</phase>
           </execution>
         </executions>
       </plugin>

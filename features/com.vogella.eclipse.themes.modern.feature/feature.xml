@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.vogella.eclipse.themes.modern.feature"
+      label="vogella Themes for the New CSS Engine"
+      version="1.0.0.qualifier"
+      provider-name="vogella GmbH">
+
+   <description>
+      Stylesheet additions for the vogella themes on Eclipse 2026-09 and later, whose CSS engine
+      understands @media and :not(). Installs only where that engine is present.
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 vogella GmbH and others.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License 2.0
+   </license>
+
+   <plugin id="com.vogella.eclipse.themes.modern" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
+
+</feature>

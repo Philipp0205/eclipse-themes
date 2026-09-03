@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.vogella.eclipse.themes.legacy.feature"
+      label="vogella Themes for the Batik CSS Engine"
+      version="1.0.0.qualifier"
+      provider-name="vogella GmbH">
+
+   <description>
+      Stylesheet additions for the vogella themes on Eclipse up to 2026-06, whose Batik based CSS engine
+      rejects the newer CSS syntax. Installs only where that engine is present.
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 vogella GmbH and others.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License 2.0
+   </license>
+
+   <plugin id="com.vogella.eclipse.themes.legacy" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
+
+</feature>
