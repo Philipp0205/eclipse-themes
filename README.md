@@ -66,7 +66,7 @@ Calm arctic blues and frost accents on Polar Night surfaces, following the offic
 
 ### AI Neon
 
-Near black surfaces with cyan and magenta accents on active elements.
+Deep blue-violet surfaces with cyan links, tab titles and keylines, and magenta on errors and active links.
 
 ![AI Neon](docs/images/ai-neon.png)
 

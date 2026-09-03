@@ -1,0 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* AI Neon tab keylines.
+ *
+ * structure.css puts the selected tab of an inactive stack on BORDER, which is
+ * right for the calm palettes but leaves this one with a single cyan line in the
+ * whole window. Here every stack shows its selected tab: magenta when the stack
+ * is inactive, cyan when it has focus. ACCENT_2 is unusable for this in VS Code
+ * Dark, which is why the rule is not shared.
+ *
+ * Imported after structure.css; same specificity, so the later declaration wins.
+ */
+
+.MPartStack {
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT_2';
+}
+
+.MPartStack.active {
+	swt-selected-tab-highlight: '#com-vogella-themes-ACCENT';
+}

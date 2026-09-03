@@ -23,62 +23,63 @@ IEclipsePreferences#org-eclipse-ui-editors:org-eclipse-ui-themes {
 		'AbstractTextEditor.Color.SelectionForeground.SystemDefault=false'
 		'AbstractTextEditor.Color.SelectionBackground.SystemDefault=false'
 		'AbstractTextEditor.Color.Foreground.SystemDefault=false'
-		'AbstractTextEditor.Color.Background=30,31,44'
-		'AbstractTextEditor.Color.Foreground=214,225,255'
-		'AbstractTextEditor.Color.SelectionBackground=27,53,80'
+		'AbstractTextEditor.Color.Background=17,22,42'
+		'AbstractTextEditor.Color.Foreground=226,234,255'
+		'AbstractTextEditor.Color.SelectionBackground=14,74,94'
 		'AbstractTextEditor.Color.SelectionForeground=234,246,255'
-		'AbstractTextEditor.Color.FindScope=27,60,90'
-		'asOccurencesIndicationColor=30,39,64'
+		'AbstractTextEditor.Color.FindScope=18,66,88'
+		'asOccurencesIndicationColor=44,55,96'
 		'breakpointIndicationColor=255,47,185'
-		'currentIPColor=0,229,255'
-		'currentLineColor=22,28,44'
-		'deletionIndicationColor=214,225,255'
-		'filteredSearchResultIndicationColor=27,60,90'
-		'hyperlinkColor=77,159,255'
+		'currentIPColor=0,240,255'
+		'currentLineColor=21,34,56'
+		'deletionIndicationColor=226,234,255'
+		'filteredSearchResultIndicationColor=18,66,88'
+		'hyperlinkColor=0,229,255'
 		'hyperlinkColor.SystemDefault=false'
 		'infoIndicationColor=57,255,136'
-		'lineNumberColor=122,136,176'
+		'lineNumberColor=140,155,201'
 		'linked.slave.color=0,184,212'
-		'matchingTagIndicationColor=30,39,64'
-		'occurrenceIndicationColor=27,60,90'
-		'overrideIndicatorColor=122,136,176'
-		'printMarginColor=30,39,64'
+		'matchingTagIndicationColor=44,55,96'
+		'occurrenceIndicationColor=18,66,88'
+		'overrideIndicatorColor=140,155,201'
+		'printMarginColor=44,55,96'
 		'searchResultHighlighting=false'
 		'searchResultIndication=true'
-		'searchResultIndicationColor=27,60,90'
+		'searchResultIndicationColor=18,66,88'
 		'searchResultTextStyle=BOX'
 		'secondaryIPColor=0,184,212'
 		'spellingIndicationColor=255,200,87'
-		'writeOccurrenceIndicationColor=27,60,90'
-		'org.eclipse.ui.editors.stickyLinesSeparatorColor=30,39,64'
+		'writeOccurrenceIndicationColor=18,66,88'
+		'org.eclipse.ui.editors.stickyLinesSeparatorColor=44,55,96'
 }
 
 /* ############################## Workbench ############################## */
 
 IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-ui-themes {
 	preferences:
-		'ACTIVE_HYPERLINK_COLOR=0,229,255'
+		'ACTIVE_HYPERLINK_COLOR=255,47,185'
+		'DECORATIONS_COLOR=140,155,201'
 		'CONFLICTING_COLOR=255,47,185'
-		'CONTENT_ASSIST_BACKGROUND_COLOR=22,27,43'
-		'CONTENT_ASSIST_FOREGROUND_COLOR=214,225,255'
-		'org.eclipse.ui.workbench.INFORMATION_BACKGROUND=22,27,43'
-		'org.eclipse.ui.workbench.INFORMATION_FOREGROUND=214,225,255'
-		'org.eclipse.ui.workbench.HOVER_BACKGROUND=22,27,43'
-		'org.eclipse.ui.workbench.HOVER_FOREGROUND=214,225,255'
+		'CONTENT_ASSIST_BACKGROUND_COLOR=30,37,64'
+		'CONTENT_ASSIST_FOREGROUND_COLOR=226,234,255'
+		'org.eclipse.ui.workbench.INFORMATION_BACKGROUND=30,37,64'
+		'org.eclipse.ui.workbench.INFORMATION_FOREGROUND=226,234,255'
+		'org.eclipse.ui.workbench.HOVER_BACKGROUND=30,37,64'
+		'org.eclipse.ui.workbench.HOVER_FOREGROUND=226,234,255'
 		'org.eclipse.ui.workbench.FORM_HEADING_ERROR_COLOR=255,110,160'
 		'org.eclipse.ui.workbench.FORM_HEADING_WARNING_COLOR=255,200,87'
-		'org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR=122,136,176'
+		'org.eclipse.ui.workbench.FORM_HEADING_INFO_COLOR=140,155,201'
 		'ERROR_COLOR=255,47,185'
-		'HYPERLINK_COLOR=77,159,255'
+		'HYPERLINK_COLOR=0,229,255'
 		'INCOMING_COLOR=57,255,136'
-		'OUTGOING_COLOR=214,225,255'
+		'OUTGOING_COLOR=226,234,255'
 		'RESOLVED_COLOR=57,255,136'
-		'EDITION_COLOR=214,225,255'
+		'EDITION_COLOR=226,234,255'
 		'org.eclipse.search.ui.match.highlight=100,83,51'
 		'org.eclipse.ui.editors.rangeIndicatorColor=4,125,147'
 		'org.eclipse.jface.REVISION_NEWEST_COLOR=57,255,136'
 		'org.eclipse.jface.REVISION_OLDEST_COLOR=255,47,185'
-		'org.eclipse.ui.editors.inlineAnnotationColor=122,136,176'
+		'org.eclipse.ui.editors.inlineAnnotationColor=140,155,201'
 }
 
 /* ############################## Heap status ############################## */
@@ -100,14 +101,14 @@ IEclipsePreferences#org-eclipse-ui:org-eclipse-ui-themes {
 
 IEclipsePreferences#org-eclipse-debug-ui:org-eclipse-ui-themes {
 	preferences:
-		'org.eclipse.debug.ui.consoleBackground=16,20,31'
-		'org.eclipse.debug.ui.outColor=214,225,255'
+		'org.eclipse.debug.ui.consoleBackground=22,28,48'
+		'org.eclipse.debug.ui.outColor=226,234,255'
 		'org.eclipse.debug.ui.inColor=57,255,136'
 		'org.eclipse.debug.ui.errorColor=255,47,185'
 		'org.eclipse.debug.ui.changedDebugElement=255,47,185'
-		'org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND=27,53,80'
-		'org.eclipse.debug.ui.MemoryHistoryKnownColor=214,225,255'
-		'org.eclipse.debug.ui.MemoryHistoryUnknownColor=122,136,176'
+		'org.eclipse.debug.ui.PREF_CHANGED_VALUE_BACKGROUND=14,74,94'
+		'org.eclipse.debug.ui.MemoryHistoryKnownColor=226,234,255'
+		'org.eclipse.debug.ui.MemoryHistoryUnknownColor=140,155,201'
 }
 
 /* Ant colours its build output itself, and org.eclipse.ant.ui binds its dark values
@@ -119,10 +120,10 @@ IEclipsePreferences#org-eclipse-ant-ui:org-eclipse-ui-themes {
 	preferences:
 		'org.eclipse.ant.ui.errorColor=255,47,185'
 		'org.eclipse.ant.ui.warningColor=255,200,87'
-		'org.eclipse.ant.ui.informationColor=214,225,255'
+		'org.eclipse.ant.ui.informationColor=226,234,255'
 		'org.eclipse.ant.ui.verboseColor=57,255,136'
-		'org.eclipse.ant.ui.debugColor=122,136,176'
-		'org.eclipse.ant.ui.textColor=214,225,255'
+		'org.eclipse.ant.ui.debugColor=140,155,201'
+		'org.eclipse.ant.ui.textColor=226,234,255'
 		'org.eclipse.ant.ui.commentsColor=76,90,122'
 		'org.eclipse.ant.ui.tagsColor=255,47,185'
 		'org.eclipse.ant.ui.tagsColor_bold=true'
@@ -130,7 +131,7 @@ IEclipsePreferences#org-eclipse-ant-ui:org-eclipse-ui-themes {
 		'org.eclipse.ant.ui.constantStringsColor_italic=true'
 		'org.eclipse.ant.ui.processingInstructionsColor=168,85,247'
 		'org.eclipse.ant.ui.processingInstructionsColor_bold=true'
-		'org.eclipse.ant.ui.dtdColor=122,136,176'
+		'org.eclipse.ant.ui.dtdColor=140,155,201'
 }
 
 /* ############################## Compare and inline diff ############################## */
@@ -147,7 +148,7 @@ IEclipsePreferences#org-eclipse-ui-editors:com-vogella-themes-compare {
 		'detailedDeletionInlineDiffColor=74,12,46'
 		'org.eclipse.egit.ui.commitEditor.diffAddedColor=11,58,40'
 		'org.eclipse.egit.ui.commitEditor.diffRemovedColor=74,12,46'
-		'TextOccurrenceIndicationColor=27,53,80'
+		'TextOccurrenceIndicationColor=14,74,94'
 }
 
 /* ############################## Manifest, target and generic editors ############################## */
@@ -158,7 +159,7 @@ IEclipsePreferences#org-eclipse-ui-editors:com-vogella-themes-compare {
 
 IEclipsePreferences#org-eclipse-pde-ui:org-eclipse-pde-ui {
 	preferences:
-		'editor.color.default=214,225,255'
+		'editor.color.default=226,234,255'
 		'editor.color.xml_comment=76,90,122'
 		'editor.color.string=57,255,136'
 		'editor.color.string_italic=true'
@@ -171,7 +172,7 @@ IEclipsePreferences#org-eclipse-pde-ui:org-eclipse-pde-ui {
 		'editor.color.header_key=255,47,185'
 		'editor.color.header_key_bold=true'
 		'editor.color.header_osgi=168,85,247'
-		'editor.color.header_assignment=0,229,255'
+		'editor.color.header_assignment=0,240,255'
 		'editor.color.header_assignment_bold=true'
 		'editor.color.header_attributes=255,200,87'
 		'editor.color.header_attributes_italic=true'
@@ -181,12 +182,12 @@ IEclipsePreferences#org-eclipse-pde-ui:org-eclipse-pde-ui {
 
 IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-pde-genericeditor-extension {
 	preferences:
-		'org.eclipse.pde.genericeditor.extension.editor.color.text=214,225,255'
+		'org.eclipse.pde.genericeditor.extension.editor.color.text=226,234,255'
 		'org.eclipse.pde.genericeditor.extension.editor.color.comment=76,90,122'
 		'org.eclipse.pde.genericeditor.extension.editor.color.quote=57,255,136'
 		'org.eclipse.pde.genericeditor.extension.editor.color.tag=255,47,185'
 		'org.eclipse.pde.genericeditor.extension.editor.color.attribute=255,200,87'
-		'org.eclipse.pde.genericeditor.extension.editor.color.header=122,136,176'
+		'org.eclipse.pde.genericeditor.extension.editor.color.header=140,155,201'
 }
 
 /* The XMI tab of the e4 model editor. Its five XML colours were hardcoded light
@@ -195,7 +196,7 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-pde-genericeditor-exten
  * to follow the active theme, and this block is what fills them in for us. */
 IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-e4-tools-emf-ui {
 	preferences:
-		'org.eclipse.e4.tools.emf.ui.color.default=214,225,255'
+		'org.eclipse.e4.tools.emf.ui.color.default=226,234,255'
 		'org.eclipse.e4.tools.emf.ui.color.tag=255,47,185'
 		'org.eclipse.e4.tools.emf.ui.color.string=57,255,136'
 		'org.eclipse.e4.tools.emf.ui.color.comment=76,90,122'
@@ -204,7 +205,7 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-e4-tools-emf-ui {
 
 IEclipsePreferences#org-eclipse-ui-genericeditor:org-eclipse-ui-genericeditor {
 	preferences:
-		'matchingBracketsColor=0,229,255'
+		'matchingBracketsColor=0,240,255'
 }
 
 /* ############################## Mylyn ############################## */
@@ -215,18 +216,18 @@ IEclipsePreferences#org-eclipse-ui-genericeditor:org-eclipse-ui-genericeditor {
 
 IEclipsePreferences#org-eclipse-ui-workbench:org-eclipse-mylyn-tasks-ui {
 	preferences:
-		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled=77,159,255'
-		'org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled=122,136,176'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.scheduled=0,229,255'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.thisweek.scheduled=140,155,201'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.past.scheduled=255,47,185'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.past.due=255,47,185'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.overdue.for.others=255,200,87'
 		'org.eclipse.mylyn.tasks.ui.colors.foreground.today.completed=57,255,136'
-		'org.eclipse.mylyn.tasks.ui.colors.foreground.completed=122,136,176'
-		'org.eclipse.mylyn.tasks.ui.colors.foreground.task.active=0,229,255'
-		'org.eclipse.mylyn.tasks.ui.colors.incoming.background=22,27,43'
-		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.start=22,27,43'
-		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.end=30,39,64'
-		'org.eclipse.mylyn.tasks.ui.color.text.quoted=214,225,255'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.completed=140,155,201'
+		'org.eclipse.mylyn.tasks.ui.colors.foreground.task.active=0,240,255'
+		'org.eclipse.mylyn.tasks.ui.colors.incoming.background=30,37,64'
+		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.start=30,37,64'
+		'org.eclipse.mylyn.tasks.ui.colors.category.gradient.end=44,55,96'
+		'org.eclipse.mylyn.tasks.ui.color.text.quoted=226,234,255'
 }
 
 /* The WikiText markup editor. These values are CSS fragment strings rather than
@@ -254,8 +255,8 @@ IEclipsePreferences#org-eclipse-mylyn-wikitext-ui {
 IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-ide-eclipse-boot-dash {
 	preferences:
 		'org.springframework.ide.eclipse.boot.dash.TextDecorColor=57,255,136'
-		'org.springframework.ide.eclipse.boot.dash.AltTextDecorColor=77,159,255'
-		'org.springframework.ide.eclipse.boot.dash.MutedTextDecorColor=122,136,176'
+		'org.springframework.ide.eclipse.boot.dash.AltTextDecorColor=0,229,255'
+		'org.springframework.ide.eclipse.boot.dash.MutedTextDecorColor=140,155,201'
 }
 
 /* A line highlight rather than text, so it takes the same subdued green as an
@@ -270,11 +271,11 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-tooling-ls-ecli
  * makes that character disappear; this deviates from their values on purpose. */
 IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-ide-eclipse-xterm {
 	preferences:
-		'org.springframework.ide.eclipse.xterm.background=11,15,26'
-		'org.springframework.ide.eclipse.xterm.foreground=214,225,255'
-		'org.springframework.ide.eclipse.xterm.selection=27,53,80'
-		'org.springframework.ide.eclipse.xterm.cursor=214,225,255'
-		'org.springframework.ide.eclipse.xterm.cursorAccent=11,15,26'
+		'org.springframework.ide.eclipse.xterm.background=17,22,42'
+		'org.springframework.ide.eclipse.xterm.foreground=226,234,255'
+		'org.springframework.ide.eclipse.xterm.selection=14,74,94'
+		'org.springframework.ide.eclipse.xterm.cursor=226,234,255'
+		'org.springframework.ide.eclipse.xterm.cursorAccent=17,22,42'
 }
 
 /* ############################## EGit ############################## */
@@ -284,17 +285,17 @@ IEclipsePreferences#org-eclipse-ui-workbench:org-springframework-ide-eclipse-xte
 
 IEclipsePreferences#org-eclipse-ui-workbench:com-vogella-themes-egit {
 	preferences:
-		'org.eclipse.egit.ui.CommitMessageCommentColor=122,136,176'
+		'org.eclipse.egit.ui.CommitMessageCommentColor=140,155,201'
 		'org.eclipse.egit.ui.DiffAddBackgroundColor=11,58,40'
-		'org.eclipse.egit.ui.DiffAddForegroundColor=214,225,255'
-		'org.eclipse.egit.ui.DiffHeadlineBackgroundColor=22,27,43'
-		'org.eclipse.egit.ui.DiffHeadlineForegroundColor=214,225,255'
-		'org.eclipse.egit.ui.DiffHunkBackgroundColor=27,53,80'
-		'org.eclipse.egit.ui.DiffHunkForegroundColor=214,225,255'
+		'org.eclipse.egit.ui.DiffAddForegroundColor=226,234,255'
+		'org.eclipse.egit.ui.DiffHeadlineBackgroundColor=30,37,64'
+		'org.eclipse.egit.ui.DiffHeadlineForegroundColor=226,234,255'
+		'org.eclipse.egit.ui.DiffHunkBackgroundColor=14,74,94'
+		'org.eclipse.egit.ui.DiffHunkForegroundColor=226,234,255'
 		'org.eclipse.egit.ui.DiffRemoveBackgroundColor=74,12,46'
 		'org.eclipse.egit.ui.DiffRemoveForegroundColor=255,214,238'
-		'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=16,20,31'
-		'org.eclipse.egit.ui.IgnoredResourceForegroundColor=122,136,176'
-		'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=16,20,31'
-		'org.eclipse.egit.ui.UncommittedChangeForegroundColor=77,159,255'
+		'org.eclipse.egit.ui.IgnoredResourceBackgroundColor=22,28,48'
+		'org.eclipse.egit.ui.IgnoredResourceForegroundColor=140,155,201'
+		'org.eclipse.egit.ui.UncommittedChangeBackgroundColor=22,28,48'
+		'org.eclipse.egit.ui.UncommittedChangeForegroundColor=0,229,255'
 }

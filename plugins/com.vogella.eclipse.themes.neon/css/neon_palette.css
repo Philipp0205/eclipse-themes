@@ -11,9 +11,11 @@
 
 /* AI Neon palette.
  *
- * Large surfaces stay near black; the cyan and magenta accents are spent on
- * the active tab keyline, focus borders, the caret area, selections, progress
- * and active view titles. A theme where everything glows is unreadable.
+ * Large surfaces are a deep blue-violet, dark enough for the accents to glow
+ * but lifted off black so the chrome reads as colour rather than void. The cyan
+ * and magenta accents are spent on the active tab keyline and its title, links,
+ * selections, progress and the caret area. A theme where everything glows is
+ * unreadable.
  *
  * This file registers the shared '#com-vogella-themes-*' tokens and redefines the
  * platform's '#org-eclipse-ui-workbench-*' color definitions, so the imported
@@ -68,42 +70,42 @@ ThemesExtension { color-definition:
 }
 
 ColorDefinition#com-vogella-themes-BG_WINDOW {
-	color: #0A0E17;
+	color: #0F1424;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=BG_WINDOW');
 }
 ColorDefinition#com-vogella-themes-BG_PART {
-	color: #10141F;
+	color: #161C30;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=BG_PART');
 }
 ColorDefinition#com-vogella-themes-BG_EDITOR {
-	color: #0B0F1A;
+	color: #11162A;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=BG_EDITOR');
 }
 ColorDefinition#com-vogella-themes-BG_RAISED {
-	color: #161B2B;
+	color: #1E2540;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=BG_RAISED');
 }
 ColorDefinition#com-vogella-themes-BORDER {
-	color: #1E2740;
+	color: #2C3760;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=BORDER');
 }
 ColorDefinition#com-vogella-themes-FG {
-	color: #D6E1FF;
+	color: #E2EAFF;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=FG');
 }
 ColorDefinition#com-vogella-themes-FG_MUTED {
-	color: #7A88B0;
+	color: #8C9BC9;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=FG_MUTED');
 }
 ColorDefinition#com-vogella-themes-ACCENT {
-	color: #00E5FF;
+	color: #00F0FF;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=ACCENT');
 }
@@ -113,7 +115,7 @@ ColorDefinition#com-vogella-themes-ACCENT_2 {
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=ACCENT_2');
 }
 ColorDefinition#com-vogella-themes-SELECTION_BG {
-	color: #1B3550;
+	color: #0E4A5E;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=SELECTION_BG');
 }
@@ -123,7 +125,7 @@ ColorDefinition#com-vogella-themes-SELECTION_FG {
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=SELECTION_FG');
 }
 ColorDefinition#com-vogella-themes-LINK {
-	color: #4D9FFF;
+	color: #00E5FF;
 	category: '#org-eclipse-ui-presentation-default';
 	label: url('platform:/plugin/com.vogella.eclipse.themes.neon?message=LINK');
 }
@@ -145,34 +147,34 @@ ColorDefinition#com-vogella-themes-SUCCESS {
 
 /* Platform definitions recolored so inherited platform rules follow the palette */
 
-ColorDefinition#org-eclipse-ui-workbench-DARK_BACKGROUND { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-DARK_FOREGROUND { color: #D6E1FF; }
+ColorDefinition#org-eclipse-ui-workbench-DARK_BACKGROUND { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-DARK_FOREGROUND { color: #E2EAFF; }
 
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #1E2740; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR { color: #1E2740; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR { color: #1E2740; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_TEXT_COLOR { color: #7A88B0; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #7A88B0; }
-ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_SELECTED_TEXT_COLOR { color: #D6E1FF; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #2C3760; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR { color: #2C3760; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR { color: #2C3760; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_TEXT_COLOR { color: #8C9BC9; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #8C9BC9; }
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_SELECTED_TEXT_COLOR { color: #E2EAFF; }
 
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START { color: #10141F; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END { color: #10141F; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #1E2740; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR { color: #00E5FF; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR { color: #00E5FF; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_TEXT_COLOR { color: #7A88B0; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #7A88B0; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR { color: #D6E1FF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START { color: #161C30; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END { color: #161C30; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR { color: #2C3760; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR { color: #00F0FF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR { color: #00F0FF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_TEXT_COLOR { color: #8C9BC9; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR { color: #8C9BC9; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR { color: #00F0FF; }
 
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_END { color: #0A0E17; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_TEXT_COLOR { color: #D6E1FF; }
-ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR { color: #D6E1FF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_END { color: #0F1424; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_TEXT_COLOR { color: #E2EAFF; }
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR { color: #E2EAFF; }
 
-ColorDefinition#org-eclipse-ui-workbench-LINK_COLOR { color: #4D9FFF; }
+ColorDefinition#org-eclipse-ui-workbench-LINK_COLOR { color: #00E5FF; }
