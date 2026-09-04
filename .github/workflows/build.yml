@@ -23,6 +23,15 @@ jobs:
           cache: maven
       - name: Check token references
         run: ./releng/check-tokens.sh
+      - name: Check the GTK palettes against the palette stylesheets
+        run: ./releng/check-gtk-palettes.sh
+      # GTK skips a rule it cannot parse instead of failing, so a misspelled property
+      # would only show as a widget that kept the desktop theme's colour.
+      - name: Check the GTK stylesheet parses
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y python3-gi gir1.2-gtk-3.0 xvfb
+          xvfb-run -a ./releng/check-gtk-stylesheet.py
       # A throwaway key, so that the signing step of the release is exercised on
       # every build without the release key ever leaving the release workflow.
       - name: Prepare a throwaway signing key
