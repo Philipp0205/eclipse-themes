@@ -21,8 +21,12 @@
  * platform widget rules follow this palette without being rewritten.
  */
 
-/* SELECTION_BG, ERROR, WARNING and SUCCESS carry no CSS rule: the engine has no
- * property for them. They are the source the preference sheet literals repeat. */
+/* ERROR, WARNING and SUCCESS carry no CSS rule: the e4 engine has no property for
+ * them. They are the source the preference sheet literals repeat.
+ * SELECTION_BG and SELECTION_FG have no e4 property either, and reach the widgets
+ * through com.vogella.eclipse.themes.gtk, whose stylesheet GTK's own CSS engine
+ * loads. Their literals are repeated in the preference sheet as well, for the
+ * editors and viewers that read the preference rather than being painted. */
 ThemesExtension { color-definition:
     '#com-vogella-themes-BG_WINDOW',
     '#com-vogella-themes-BG_PART',
