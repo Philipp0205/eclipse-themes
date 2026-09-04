@@ -33,6 +33,9 @@ for x in range(x0,x1):
 Compare the result against the palette, in RGB, not by name.
 `(33,34,44)` is BG_WINDOW and `(40,42,54)` is BG_PART, and a strip that should be one and is the other is the whole bug report.
 
+Take the modal colour along the row rather than one sample from its middle, because a single sample lands on an antialiased glyph as often as not.
+That error does not look like noise, it looks like a finding: the five dark palettes came out about a tenth lighter than `SELECTION_BG` and One Light about a tenth darker, which reads as the desktop theme blending something over the selection, and is only the text bleeding into one pixel.
+
 Two traps.
 A widget print can be taken before GTK has repainted, so a first capture that looks unchanged is not evidence; take a second one.
 A part behind another tab is not rendered at all and the capture is refused, so bring it forward first, with `eclipse_select_tab` for a page inside a multi page editor.
@@ -133,6 +136,8 @@ And a property that changes a node's box, `border-width` on the `check` indicato
 One trap that has nothing to do with GTK and cost a round trip anyway.
 The build resolves against `JavaSE-25` and the IDE running the result may be on anything from `JavaSE-17` up, so the bytecode version is not the build's to choose: a class file 69 bundle on a Java 21 Eclipse fails with `UnsupportedClassVersionError` at early startup, which looks exactly like the GTK layer being absent.
 `common` therefore pins `JavaSE-17` three times, once per consumer, and all three have to move together: `Bundle-RequiredExecutionEnvironment` for p2, `.settings/org.eclipse.jdt.core.prefs` for JDT, and `tycho-compiler-plugin`'s `release` in its own `pom.xml`, because the parent's `executionEnvironment` would otherwise decide it.
+The JDT half of that only counts once the IDE has read the file, and a workspace with auto refresh off never does after a checkout that added it, so the project keeps building at the workspace default and the pin looks like it did not land.
+Check the output rather than the settings: `od -An -t u1 -j 6 -N 2` on a class file in `bin` prints `61` for `JavaSE-17` and `69` for a workspace defaulting to 25.
 
 Measuring here does not need an IDE, which is the one part of this repository that can be checked without one.
 Drive `GtkStyleProvider` against real SWT widgets under `xvfb-run`, read the pixels back with `GC.copyArea` into an `Image`, and compare against the palette in RGB.
