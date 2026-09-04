@@ -9,7 +9,7 @@ No CSS theme can recolor anything drawn by the operating system or by native too
 SWT renders some of these itself depending on version and platform settings, so what exactly stays native can shift between releases.
 
 On GTK these are no longer left alone, but they are still not reached from CSS.
-`com.vogella.eclipse.themes.gtk` writes a second stylesheet for GTK's own engine and loads it into a style provider on the Eclipse display, which is a different mechanism with a different set of rules; see [platform-styling-bugs.md](platform-styling-bugs.md) and the AGENTS.md section on it.
+`com.vogella.eclipse.themes.common` writes a second stylesheet for GTK's own engine and loads it into a style provider on the Eclipse display, which is a different mechanism with a different set of rules; see [platform-styling-bugs.md](platform-styling-bugs.md) and the AGENTS.md section on it.
 What stays out of reach on any platform is the window decorations, which belong to the window manager.
 
 ## Tree, table and list selection colors
@@ -28,7 +28,7 @@ String css = "treeview {background-color: " + ... + ";}\n"
 
 `COLOR_LIST_SELECTION` is read off the desktop theme during `Device` init, so the more completely a theme colours a tree the more certainly its selection is the desktop accent.
 That is what makes this unreachable from CSS rather than merely unsupported, and it is why the fix had to be a GTK style provider at a priority above the one SWT installs that rule at.
-Handled on GTK in `plugins/com.vogella.eclipse.themes.gtk/css/gtk.css`; still open on Windows and macOS.
+Handled on GTK in `plugins/com.vogella.eclipse.themes.common/css/gtk.css`; still open on Windows and macOS.
 
 ## Preference based colors are written, not resolved live
 

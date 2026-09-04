@@ -94,7 +94,7 @@ the theme engine. SWT's own theming-fix CSS says colour information does not bel
 
 ### Resolved here by owning the provider
 
-The second of those two asks is what `com.vogella.eclipse.themes.gtk` does, with the theme
+The second of those two asks is what `com.vogella.eclipse.themes.common` does, with the theme
 owning the provider instead of the engine. It creates one `GtkCssProvider`, attaches it to the
 Eclipse display and reloads it whenever the active theme changes, which is the part
 `gtk.cssFile` cannot do.

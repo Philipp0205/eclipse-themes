@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <!-- The only trigger that activates this bundle's code: the stylesheets around it
+        are read by the CSS engine and never load a class. It doubles as the off
+        switch, since Preferences > General > Startup and Shutdown lists every early
+        startup contribution with a check box.
+        GtkThemeStartup returns immediately on anything but GTK, so this costs a class
+        load and nothing else on Windows and macOS. -->
+   <extension point="org.eclipse.ui.startup">
+      <startup class="com.vogella.eclipse.themes.gtk.GtkThemeStartup"/>
+   </extension>
+</plugin>

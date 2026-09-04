@@ -106,7 +106,9 @@ The main repository has xz index files switched off because the mirror step woul
 
 ## A third engine, GTK's own
 
-`plugins/com.vogella.eclipse.themes.gtk` is the one bundle here with Java in it, and the only place a stylesheet is written for GTK's CSS engine rather than the e4 one.
+`plugins/com.vogella.eclipse.themes.common` is the one bundle here with Java in it, and its `css/gtk.css` is the only stylesheet written for GTK's CSS engine rather than the e4 one.
+It started as a GTK only bundle of its own gated by `Eclipse-PlatformFilter: (osgi.ws=gtk)`, which is the tidier shape and the wrong one, and the reason is worth keeping: a bundle nobody has heard of is absent from the workspace after a checkout, absent from an Eclipse Application launch configuration set to "plug-ins selected below", and reachable from an installed theme only through an optional feature include p2 may drop, and all three look identical from the outside, namely a theme that applies while these widgets do not change.
+Every theme requires `common` and imports its stylesheets, so a theme that renders at all proves this code is loaded; the window system is checked at runtime in `GtkThemeStartup.earlyStartup` instead.
 It exists because SWT hands a short list of widgets to GTK and gives the e4 engine no property that reaches them, so a desktop GTK theme paints through an otherwise complete theme.
 `css/gtk.css` is a template: `GtkStyleSheet` substitutes the `'#com-vogella-themes-*'` tokens, deliberately spelled the repository's way so `check-tokens.sh` holds it to the same contract as `structure.css`, and `GtkStyleProvider` loads the result into one provider attached to the display.
 

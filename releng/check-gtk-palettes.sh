@@ -16,7 +16,7 @@ cd "$(dirname "$0")/.."
 # Byte order throughout, so that 'sort' and 'comm' agree on where ACCENT_2 goes.
 export LC_ALL=C
 
-palettes=plugins/com.vogella.eclipse.themes.gtk/palettes
+palettes=plugins/com.vogella.eclipse.themes.common/palettes
 write=false
 [ "${1:-}" = "--write" ] && write=true
 
@@ -94,7 +94,7 @@ done
 # check-tokens.sh already proves the token is declared by all six palette
 # stylesheets; this proves it survived the copy.
 used=$(grep -oh "'#com-vogella-themes-[A-Za-z_0-9]*'" \
-	plugins/com.vogella.eclipse.themes.gtk/css/gtk.css \
+	plugins/com.vogella.eclipse.themes.common/css/gtk.css \
 	| sed "s/.*#com-vogella-themes-\([A-Za-z_0-9]*\).*/\1/" | sort -u)
 if ! $write; then
 	for file in "${expected[@]}"; do

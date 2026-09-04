@@ -63,6 +63,18 @@ import org.osgi.service.event.EventHandler;
  * on the same code path and cannot be opted out of. Whichever arrives first wins and
  * the other is a no-op, because the active id is remembered.
  * <p>
+ * <b>Why this sits in the common bundle.</b> It was a GTK only bundle of its own at
+ * first, gated by {@code Eclipse-PlatformFilter: (osgi.ws=gtk)}, which is the tidier
+ * shape and the wrong one. A bundle nobody has ever heard of is a bundle that is not
+ * in the workspace after a checkout, not in an Eclipse Application launch
+ * configuration set to "plug-ins selected below", and reachable from an installed
+ * theme only through an optional feature include that p2 is free to drop. All three
+ * failure modes look identical from the outside: the theme applies and these widgets
+ * do not change. Every theme already requires
+ * {@code com.vogella.eclipse.themes.common} and imports its stylesheets, so a theme
+ * that renders at all proves this bundle is resolved and active. The window system is
+ * a runtime question here instead, checked in {@link #earlyStartup()}.
+ * <p>
  * Being an {@code org.eclipse.ui.startup} contribution also gives the layer an off
  * switch that costs no code and no preference page of its own: clearing this bundle
  * under Preferences > General > Startup and Shutdown stops it from ever running.
@@ -99,6 +111,12 @@ public final class GtkThemeStartup implements IStartup, EventHandler {
 
 	@Override
 	public void earlyStartup() {
+		// This lives in the bundle every theme already requires rather than in a GTK
+		// only bundle of its own, so the window system is a runtime question rather than
+		// an Eclipse-PlatformFilter. See the class comment.
+		if (!Platform.WS_GTK.equals(Platform.getWS())) {
+			return;
+		}
 		if (!Boolean.parseBoolean(System.getProperty(ENABLED, "true"))) {
 			return;
 		}
