@@ -73,11 +73,22 @@ public final class GtkThemeStartup implements IStartup, EventHandler {
 			return;
 		}
 		display = PlatformUI.getWorkbench().getDisplay();
-		display.asyncExec(() -> {
+		display.asyncExec(this::start);
+	}
+
+	private void start() {
+		try {
+			// Constructing this loads SWT's GTK bindings, so it can fail the same way
+			// writing the sheet can, and outside a try it would surface as the workbench's
+			// unhandled event loop exception dialog rather than as a log entry.
 			provider = new GtkStyleProvider();
-			listenForThemeChanges();
-			follow(activeThemeId());
-		});
+		} catch (RuntimeException | LinkageError e) {
+			unsupported = true;
+			log.warn("No GTK bindings, so the widgets GTK owns keep the desktop theme's colours", e);
+			return;
+		}
+		listenForThemeChanges();
+		follow(activeThemeId());
 	}
 
 	/**

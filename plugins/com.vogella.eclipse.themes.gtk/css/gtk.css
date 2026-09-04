@@ -106,23 +106,24 @@ label selection {
  * to the palette value. The indicator is a node of its own, so naming it costs
  * nothing anywhere else, which is what the SWT side of the fix is about too.
  *
- * FG for the border rather than BORDER or FG_MUTED. The indicator's fill separates
- * from the page by 1.09:1 to 1.21:1, so the border alone carries it, and it has to
+ * FG for the outline rather than BORDER or FG_MUTED. The indicator's fill separates
+ * from the page by 1.09:1 to 1.21:1, so the outline alone carries it, and it has to
  * clear the 3:1 of WCAG 1.4.11 against both. BORDER manages 1.25:1 to 1.56:1
  * against the page and FG_MUTED 1.96:1 in nord; FG is the one token that clears it
  * in all six palettes, 7.45:1 at worst against the page and 6.39:1 against the
- * fill. A one pixel outline is a cheap price for an indicator that can be seen. */
-/* An inset box-shadow for the outline, not a border, and the difference was
- * measured. 'border-color' alone paints nothing: the interior came out BG_RAISED and
- * the edge stayed a two pixel blend into the page, because the desktop theme draws
- * the outline from a border-image and leaves border-color nothing to recolour.
+ * fill. A one pixel ring is a cheap price for an indicator that can be seen.
+ *
+ * An inset box-shadow draws that ring, not a border, and the difference was measured
+ * too. 'border-color' alone paints nothing, because the desktop theme draws the
+ * outline from a border-image and leaves border-color nothing to recolour: the
+ * interior came out BG_RAISED and the edge stayed a two pixel blend into the page.
  * Adding 'border-style: solid; border-width: 1px' does paint it, and grows the
- * indicator by a pixel on each side, which pushed the label of every check box in
- * the IDE up against its box; a provider change repaints but does not re-lay out, so
- * that stays wrong until something else resizes the page. An inset shadow draws the
- * same one pixel ring inside the existing box and takes no part in sizing: measured
- * against the unstyled indicator, the box still spans the same pixels and the label
- * still starts on the same one. */
+ * indicator by a pixel on each side, which closed the gap between every check box in
+ * the IDE and its label; a provider change repaints but does not re-lay out, so that
+ * would stay wrong until something else resized the page. An inset shadow draws the
+ * same ring inside the existing box and takes no part in sizing: measured against
+ * the unstyled indicator, the box spans the same pixels and the label starts on the
+ * same one. */
 check,
 radio {
 	background-color: '#com-vogella-themes-BG_RAISED';
