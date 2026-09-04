@@ -1,0 +1,393 @@
+/*******************************************************************************
+ * Copyright (c) 2026 vogella GmbH and others.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+
+/* The GTK stylesheet, for GTK's own CSS engine rather than the e4 one.
+ *
+ * This is a TEMPLATE, not a stylesheet the e4 engine ever loads. GtkStyleSheet
+ * replaces every '#com-vogella-themes-*' token with the active theme's value and
+ * hands the result to a GtkCssProvider attached to the Eclipse display alone. The
+ * token spelling is the repository's, on purpose: releng/check-tokens.sh treats
+ * this file as one more consumer and so guarantees that every token used here is
+ * defined and registered by all six palettes.
+ *
+ * WHAT BELONGS IN HERE, and it is a short list.
+ *
+ * SWT delegates a handful of widgets to GTK and offers the e4 engine no property
+ * that reaches them, which is why a desktop GTK theme paints through an otherwise
+ * complete Eclipse theme. Those widgets, and only those, belong here.
+ *
+ * WHAT MUST NEVER BE IN HERE.
+ *
+ * A declaration that SWT also emits. The provider is attached at
+ * GTK_STYLE_PROVIDER_PRIORITY_USER, and GTK resolves across providers by priority
+ * before specificity, so anything named here outranks the per widget CSS that
+ * Control.setBackgroundGdkRGBA and its siblings install at
+ * GTK_STYLE_PROVIDER_PRIORITY_APPLICATION. Measured: a 'treeview.view:selected'
+ * rule at 800 on the screen resolves over a 'treeview:selected' rule at 600 on the
+ * widget's own style context, and the same rule at 201 loses to it. USER is
+ * therefore the only priority at which this file does anything at all, and it is
+ * also what makes a careless rule here silently disable a whole area of
+ * structure.css.
+ *
+ * So: no bare 'label', 'button', 'entry', 'treeview', 'widget' or 'window' rule.
+ * SWT emits '* { background-color }' and '* { color }' on the style context of
+ * every one of those, from whatever the e4 cascade resolved, and a rule here would
+ * flatten the BG_WINDOW, BG_PART, BG_EDITOR and BG_RAISED distinctions that
+ * structure.css spends six hundred lines making. Selectors here are limited to
+ * three kinds that SWT provably never emits:
+ *  - widget states, ':selected', ':hover', ':disabled', ':checked'
+ *  - node types SWT has no colour API for at all: menus, tooltips, scrollbars,
+ *    the 'check' and 'radio' indicator nodes, the calendar
+ *  - node types that only exist inside a native dialog, where no SWT widget lives
+ *
+ * Node names were read off GTK 3.24 widget paths rather than guessed. Unlike the
+ * e4 engine, GTK skips a rule it does not understand instead of dropping the
+ * sheet, so a GTK 4 only name costs a parser warning and nothing else.
+ */
+
+/* ############################## Selection ############################## */
+
+/* The oldest complaint about these themes, and the one no stylesheet could answer:
+ * a selected row came out in the desktop accent colour, Yaru orange on Ubuntu,
+ * inside an otherwise near black IDE. There is no 'swt-selection-*' property in
+ * org.eclipse.e4.ui.css.swt, and Tree.setBackgroundGdkRGBA actively re-asserts
+ * COLOR_LIST_SELECTION, which SWT read off the desktop theme during Device init:
+ *
+ *     treeview {background-color: <the theme's colour>;}
+ *     treeview:selected {background-color: <the desktop accent>;}
+ *
+ * Both halves of that land at PRIORITY_APPLICATION on the tree's own style
+ * context. Naming only the selected state here leaves the first line alone, so the
+ * unselected rows keep whichever surface the e4 cascade gave them, and overrides
+ * the second. */
+treeview.view:selected,
+treeview.view:selected:focus,
+treeview.view:selected:hover,
+list row:selected,
+list row:selected:focus,
+iconview.view:selected,
+iconview.view:selected:focus,
+flowbox flowboxchild:selected {
+	background-color: '#com-vogella-themes-SELECTION_BG';
+	background-image: none;
+	color: '#com-vogella-themes-SELECTION_FG';
+}
+
+/* Selected text in a Text, a Combo or a native entry. Combo.updateCss re-asserts
+ * COLOR_LIST_SELECTION here for the same reason Tree does, and says so in a
+ * comment: setting '*' also hits the selection, so it forces the colours back to
+ * "reasonable ones", meaning the desktop's. */
+entry selection,
+entry selection:focus,
+spinbutton selection,
+textview text selection,
+label selection {
+	background-color: '#com-vogella-themes-SELECTION_BG';
+	color: '#com-vogella-themes-SELECTION_FG';
+}
+
+/* ############################## Check box and radio indicators ############################## */
+
+/* docs/styling-limits.md recorded this as needing a change in SWT.
+ * Button.setBackgroundGdkRGBA injects '* { background-color: <page colour> }' on
+ * the button's style context, and the universal selector reaches the 'check' and
+ * 'radio' indicator nodes along with the label, so the indicator's interior is
+ * painted over with the page colour and only its border survives. Measured on GTK
+ * 3.24: with Adwaita alone the indicator resolves to #FFFFFF, with SWT's rule at
+ * 600 it resolves to the page colour, and with the rule below at 800 it resolves
+ * to the palette value. The indicator is a node of its own, so naming it costs
+ * nothing anywhere else, which is what the SWT side of the fix is about too.
+ *
+ * FG for the outline rather than BORDER or FG_MUTED. The indicator's fill separates
+ * from the page by 1.09:1 to 1.21:1, so the outline alone carries it, and it has to
+ * clear the 3:1 of WCAG 1.4.11 against both. BORDER manages 1.25:1 to 1.56:1
+ * against the page and FG_MUTED 1.96:1 in nord; FG is the one token that clears it
+ * in all six palettes, 7.45:1 at worst against the page and 6.39:1 against the
+ * fill. A one pixel ring is a cheap price for an indicator that can be seen.
+ *
+ * An inset box-shadow draws that ring, not a border, and the difference was measured
+ * too. 'border-color' alone paints nothing, because the desktop theme draws the
+ * outline from a border-image and leaves border-color nothing to recolour: the
+ * interior came out BG_RAISED and the edge stayed a two pixel blend into the page.
+ * Adding 'border-style: solid; border-width: 1px' does paint it, and grows the
+ * indicator by a pixel on each side, which closed the gap between every check box in
+ * the IDE and its label; a provider change repaints but does not re-lay out, so that
+ * would stay wrong until something else resized the page. An inset shadow draws the
+ * same ring inside the existing box and takes no part in sizing: measured against
+ * the unstyled indicator, the box spans the same pixels and the label starts on the
+ * same one. */
+check,
+radio {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	background-image: none;
+	box-shadow: inset 0 0 0 1px '#com-vogella-themes-FG';
+	color: '#com-vogella-themes-FG';
+}
+
+/* ACCENT carries the checked state, the same colour the active tab keyline and the
+ * progress fill already use, and BG_WINDOW draws the mark on top of it: 3.22:1 at
+ * worst, in One Light, which clears the 3:1 a non text indicator needs. FG on
+ * ACCENT would be 1.17:1 in AI Neon and invisible. */
+check:checked,
+check:indeterminate,
+radio:checked,
+radio:indeterminate {
+	background-color: '#com-vogella-themes-ACCENT';
+	background-image: none;
+	/* No ring: measured solid ACCENT from edge to edge, which is the state reading as
+	 * filled rather than as outlined and is what tells the two apart at a glance. */
+	box-shadow: none;
+	color: '#com-vogella-themes-BG_WINDOW';
+}
+
+check:disabled,
+radio:disabled {
+	background-color: '#com-vogella-themes-BG_PART';
+	background-image: none;
+	box-shadow: inset 0 0 0 1px '#com-vogella-themes-FG_MUTED';
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+/* ############################## Scrollbars ############################## */
+
+/* A transparent trough rather than a palette colour. A scrollbar sits on whichever
+ * surface its scrolled widget has, and that is BG_PART in a view, BG_EDITOR in an
+ * editor and BG_RAISED in a dialog; GTK cannot tell which, and a fixed colour
+ * would draw a strip of the wrong shade down the side of two of the three. Letting
+ * the surface show through gets all three right for free.
+ *
+ * The slider is FG_MUTED and brightens to FG under the pointer. FG_MUTED separates
+ * from the part surface by 1.96:1 in nord and up to 6.15:1 elsewhere, so it is not
+ * a 3:1 contrast for the resting state; every desktop theme draws a scrollbar at
+ * about that ratio, and the hover state, 7.45:1 at worst, is what has to be
+ * findable. Recorded rather than hidden. */
+scrollbar,
+scrollbar trough,
+scrollbar trough:hover {
+	background-color: transparent;
+	background-image: none;
+	border-color: transparent;
+}
+
+scrollbar slider {
+	background-color: '#com-vogella-themes-FG_MUTED';
+	border-color: transparent;
+}
+
+scrollbar slider:hover,
+scrollbar slider:active {
+	background-color: '#com-vogella-themes-FG';
+}
+
+scrollbar slider:disabled {
+	background-color: transparent;
+}
+
+/* ############################## Scales ############################## */
+
+/* A Scale is a GtkScale, whose trough, filled part and handle are nodes of their own
+ * with no SWT colour API between them. What SWT does emit,
+ * '* { background-color: <the surface> }' from the e4 cascade, reaches all three at
+ * once, so a Scale on a themed page comes out as a flat band the colour of the page
+ * with nothing in it to grab. Naming the three nodes puts it back: the same
+ * BORDER trough and ACCENT fill the ProgressBar rule in structure.css uses, and an FG
+ * handle so the thing the pointer is looking for is the brightest part of it.
+ * An SWT Slider is a GtkScrollbar and is covered by the scrollbar rules above. */
+scale trough {
+	background-color: '#com-vogella-themes-BORDER';
+	background-image: none;
+	border-color: transparent;
+}
+
+scale highlight,
+scale trough highlight {
+	background-color: '#com-vogella-themes-ACCENT';
+	background-image: none;
+}
+
+scale slider {
+	background-color: '#com-vogella-themes-FG';
+	background-image: none;
+	border-color: '#com-vogella-themes-BORDER';
+}
+
+scale trough:disabled,
+scale slider:disabled {
+	background-color: '#com-vogella-themes-FG_MUTED';
+	background-image: none;
+}
+
+/* ############################## Menus ############################## */
+
+/* SWT has no colour API for Menu or MenuItem on any platform, and the e4 engine
+ * has no handler for either, so the menu bar and every context menu in the IDE are
+ * painted by GTK from the desktop theme and nothing in a theme could change it.
+ *
+ * The bar is window chrome and takes BG_WINDOW, to sit with the trim toolbars
+ * around it. A drop down is a raised surface and takes BG_RAISED, the same shade
+ * content assist and the other popups use. */
+menubar {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	background-image: none;
+	color: '#com-vogella-themes-FG';
+}
+
+/* 'popover' and its 'contents' node are the GTK 4 spelling of the same thing.
+ * Combo.updateCss emits 'menu { background: <the combo background> }' for the
+ * drop down list of a read only Combo, which is BG_RAISED through the Combo rule
+ * in structure.css, so this agrees with it rather than overriding it. */
+menu,
+.context-menu,
+popover.background,
+popover.background contents {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	background-image: none;
+	border-color: '#com-vogella-themes-BORDER';
+	color: '#com-vogella-themes-FG';
+}
+
+menubar > menuitem,
+menu menuitem,
+popover.background modelbutton {
+	background-color: transparent;
+	background-image: none;
+	color: '#com-vogella-themes-FG';
+}
+
+menubar > menuitem:hover,
+menu menuitem:hover,
+popover.background modelbutton:hover {
+	background-color: '#com-vogella-themes-SELECTION_BG';
+	background-image: none;
+	color: '#com-vogella-themes-SELECTION_FG';
+}
+
+menuitem:disabled,
+menuitem:disabled label,
+popover.background modelbutton:disabled {
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+/* Scoped to a menu on purpose. A bare 'separator' rule would also reach the
+ * GtkSeparator behind an SWT ToolItem separator, and the rule that follows from
+ * ToolItem.updateStyle returning early for SWT.SEPARATOR is that a separator
+ * always shows its ToolBar's colour straight through: giving it a line of its own
+ * would put a visible bar across every toolbar in the IDE. */
+menu separator,
+popover.background separator {
+	background-color: '#com-vogella-themes-BORDER';
+	background-image: none;
+}
+
+/* ############################## Tooltips ############################## */
+
+/* Control.setToolTipText goes to gtk_widget_set_tooltip_text, so a hover tip is a
+ * GTK tooltip window with no SWT widget in it and no e4 selector over it. The
+ * SWT ToolTip balloon is a Shell instead, node 'window', which structure.css
+ * already reaches and this file deliberately leaves alone. */
+tooltip,
+tooltip.background {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	background-image: none;
+	border-color: '#com-vogella-themes-BORDER';
+	color: '#com-vogella-themes-FG';
+}
+
+tooltip label,
+tooltip.background label {
+	background-color: transparent;
+	color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Calendar ############################## */
+
+/* A DateTime with SWT.CALENDAR is a GtkCalendar, which draws its own grid and has
+ * no SWT colour API beyond the widget background. */
+calendar {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	background-image: none;
+	border-color: '#com-vogella-themes-BORDER';
+	color: '#com-vogella-themes-FG';
+}
+
+calendar:selected {
+	background-color: '#com-vogella-themes-SELECTION_BG';
+	background-image: none;
+	color: '#com-vogella-themes-SELECTION_FG';
+}
+
+calendar.header,
+calendar.button {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	background-image: none;
+	color: '#com-vogella-themes-FG';
+}
+
+calendar:disabled,
+calendar.day-name {
+	color: '#com-vogella-themes-FG_MUTED';
+}
+
+/* ############################## Native dialogs ############################## */
+
+/* Shell always calls gtk_window_new(GTK_WINDOW_TOPLEVEL), so the 'dialog' node
+ * appears for GTK's own dialogs and for nothing else: the file, print, colour and
+ * font choosers and a MessageBox. No SWT widget lives inside one, no e4 selector
+ * reaches one, and until now they opened in the desktop theme in the middle of a
+ * themed IDE. Because the subtree holds no SWT widgets, the container and leaf
+ * rules that are banned everywhere else in this file are safe here. */
+dialog,
+messagedialog,
+dialog > box,
+messagedialog > box,
+filechooser,
+filechooser > box,
+colorchooser,
+fontchooser,
+printdialog {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	background-image: none;
+	color: '#com-vogella-themes-FG';
+}
+
+filechooser treeview.view,
+filechooser list,
+fontchooser treeview.view,
+fontchooser list,
+placessidebar.sidebar,
+placessidebar.sidebar list {
+	background-color: '#com-vogella-themes-BG_PART';
+	background-image: none;
+	color: '#com-vogella-themes-FG';
+}
+
+filechooser entry,
+filechooser button,
+fontchooser entry,
+fontchooser button,
+colorchooser button,
+dialog > box button,
+messagedialog > box button,
+printdialog entry,
+printdialog button {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	background-image: none;
+	border-color: '#com-vogella-themes-BORDER';
+	color: '#com-vogella-themes-FG';
+}
+
+filechooser paned > separator,
+filechooser .pathbar,
+printdialog notebook header {
+	background-color: '#com-vogella-themes-BG_WINDOW';
+	background-image: none;
+	color: '#com-vogella-themes-FG';
+}

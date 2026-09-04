@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<!-- Bound to the JavaSE-17 execution environment rather than to the workspace
+	     default JRE, so the project's Java level comes from the manifest's
+	     Bundle-RequiredExecutionEnvironment and not from whatever the workspace happens
+	     to default to. A workspace defaulting to 25 built this bundle to class file 69,
+	     which an Eclipse Application launch on a Java 21 JRE then refused to load. -->
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

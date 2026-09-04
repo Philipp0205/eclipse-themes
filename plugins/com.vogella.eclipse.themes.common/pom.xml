@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.vogella.eclipse.themes</groupId>
+    <artifactId>com.vogella.eclipse.themes.parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>com.vogella.eclipse.themes.common</artifactId>
+  <packaging>eclipse-plugin</packaging>
+  <name>[bundle] vogella Themes, shared stylesheets and the GTK layer</name>
+
+  <!-- The only bundle here with Java in it, and the only one that cares what the
+       compiler emits. The parent sets the target platform's execution environment to
+       JavaSE-25, which would otherwise decide the bytecode version too, and a class
+       file 69 bundle cannot be loaded by an Eclipse running on Java 21. That is not
+       hypothetical: it was reported from an Eclipse Application launch on a Java 21
+       JRE, where the theme applied and the GTK layer failed with
+       UnsupportedClassVersionError. Nothing in the source needs more than 17.
+       The manifest's Bundle-RequiredExecutionEnvironment and the JDT settings beside
+       it say the same thing to p2 and to the IDE. -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-compiler-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

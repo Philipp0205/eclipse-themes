@@ -3,7 +3,8 @@
 # vogella Eclipse Themes
 
 Additional themes for the Eclipse IDE, shipped as an installable p2 update site.
-The themes are pure resource plugins: CSS and preference definitions only, no Java code.
+The six theme plugins are pure resource plugins: CSS and preference definitions only.
+The shared `com.vogella.eclipse.themes.common` plugin carries a little Java beside its stylesheets, and only because the widgets SWT hands to GTK cannot be reached from a stylesheet at all; see [Widgets GTK paints](#widgets-gtk-paints).
 
 ## Installing
 
@@ -78,7 +79,42 @@ The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors.
 
 All six are the same workspace, the same file and the same maximized window, captured on GTK at 200% scaling.
 The five dark ones differ from each other only in the theme; One Light differs in layout too, for the reason noted above.
-The orange row selection in the tree and the outline is the desktop accent color rather than the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
+The orange row selection in the trees predates the GTK stylesheet and is the desktop accent color rather than the theme; it now follows the palette, and the screenshots are due a retake.
+
+## Widgets GTK paints
+
+SWT draws most of the IDE itself, but it hands a short list of widgets to GTK and offers the CSS engine no property that reaches them.
+Those widgets keep the desktop GTK theme's colors however complete an Eclipse theme is, which is why a selected row used to come out in the desktop accent inside an otherwise dark IDE.
+The list is the selection in every tree, table and list, the scrollbars, the menu bar and every context menu, the hover tooltips, the check box and radio button indicators, the scales and the native file, print, color and font dialogs.
+
+`com.vogella.eclipse.themes.common` closes it, on Linux only.
+It resolves one stylesheet against the active theme's palette and loads it into a GTK style provider attached to the Eclipse display, so it colors Eclipse and changes nothing about your desktop or any other application.
+It follows a theme switch, and switching to a theme that is not one of these hands the widgets straight back to the desktop theme.
+
+It lives in the plugin every theme already depends on rather than in a plugin of its own, so there is nothing extra to install, select or enable: a theme that renders at all has this code loaded.
+To turn it off, clear *vogella Eclipse Themes Common* under *Preferences > General > Startup and Shutdown*, or launch with `-Dcom.vogella.eclipse.themes.gtk=false`.
+What it still cannot reach is the window decorations, which belong to the window manager.
+
+Everything else about theming stays in CSS.
+The stylesheet is deliberately narrow, and [AGENTS.md](AGENTS.md) explains why it has to be: it is loaded at a priority that outranks the CSS engine, so anything it names it takes over completely.
+
+### If these widgets keep the desktop colors
+
+The plugin writes one line to the log every time it applies or clears the stylesheet, so start at *Window > Show View > Error Log*, or `<workspace>/.metadata/.log`.
+A line reading `GTK stylesheet applied for com.vogella.eclipse.themes.draculadark` means it did its work and anything still wrong is a missing rule; a warning names what it could not do; and no line at all means it never ran.
+
+For no line at all, in order of likelihood:
+
+- The theme active in the running IDE is not one of these six.
+  A launch configuration with a fresh runtime workspace starts on the platform's own theme, and the code correctly does nothing then; pick a vogella theme under *Preferences > General > Appearance* in the launched instance.
+- Early startup is switched off for *vogella Eclipse Themes Common* under *Preferences > General > Startup and Shutdown*, or the launch passes `-Dcom.vogella.eclipse.themes.gtk=false`.
+- The code did not get compiled. `com.vogella.eclipse.themes.common` used to be a resource-only project and now has a `src` folder, so a workspace that already had it imported needs *Project > Clean* once for the Java builder to produce `bin/`.
+- The platform is not GTK, where the whole layer returns immediately by design.
+
+A stack trace rather than a line is the same question answered more loudly.
+`UnsupportedClassVersionError ... class file version 69.0` means the bundle was built to Java 25 bytecode and the IDE is running on Java 21; the bundle pins itself to `JavaSE-17` in three places for exactly that reason, so a workspace that built it once under an older configuration needs a *Project > Clean*.
+
+The menu bar is the quickest thing to look at, because nothing else in the repository can touch it: SWT has no color API for `Menu` and neither has the CSS engine, so a menu bar in the palette's window color means the stylesheet is live, and one in the desktop theme's color means it is not.
 
 ## Building
 
@@ -88,9 +124,56 @@ mvn clean verify
 
 Maven has to run on JDK 25 or newer, because the target platform is resolved against the
 `JavaSE-25` execution environment configured in `pom.xml`.
+That is the environment the build resolves against, not the one the result runs on:
+`com.vogella.eclipse.themes.common` is the only bundle with Java in it and pins itself to
+`JavaSE-17`, in its manifest for p2, in `.settings/org.eclipse.jdt.core.prefs` for the IDE and
+in its own `pom.xml` for Tycho, so that an Eclipse running on an older JRE than the build
+machine can still load it.
+Three checks run beside it, and the CI runs all three: `releng/check-tokens.sh` for the token
+contract, `releng/check-gtk-palettes.sh` for the GTK palette copies, and
+`releng/check-gtk-stylesheet.py` to parse the GTK stylesheet with GTK's own engine, which
+needs `python3-gi`, `gir1.2-gtk-3.0` and `xvfb-run` and skips itself without them.
 The build is pomless Tycho (5.0.4) against the Eclipse 2026-06 release train target platform, with the modern CSS variant bundle and the update site resolved against 2026-09 (see [AGENTS.md](AGENTS.md)).
 The resulting p2 repository lands in
 `update-site/com.vogella.eclipse.themes.repository/target/repository/`.
+
+### Running the themes from the workspace
+
+Import the projects under `plugins/` and `features/`, set the target platform from
+`target-platform/com.vogella.eclipse.themes.target/com.vogella.eclipse.themes.target.target`,
+and launch an *Eclipse Application*. Four things are worth knowing, in the order they bite.
+
+`com.vogella.eclipse.themes.common` gained a Java nature and a `src` folder when the GTK
+layer moved into it. Eclipse does not always pick a nature change up from disk on an
+already imported project, so close and reopen that project after pulling, then
+*Project > Clean* it. Cleaning is not optional if you built it before: the old output
+stays in `bin/` and nothing replaces it.
+
+Check what actually came out, because a stale `bin/` looks exactly like the layer not
+being there:
+
+```
+find plugins/com.vogella.eclipse.themes.common/bin -name GtkThemeStartup.class \
+  -exec sh -c 'od -An -t u1 -j 6 -N 2 "$1"' _ {} \;
+```
+
+`0  61` is Java 17 and correct. `0  69` is Java 25, which an Eclipse running on Java 21
+refuses to load with `UnsupportedClassVersionError`; delete the `bin` folder on disk,
+refresh the project and build again.
+
+The launch configuration's Plug-ins tab has to include that project. It is one every
+theme already depends on, so it is normally there, but a tab set to *plug-ins selected
+below* is worth a look.
+
+The launched instance gets a fresh runtime workspace, which starts on the platform's own
+theme. Pick one of the six under *Preferences > General > Appearance* there; until then
+the GTK layer correctly does nothing.
+
+Then check the menu bar. It is the one thing in the IDE that only this stylesheet can
+paint, so it tracking the theme means the layer is live, and *Window > Show View > Error
+Log* has a line either way.
+
+## Publishing
 
 Pushing to `main` runs that same build and publishes the result to the hosted update site, on the `gh-pages` branch.
 The site carries one build at a time: `releng/update-composite-site.sh` writes the p2 composite metadata that points the root URL at it, and drops what came before.
@@ -127,7 +210,12 @@ rename the `.project` name and `Automatic-Module-Name`, replace the palette valu
 preference stylesheets (`*_preferences.css` and `*_jdt.css`, plus `vscode_tabs.css` if you
 copied the VS Code theme), add a feature under `features/` and list it in the update site
 `category.xml`.
-Run `./releng/check-tokens.sh` afterwards, it verifies the token contract for every palette it
+Then run `./releng/check-gtk-palettes.sh --write`, which copies the new palette's values into
+`plugins/com.vogella.eclipse.themes.common/palettes/<theme id>.properties` for the GTK stylesheet
+to resolve against. It has to be a copy rather than a lookup, because the values are needed
+before the CSS engine has applied them; the same script without `--write` fails the build when
+the copy and the stylesheet disagree, so a later palette change cannot go one way only.
+Finally run `./releng/check-tokens.sh`, which verifies the token contract for every palette it
 finds.
 No pom changes are needed, the pomless aggregator picks up new directories automatically.
 
