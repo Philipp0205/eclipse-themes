@@ -3,8 +3,8 @@
 # vogella Eclipse Themes
 
 Additional themes for the Eclipse IDE, shipped as an installable p2 update site.
-The themes themselves are pure resource plugins: CSS and preference definitions only.
-One companion plugin carries Java, `com.vogella.eclipse.themes.gtk`, and only because the widgets SWT hands to GTK cannot be reached from a stylesheet at all; see [Widgets GTK paints](#widgets-gtk-paints).
+The six theme plugins are pure resource plugins: CSS and preference definitions only.
+The shared `com.vogella.eclipse.themes.common` plugin carries a little Java beside its stylesheets, and only because the widgets SWT hands to GTK cannot be reached from a stylesheet at all; see [Widgets GTK paints](#widgets-gtk-paints).
 
 ## Installing
 
@@ -79,7 +79,7 @@ The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors.
 
 All six are the same workspace, the same file and the same maximized window, captured on GTK at 200% scaling.
 The five dark ones differ from each other only in the theme; One Light differs in layout too, for the reason noted above.
-The orange row selection in the trees predates `com.vogella.eclipse.themes.gtk` and is the desktop accent color rather than the theme; it now follows the palette, and the screenshots are due a retake.
+The orange row selection in the trees predates the GTK stylesheet and is the desktop accent color rather than the theme; it now follows the palette, and the screenshots are due a retake.
 
 ## Widgets GTK paints
 
@@ -87,16 +87,31 @@ SWT draws most of the IDE itself, but it hands a short list of widgets to GTK an
 Those widgets keep the desktop GTK theme's colors however complete an Eclipse theme is, which is why a selected row used to come out in the desktop accent inside an otherwise dark IDE.
 The list is the selection in every tree, table and list, the scrollbars, the menu bar and every context menu, the hover tooltips, the check box and radio button indicators, the scales and the native file, print, color and font dialogs.
 
-`com.vogella.eclipse.themes.gtk` closes it, on Linux only.
+`com.vogella.eclipse.themes.common` closes it, on Linux only.
 It resolves one stylesheet against the active theme's palette and loads it into a GTK style provider attached to the Eclipse display, so it colors Eclipse and changes nothing about your desktop or any other application.
 It follows a theme switch, and switching to a theme that is not one of these hands the widgets straight back to the desktop theme.
 
-The plugin comes with each theme feature and needs no setup.
-To turn it off, clear it under *Preferences > General > Startup and Shutdown*, or launch with `-Dcom.vogella.eclipse.themes.gtk=false`.
+It lives in the plugin every theme already depends on rather than in a plugin of its own, so there is nothing extra to install, select or enable: a theme that renders at all has this code loaded.
+To turn it off, clear *vogella Eclipse Themes Common* under *Preferences > General > Startup and Shutdown*, or launch with `-Dcom.vogella.eclipse.themes.gtk=false`.
 What it still cannot reach is the window decorations, which belong to the window manager.
 
 Everything else about theming stays in CSS.
 The stylesheet is deliberately narrow, and [AGENTS.md](AGENTS.md) explains why it has to be: it is loaded at a priority that outranks the CSS engine, so anything it names it takes over completely.
+
+### If these widgets keep the desktop colors
+
+The plugin writes one line to the log every time it applies or clears the stylesheet, so start at *Window > Show View > Error Log*, or `<workspace>/.metadata/.log`.
+A line reading `GTK stylesheet applied for com.vogella.eclipse.themes.draculadark` means it did its work and anything still wrong is a missing rule; a warning names what it could not do; and no line at all means it never ran.
+
+For no line at all, in order of likelihood:
+
+- The theme active in the running IDE is not one of these six.
+  A launch configuration with a fresh runtime workspace starts on the platform's own theme, and the code correctly does nothing then; pick a vogella theme under *Preferences > General > Appearance* in the launched instance.
+- Early startup is switched off for *vogella Eclipse Themes Common* under *Preferences > General > Startup and Shutdown*, or the launch passes `-Dcom.vogella.eclipse.themes.gtk=false`.
+- The code did not get compiled. `com.vogella.eclipse.themes.common` used to be a resource-only project and now has a `src` folder, so a workspace that already had it imported needs *Project > Clean* once for the Java builder to produce `bin/`.
+- The platform is not GTK, where the whole layer returns immediately by design.
+
+The menu bar is the quickest thing to look at, because nothing else in the repository can touch it: SWT has no color API for `Menu` and neither has the CSS engine, so a menu bar in the palette's window color means the stylesheet is live, and one in the desktop theme's color means it is not.
 
 ## Building
 
@@ -150,7 +165,7 @@ preference stylesheets (`*_preferences.css` and `*_jdt.css`, plus `vscode_tabs.c
 copied the VS Code theme), add a feature under `features/` and list it in the update site
 `category.xml`.
 Then run `./releng/check-gtk-palettes.sh --write`, which copies the new palette's values into
-`plugins/com.vogella.eclipse.themes.gtk/palettes/<theme id>.properties` for the GTK stylesheet
+`plugins/com.vogella.eclipse.themes.common/palettes/<theme id>.properties` for the GTK stylesheet
 to resolve against. It has to be a copy rather than a lookup, because the values are needed
 before the CSS engine has applied them; the same script without `--write` fails the build when
 the copy and the stylesheet disagree, so a later palette change cannot go one way only.

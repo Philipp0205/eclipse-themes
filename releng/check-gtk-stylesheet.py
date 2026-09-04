@@ -22,7 +22,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-BUNDLE = ROOT / "plugins" / "com.vogella.eclipse.themes.gtk"
+BUNDLE = ROOT / "plugins" / "com.vogella.eclipse.themes.common"
 TEMPLATE = BUNDLE / "css" / "gtk.css"
 PALETTES = BUNDLE / "palettes"
 
