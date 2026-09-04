@@ -147,8 +147,19 @@ and launch an *Eclipse Application*. Four things are worth knowing, in the order
 layer moved into it. Eclipse does not always pick a nature change up from disk on an
 already imported project, so close and reopen that project after pulling, then
 *Project > Clean* it. Cleaning is not optional if you built it before: the old output
-stays in `bin/` and nothing replaces it. Check afterwards that
-`bin/com/vogella/eclipse/themes/gtk/GtkThemeStartup.class` exists.
+stays in `bin/` and nothing replaces it.
+
+Check what actually came out, because a stale `bin/` looks exactly like the layer not
+being there:
+
+```
+find plugins/com.vogella.eclipse.themes.common/bin -name GtkThemeStartup.class \
+  -exec sh -c 'od -An -t u1 -j 6 -N 2 "$1"' _ {} \;
+```
+
+`0  61` is Java 17 and correct. `0  69` is Java 25, which an Eclipse running on Java 21
+refuses to load with `UnsupportedClassVersionError`; delete the `bin` folder on disk,
+refresh the project and build again.
 
 The launch configuration's Plug-ins tab has to include that project. It is one every
 theme already depends on, so it is normally there, but a tab set to *plug-ins selected
