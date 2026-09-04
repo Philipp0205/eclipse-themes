@@ -98,6 +98,21 @@ What it still cannot reach is the window decorations, which belong to the window
 Everything else about theming stays in CSS.
 The stylesheet is deliberately narrow, and [AGENTS.md](AGENTS.md) explains why it has to be: it is loaded at a priority that outranks the CSS engine, so anything it names it takes over completely.
 
+### If these widgets keep the desktop colors
+
+The plugin writes one line to the log every time it applies or clears the stylesheet, so start at *Window > Show View > Error Log*, or `<workspace>/.metadata/.log`.
+A line reading `GTK stylesheet applied for com.vogella.eclipse.themes.draculadark` means it did its work and anything still wrong is a missing rule; a warning names what it could not do; and no line at all means it never ran.
+
+For no line at all, in order of likelihood:
+
+- The bundle is not in the running configuration.
+  In a self-hosted *Eclipse Application* launch this is the usual answer: a launch configuration whose Plug-ins tab is set to *plug-ins selected below* does not pick up plug-in projects added to the workspace later, so `com.vogella.eclipse.themes.gtk` sits there unchecked.
+  Either check it, or switch the tab back to *all workspace and enabled target plug-ins*.
+- Early startup is switched off for it under *Preferences > General > Startup and Shutdown*, or the launch passes `-Dcom.vogella.eclipse.themes.gtk=false`.
+- The theme active in the running IDE is not one of these six.
+  A launch configuration with a fresh runtime workspace starts on the platform's own theme, and the plugin correctly does nothing then; pick a vogella theme under *Preferences > General > Appearance* in the launched instance.
+- The platform is not GTK. The bundle carries `Eclipse-PlatformFilter: (osgi.ws=gtk)` and does not resolve anywhere else, by design.
+
 ## Building
 
 ```

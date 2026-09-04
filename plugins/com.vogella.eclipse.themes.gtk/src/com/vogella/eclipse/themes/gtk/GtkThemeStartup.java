@@ -15,10 +15,13 @@ package com.vogella.eclipse.themes.gtk;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.ui.css.swt.theme.ITheme;
 import org.eclipse.e4.ui.css.swt.theme.IThemeEngine;
 import org.eclipse.swt.widgets.Composite;
@@ -37,11 +40,28 @@ import org.osgi.service.event.EventHandler;
 /**
  * Keeps the GTK stylesheet in step with the active theme.
  * <p>
- * Two entry points, because a theme is either already active when the IDE comes up
- * or is chosen later. {@link #earlyStartup()} handles the first and is also what
- * activates this bundle at all, since nothing else refers to it;
- * {@link #handleEvent(Event)} handles the second, through the {@code THEME_CHANGED}
- * event {@code IThemeEngine} documents for exactly this purpose.
+ * The whole layer is invisible when it works and invisible when it does not, so
+ * every path through this class ends in either a stylesheet or a log entry. There is
+ * no third outcome, and there used to be: a lookup that came back empty simply
+ * returned, which is indistinguishable from the bundle not being installed at all.
+ * <p>
+ * <b>Finding out which theme is active.</b> Three sources, in order, because each
+ * one can be absent on its own. The {@code IThemeEngine} parked in the display's data
+ * is the direct answer but is only there once something has asked
+ * {@code ThemeEngineManager} for it; the workbench service is the same object by
+ * another route; and the {@code themeid} instance preference is what
+ * {@code ThemeEngine.setTheme} writes and flushes, so it survives anything. The
+ * fallbacks matter most in the ordinary case: when the theme was already active at
+ * startup, no theme change is ever broadcast, and a failure to read it here would
+ * leave the sheet unwritten for the whole session.
+ * <p>
+ * <b>Noticing a switch.</b> Two triggers, for the same reason. The
+ * {@code THEME_CHANGED} event is the one {@code IThemeEngine} documents, but
+ * {@code ThemeEngine.sendThemeChangeEvent} gives up quietly when no
+ * {@code EventAdmin} is registered, which is a thing that happens in a launch
+ * configuration that did not include one. The {@code themeid} preference is written
+ * on the same code path and cannot be opted out of. Whichever arrives first wins and
+ * the other is a no-op, because the active id is remembered.
  * <p>
  * Being an {@code org.eclipse.ui.startup} contribution also gives the layer an off
  * switch that costs no code and no preference page of its own: clearing this bundle
@@ -53,13 +73,23 @@ public final class GtkThemeStartup implements IStartup, EventHandler {
 	/** The display data key under which the e4 engine parks its theme engine. */
 	private static final String THEME_ENGINE = "org.eclipse.e4.ui.css.swt.theme";
 
+	/** The instance preference {@code ThemeEngine.setTheme} writes and flushes. */
+	private static final String THEME_ID_PREFERENCE = "themeid";
+
 	private static final String ENABLED = "com.vogella.eclipse.themes.gtk";
+
+	/** What every theme id of ours starts with, so a missing palette can be told
+	 * apart from a theme that was never meant to have one. */
+	private static final String OUR_THEMES = "com.vogella.eclipse.themes.";
 
 	private final ILog log = Platform.getLog(GtkThemeStartup.class);
 
 	private GtkStyleProvider provider;
 
 	private Display display;
+
+	/** The id the current sheet was resolved from, so two triggers do the work once. */
+	private String applied;
 
 	/**
 	 * Set once the window system has answered that it cannot do this, so that a user
@@ -100,7 +130,10 @@ public final class GtkThemeStartup implements IStartup, EventHandler {
 	@Override
 	public void handleEvent(Event event) {
 		Object theme = event.getProperty(IThemeEngine.Events.THEME);
-		String themeId = theme instanceof ITheme active ? active.getId() : null;
+		post(theme instanceof ITheme active ? active.getId() : null);
+	}
+
+	private void post(String themeId) {
 		if (display != null && !display.isDisposed()) {
 			display.asyncExec(() -> follow(themeId));
 		}
@@ -110,20 +143,31 @@ public final class GtkThemeStartup implements IStartup, EventHandler {
 		if (unsupported || provider == null || display == null || display.isDisposed()) {
 			return;
 		}
+		if (Objects.equals(themeId, applied)) {
+			return;
+		}
 		try {
 			Optional<Palette> palette = themeId == null ? Optional.empty() : Palette.of(themeId);
 			if (palette.isEmpty()) {
-				// Not one of ours. Emptying the sheet hands the widgets back to the desktop
-				// theme, which is the right answer for the platform themes and for any other
-				// third party theme the user switches to.
+				// Either a theme that is not ours, which is the common case and correct, or
+				// one of ours whose palette did not ship. Only the second is worth a warning,
+				// and the bundle prefix is the only thing that tells them apart.
+				if (themeId != null && themeId.startsWith(OUR_THEMES)) {
+					log.warn("No GTK palette for " + themeId + ", so the widgets GTK owns keep the desktop"
+							+ " theme's colours. Expected palettes/" + themeId + ".properties in this bundle.");
+				}
+				applied = themeId;
 				if (provider.isAttached()) {
 					provider.write("");
 					repaint();
+					log.info("GTK stylesheet cleared for " + themeId + ", the desktop theme paints these widgets again");
 				}
 				return;
 			}
 			provider.write(GtkStyleSheet.resolve(palette.get()));
 			repaint();
+			applied = themeId;
+			log.info("GTK stylesheet applied for " + themeId);
 		} catch (Exception | LinkageError e) {
 			unsupported = true;
 			log.warn("Could not apply the GTK stylesheet for " + themeId
@@ -169,19 +213,50 @@ public final class GtkThemeStartup implements IStartup, EventHandler {
 	}
 
 	private String activeThemeId() {
-		Object engine = display.getData(THEME_ENGINE);
-		if (!(engine instanceof IThemeEngine themeEngine)) {
-			return null;
+		if (display.getData(THEME_ENGINE) instanceof IThemeEngine engine) {
+			String themeId = activeThemeId(engine);
+			if (themeId != null) {
+				return themeId;
+			}
 		}
-		ITheme active = themeEngine.getActiveTheme();
+		IThemeEngine service = PlatformUI.getWorkbench().getService(IThemeEngine.class);
+		if (service != null) {
+			String themeId = activeThemeId(service);
+			if (themeId != null) {
+				return themeId;
+			}
+		}
+		String themeId = preferences().get(THEME_ID_PREFERENCE, null);
+		if (themeId == null) {
+			log.warn("No theme engine and no '" + THEME_ID_PREFERENCE + "' preference, so the active theme is"
+					+ " unknown and the widgets GTK owns keep the desktop theme's colours");
+		}
+		return themeId;
+	}
+
+	private static String activeThemeId(IThemeEngine engine) {
+		ITheme active = engine.getActiveTheme();
 		return active == null ? null : active.getId();
 	}
 
+	private static IEclipsePreferences preferences() {
+		return InstanceScope.INSTANCE.getNode(THEME_ENGINE);
+	}
+
 	private void listenForThemeChanges() {
+		// The preference first: it is the trigger that cannot be missing, so registering
+		// it before the optional one means a failure below still leaves a working layer.
+		preferences().addPreferenceChangeListener(event -> {
+			if (THEME_ID_PREFERENCE.equals(event.getKey())) {
+				post(event.getNewValue() instanceof String themeId ? themeId : null);
+			}
+		});
+
 		Bundle bundle = FrameworkUtil.getBundle(GtkThemeStartup.class);
 		BundleContext context = bundle == null ? null : bundle.getBundleContext();
 		if (context == null) {
-			log.warn("No bundle context, so the GTK stylesheet will not follow a theme switch");
+			log.warn("No bundle context, so a theme switch is only noticed through the '" + THEME_ID_PREFERENCE
+					+ "' preference");
 			return;
 		}
 		Dictionary<String, Object> properties = new Hashtable<>();
