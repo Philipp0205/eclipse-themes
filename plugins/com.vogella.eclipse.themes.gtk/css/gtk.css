@@ -177,6 +177,40 @@ scrollbar slider:disabled {
 	background-color: transparent;
 }
 
+/* ############################## Scales ############################## */
+
+/* A Scale is a GtkScale, whose trough, filled part and handle are nodes of their own
+ * with no SWT colour API between them. What SWT does emit,
+ * '* { background-color: <the surface> }' from the e4 cascade, reaches all three at
+ * once, so a Scale on a themed page comes out as a flat band the colour of the page
+ * with nothing in it to grab. Naming the three nodes puts it back: the same
+ * BORDER trough and ACCENT fill the ProgressBar rule in structure.css uses, and an FG
+ * handle so the thing the pointer is looking for is the brightest part of it.
+ * An SWT Slider is a GtkScrollbar and is covered by the scrollbar rules above. */
+scale trough {
+	background-color: '#com-vogella-themes-BORDER';
+	background-image: none;
+	border-color: transparent;
+}
+
+scale highlight,
+scale trough highlight {
+	background-color: '#com-vogella-themes-ACCENT';
+	background-image: none;
+}
+
+scale slider {
+	background-color: '#com-vogella-themes-FG';
+	background-image: none;
+	border-color: '#com-vogella-themes-BORDER';
+}
+
+scale trough:disabled,
+scale slider:disabled {
+	background-color: '#com-vogella-themes-FG_MUTED';
+	background-image: none;
+}
+
 /* ############################## Menus ############################## */
 
 /* SWT has no colour API for Menu or MenuItem on any platform, and the e4 engine

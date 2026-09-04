@@ -36,10 +36,16 @@ Composite > * > * {
 
 /* ############################## Inputs ############################## */
 
+/* DateTime belongs with the other fields and not with the surfaces. Without it the
+ * 'Composite > *' catch-all above paints it BG_WINDOW, so the scheduling fields of a
+ * Mylyn task read as chrome rather than as something editable. Only the SWT.DATE and
+ * SWT.TIME forms are reached this way; SWT.CALENDAR is a GtkCalendar that draws its
+ * own grid, and is handled in the GTK stylesheet instead. */
 Combo,
 List,
 Text,
 Spinner,
+DateTime,
 CCombo {
 	background-color: '#com-vogella-themes-BG_RAISED';
 	color: '#com-vogella-themes-FG';
@@ -507,7 +513,9 @@ Section {
 .MPart Form Text,
 .MPart Form Combo,
 .MPart Form CCombo,
-.MPart Form Spinner {
+.MPart Form Spinner,
+.MPart Section DateTime,
+.MPart Form DateTime {
 	background-color: '#com-vogella-themes-BG_RAISED';
 	color: '#com-vogella-themes-FG';
 }
