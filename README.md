@@ -111,6 +111,9 @@ For no line at all, in order of likelihood:
 - The code did not get compiled. `com.vogella.eclipse.themes.common` used to be a resource-only project and now has a `src` folder, so a workspace that already had it imported needs *Project > Clean* once for the Java builder to produce `bin/`.
 - The platform is not GTK, where the whole layer returns immediately by design.
 
+A stack trace rather than a line is the same question answered more loudly.
+`UnsupportedClassVersionError ... class file version 69.0` means the bundle was built to Java 25 bytecode and the IDE is running on Java 21; the bundle pins itself to `JavaSE-17` in three places for exactly that reason, so a workspace that built it once under an older configuration needs a *Project > Clean*.
+
 The menu bar is the quickest thing to look at, because nothing else in the repository can touch it: SWT has no color API for `Menu` and neither has the CSS engine, so a menu bar in the palette's window color means the stylesheet is live, and one in the desktop theme's color means it is not.
 
 ## Building
@@ -121,6 +124,11 @@ mvn clean verify
 
 Maven has to run on JDK 25 or newer, because the target platform is resolved against the
 `JavaSE-25` execution environment configured in `pom.xml`.
+That is the environment the build resolves against, not the one the result runs on:
+`com.vogella.eclipse.themes.common` is the only bundle with Java in it and pins itself to
+`JavaSE-17`, in its manifest for p2, in `.settings/org.eclipse.jdt.core.prefs` for the IDE and
+in its own `pom.xml` for Tycho, so that an Eclipse running on an older JRE than the build
+machine can still load it.
 Three checks run beside it, and the CI runs all three: `releng/check-tokens.sh` for the token
 contract, `releng/check-gtk-palettes.sh` for the GTK palette copies, and
 `releng/check-gtk-stylesheet.py` to parse the GTK stylesheet with GTK's own engine, which

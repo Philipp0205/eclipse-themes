@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+# Pinned rather than inherited from the workspace, and the reason is a bug report.
+# A workspace whose default compliance was 25 built this bundle to class file 69,
+# which an Eclipse Application launch on a Java 21 JRE then refused to load with
+# UnsupportedClassVersionError, so the theme applied and the GTK layer did not. The
+# Bundle-RequiredExecutionEnvironment says what the bundle needs and these say what
+# the compiler emits; both are JavaSE-17, and pom.xml says the same to Tycho.
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=17
+org.eclipse.jdt.core.compiler.compliance=17
+org.eclipse.jdt.core.compiler.release=enabled
+org.eclipse.jdt.core.compiler.source=17

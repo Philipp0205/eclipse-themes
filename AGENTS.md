@@ -130,6 +130,10 @@ Two traps beyond the ones in the measuring section above.
 GTK does not queue a redraw when a provider on the screen changes, and a shell wide `redraw` with `allChildren` does not reach a `Tree`, which draws its rows into a `GdkWindow` of its own; every control has to be asked, which is what `GtkThemeStartup.repaint` does.
 And a property that changes a node's box, `border-width` on the `check` indicator for one, repaints without re-laying out, so it shifts the widgets around it until something else resizes the page: use `box-shadow: inset` for an outline instead.
 
+One trap that has nothing to do with GTK and cost a round trip anyway.
+The build resolves against `JavaSE-25` and the IDE running the result may be on anything from `JavaSE-17` up, so the bytecode version is not the build's to choose: a class file 69 bundle on a Java 21 Eclipse fails with `UnsupportedClassVersionError` at early startup, which looks exactly like the GTK layer being absent.
+`common` therefore pins `JavaSE-17` three times, once per consumer, and all three have to move together: `Bundle-RequiredExecutionEnvironment` for p2, `.settings/org.eclipse.jdt.core.prefs` for JDT, and `tycho-compiler-plugin`'s `release` in its own `pom.xml`, because the parent's `executionEnvironment` would otherwise decide it.
+
 Measuring here does not need an IDE, which is the one part of this repository that can be checked without one.
 Drive `GtkStyleProvider` against real SWT widgets under `xvfb-run`, read the pixels back with `GC.copyArea` into an `Image`, and compare against the palette in RGB.
 That is how every claim in this section was established.
