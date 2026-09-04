@@ -112,11 +112,22 @@ label selection {
  * against the page and FG_MUTED 1.96:1 in nord; FG is the one token that clears it
  * in all six palettes, 7.45:1 at worst against the page and 6.39:1 against the
  * fill. A one pixel outline is a cheap price for an indicator that can be seen. */
+/* An inset box-shadow for the outline, not a border, and the difference was
+ * measured. 'border-color' alone paints nothing: the interior came out BG_RAISED and
+ * the edge stayed a two pixel blend into the page, because the desktop theme draws
+ * the outline from a border-image and leaves border-color nothing to recolour.
+ * Adding 'border-style: solid; border-width: 1px' does paint it, and grows the
+ * indicator by a pixel on each side, which pushed the label of every check box in
+ * the IDE up against its box; a provider change repaints but does not re-lay out, so
+ * that stays wrong until something else resizes the page. An inset shadow draws the
+ * same one pixel ring inside the existing box and takes no part in sizing: measured
+ * against the unstyled indicator, the box still spans the same pixels and the label
+ * still starts on the same one. */
 check,
 radio {
 	background-color: '#com-vogella-themes-BG_RAISED';
 	background-image: none;
-	border-color: '#com-vogella-themes-FG';
+	box-shadow: inset 0 0 0 1px '#com-vogella-themes-FG';
 	color: '#com-vogella-themes-FG';
 }
 
@@ -130,7 +141,9 @@ radio:checked,
 radio:indeterminate {
 	background-color: '#com-vogella-themes-ACCENT';
 	background-image: none;
-	border-color: '#com-vogella-themes-ACCENT';
+	/* No ring: measured solid ACCENT from edge to edge, which is the state reading as
+	 * filled rather than as outlined and is what tells the two apart at a glance. */
+	box-shadow: none;
 	color: '#com-vogella-themes-BG_WINDOW';
 }
 
@@ -138,7 +151,7 @@ check:disabled,
 radio:disabled {
 	background-color: '#com-vogella-themes-BG_PART';
 	background-image: none;
-	border-color: '#com-vogella-themes-FG_MUTED';
+	box-shadow: inset 0 0 0 1px '#com-vogella-themes-FG_MUTED';
 	color: '#com-vogella-themes-FG_MUTED';
 }
 
