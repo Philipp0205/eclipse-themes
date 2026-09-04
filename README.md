@@ -137,6 +137,33 @@ The build is pomless Tycho (5.0.4) against the Eclipse 2026-06 release train tar
 The resulting p2 repository lands in
 `update-site/com.vogella.eclipse.themes.repository/target/repository/`.
 
+### Running the themes from the workspace
+
+Import the projects under `plugins/` and `features/`, set the target platform from
+`target-platform/com.vogella.eclipse.themes.target/com.vogella.eclipse.themes.target.target`,
+and launch an *Eclipse Application*. Four things are worth knowing, in the order they bite.
+
+`com.vogella.eclipse.themes.common` gained a Java nature and a `src` folder when the GTK
+layer moved into it. Eclipse does not always pick a nature change up from disk on an
+already imported project, so close and reopen that project after pulling, then
+*Project > Clean* it. Cleaning is not optional if you built it before: the old output
+stays in `bin/` and nothing replaces it. Check afterwards that
+`bin/com/vogella/eclipse/themes/gtk/GtkThemeStartup.class` exists.
+
+The launch configuration's Plug-ins tab has to include that project. It is one every
+theme already depends on, so it is normally there, but a tab set to *plug-ins selected
+below* is worth a look.
+
+The launched instance gets a fresh runtime workspace, which starts on the platform's own
+theme. Pick one of the six under *Preferences > General > Appearance* there; until then
+the GTK layer correctly does nothing.
+
+Then check the menu bar. It is the one thing in the IDE that only this stylesheet can
+paint, so it tracking the theme means the layer is live, and *Window > Show View > Error
+Log* has a line either way.
+
+## Publishing
+
 Pushing to `main` runs that same build and publishes the result to the hosted update site, on the `gh-pages` branch.
 The site carries one build at a time: `releng/update-composite-site.sh` writes the p2 composite metadata that points the root URL at it, and drops what came before.
 A tag of the form `v*` additionally attaches the repository archive to a GitHub release.
