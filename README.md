@@ -3,7 +3,8 @@
 # vogella Eclipse Themes
 
 Additional themes for the Eclipse IDE, shipped as an installable p2 update site.
-The themes are pure resource plugins: CSS and preference definitions only, no Java code.
+The themes themselves are pure resource plugins: CSS and preference definitions only.
+One companion plugin carries Java, `com.vogella.eclipse.themes.gtk`, and only because the widgets SWT hands to GTK cannot be reached from a stylesheet at all; see [Widgets GTK paints](#widgets-gtk-paints).
 
 ## Installing
 
@@ -78,7 +79,24 @@ The VS Code Dark Modern look, including its tab styling and Dark+ syntax colors.
 
 All six are the same workspace, the same file and the same maximized window, captured on GTK at 200% scaling.
 The five dark ones differ from each other only in the theme; One Light differs in layout too, for the reason noted above.
-The orange row selection in the tree and the outline is the desktop accent color rather than the theme: GTK owns tree selection and no stylesheet can set it, see [styling-limits.md](docs/styling-limits.md).
+The orange row selection in the trees predates `com.vogella.eclipse.themes.gtk` and is the desktop accent color rather than the theme; it now follows the palette, and the screenshots are due a retake.
+
+## Widgets GTK paints
+
+SWT draws most of the IDE itself, but it hands a short list of widgets to GTK and offers the CSS engine no property that reaches them.
+Those widgets keep the desktop GTK theme's colors however complete an Eclipse theme is, which is why a selected row used to come out in the desktop accent inside an otherwise dark IDE.
+The list is the selection in every tree, table and list, the scrollbars, the menu bar and every context menu, the hover tooltips, the check box and radio button indicators, the scales and the native file, print, color and font dialogs.
+
+`com.vogella.eclipse.themes.gtk` closes it, on Linux only.
+It resolves one stylesheet against the active theme's palette and loads it into a GTK style provider attached to the Eclipse display, so it colors Eclipse and changes nothing about your desktop or any other application.
+It follows a theme switch, and switching to a theme that is not one of these hands the widgets straight back to the desktop theme.
+
+The plugin comes with each theme feature and needs no setup.
+To turn it off, clear it under *Preferences > General > Startup and Shutdown*, or launch with `-Dcom.vogella.eclipse.themes.gtk=false`.
+What it still cannot reach is the window decorations, which belong to the window manager.
+
+Everything else about theming stays in CSS.
+The stylesheet is deliberately narrow, and [AGENTS.md](AGENTS.md) explains why it has to be: it is loaded at a priority that outranks the CSS engine, so anything it names it takes over completely.
 
 ## Building
 
@@ -88,6 +106,10 @@ mvn clean verify
 
 Maven has to run on JDK 25 or newer, because the target platform is resolved against the
 `JavaSE-25` execution environment configured in `pom.xml`.
+Three checks run beside it, and the CI runs all three: `releng/check-tokens.sh` for the token
+contract, `releng/check-gtk-palettes.sh` for the GTK palette copies, and
+`releng/check-gtk-stylesheet.py` to parse the GTK stylesheet with GTK's own engine, which
+needs `python3-gi`, `gir1.2-gtk-3.0` and `xvfb-run` and skips itself without them.
 The build is pomless Tycho (5.0.4) against the Eclipse 2026-06 release train target platform, with the modern CSS variant bundle and the update site resolved against 2026-09 (see [AGENTS.md](AGENTS.md)).
 The resulting p2 repository lands in
 `update-site/com.vogella.eclipse.themes.repository/target/repository/`.
@@ -127,7 +149,12 @@ rename the `.project` name and `Automatic-Module-Name`, replace the palette valu
 preference stylesheets (`*_preferences.css` and `*_jdt.css`, plus `vscode_tabs.css` if you
 copied the VS Code theme), add a feature under `features/` and list it in the update site
 `category.xml`.
-Run `./releng/check-tokens.sh` afterwards, it verifies the token contract for every palette it
+Then run `./releng/check-gtk-palettes.sh --write`, which copies the new palette's values into
+`plugins/com.vogella.eclipse.themes.gtk/palettes/<theme id>.properties` for the GTK stylesheet
+to resolve against. It has to be a copy rather than a lookup, because the values are needed
+before the CSS engine has applied them; the same script without `--write` fails the build when
+the copy and the stylesheet disagree, so a later palette change cannot go one way only.
+Finally run `./releng/check-tokens.sh`, which verifies the token contract for every palette it
 finds.
 No pom changes are needed, the pomless aggregator picks up new directories automatically.
 
