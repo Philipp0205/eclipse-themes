@@ -37,13 +37,18 @@
  * also what makes a careless rule here silently disable a whole area of
  * structure.css.
  *
- * So: no bare 'label', 'button', 'entry', 'treeview', 'widget' or 'window' rule.
- * SWT emits '* { background-color }' and '* { color }' on the style context of
- * every one of those, from whatever the e4 cascade resolved, and a rule here would
- * flatten the BG_WINDOW, BG_PART, BG_EDITOR and BG_RAISED distinctions that
- * structure.css spends six hundred lines making. Selectors here are limited to
- * three kinds that SWT provably never emits:
- *  - widget states, ':selected', ':hover', ':disabled', ':checked'
+ * So: no bare 'label', 'button', 'entry', 'treeview', 'widget' or 'window' rule that
+ * declares 'background-color' or 'color'. SWT emits '* { background-color }' and
+ * '* { color }' on the style context of every one of those, from whatever the e4
+ * cascade resolved, and such a rule would flatten the BG_WINDOW, BG_PART, BG_EDITOR
+ * and BG_RAISED distinctions that structure.css spends six hundred lines making. What
+ * may be declared here is limited to four kinds, each of which SWT provably never
+ * emits:
+ *  - widget states, ':selected', ':hover', ':disabled', ':checked', ':focus'
+ *  - properties SWT has no API for and never writes: every 'border-*', 'box-shadow'
+ *    and 'outline-*'. Those cannot flatten a surface because they do not name one, so
+ *    they are safe even on a bare node rule, which is what the 'button' section below
+ *    relies on and the only place that does.
  *  - node types SWT has no colour API for at all: menus, tooltips, scrollbars,
  *    the 'check' and 'radio' indicator nodes, the calendar
  *  - node types that only exist inside a native dialog, where no SWT widget lives
@@ -154,6 +159,89 @@ radio:disabled {
 	background-image: none;
 	box-shadow: inset 0 0 0 1px '#com-vogella-themes-FG_MUTED';
 	color: '#com-vogella-themes-FG_MUTED';
+}
+
+/* ############################## Buttons ############################## */
+
+/* Everything SWT builds out of a GTK 'button' node: a push or toggle Button, a
+ * ToolItem, the drop down of a Combo, the column header of a Tree. Their FILL is
+ * deliberately absent from this section, because it is the one part SWT does emit.
+ * Button.setBackgroundGdkRGBA writes '* { background: <c> }' and ToolItem.updateStyle
+ * writes 'button { background-image: none; background-color: <c> }', both at
+ * PRIORITY_APPLICATION and both from whatever the e4 cascade resolved. Measured with
+ * the providers layered the way the IDE layers them: neither declaration carries a
+ * state qualifier, so it holds the fill in every state, hovered, pressed, checked and
+ * disabled alike, and the resting look together with the BG_PART, BG_WINDOW and
+ * BG_RAISED distinction stays where it belongs, in structure.css.
+ *
+ * What is left is exactly what SWT never writes, and all of it was the desktop theme
+ * showing through. Measured on the VS Code Dark palette: a push button was outlined in
+ * #BCBEBF under Breeze and #CDC7C2 under Adwaita, each with a white line inside the top
+ * edge, and that outline turned Breeze's #3DAEE9 on hover and on focus. Hover changed
+ * no fill at all, so a button gave no feedback under the pointer. A toggled ToolItem
+ * was marked by the desktop outline and by nothing else: its fill measured #19191A on
+ * a #181818 bar, 1.01:1, and under Adwaita a hovered one came out #F8F8F7, a near
+ * white box on a near black trim. */
+button {
+	border-color: '#com-vogella-themes-BORDER';
+	/* The white line inside the top edge is a desktop inset shadow, and on a dark
+	 * button it reads as a scratch rather than as relief. */
+	box-shadow: none;
+}
+
+/* A toolbar item stays flat, and a desktop theme keeps it flat by painting that border
+ * transparent rather than by leaving it out: measured, the rule above put a box around
+ * every toolbar icon in the IDE under Adwaita, the chiclet this repository has chased
+ * before, and changed nothing at all under Breeze. One desktop theme would not have
+ * shown it. */
+toolbar button,
+toolbar togglebutton {
+	border-color: transparent;
+}
+
+/* Hover, which no SWT declaration and no e4 property reaches. The SELECTION_BG and
+ * SELECTION_FG pair the menus already use, so the pointer over a button, a menu item
+ * and a tree row all mean the same thing. SELECTION_FG on SELECTION_BG is 6.40:1 at
+ * worst and clears AA in all six palettes. The fill separates from the page by as
+ * little as 1.07:1, in One Light, which is recorded rather than hidden: it is a change
+ * of hue more than of lightness, and hover is not one of the states WCAG 1.4.11 asks
+ * 3:1 of. This reaches a hovered ToolItem and a hovered Tree column header too, both
+ * of which were painted by the desktop theme until now. */
+button:hover {
+	background-color: '#com-vogella-themes-SELECTION_BG';
+	background-image: none;
+	color: '#com-vogella-themes-SELECTION_FG';
+}
+
+/* Pressed and toggled: an ACCENT ring, not an ACCENT fill, and the difference is the
+ * numbers. ACCENT separates from every surface the palette has, 3.22:1 against
+ * BG_WINDOW at worst and 3.38:1 against BG_RAISED, so a ring marks the state to the
+ * 3:1 of WCAG 1.4.11 wherever the button sits. A fill would put the label on ACCENT,
+ * where the best available foreground, BG_WINDOW, reads 3.22:1 in One Light and 3.92:1
+ * in VS Code Dark and misses AA in both; the ring leaves the label on FG over the fill
+ * the e4 cascade chose, 6.39:1 at worst.
+ *
+ * An inset box-shadow draws it, for the reason the check indicator's ring uses one: a
+ * provider change repaints without re-laying out, so a border-width here would shift
+ * every button on the page until something else resized it.
+ *
+ * This is also what answers the dead ':checked' pseudo-class of ToolItemElement, which
+ * needs -Dorg.eclipse.e4.ui.css.dynamic=true and silently matches nothing without it.
+ * The state is read from GTK here, so no system property is in the way. */
+button:active,
+button:checked {
+	box-shadow: inset 0 0 0 2px '#com-vogella-themes-ACCENT';
+}
+
+/* Keyboard focus. The 'button' rule above overrides the desktop theme's focus border
+ * along with its resting one, so without this focus would have no marker at all, which
+ * is a worse place to leave it than where it started. 'outline-color' is inert on a
+ * GTK 3 button, measured as zero pixels with an unmistakable colour and a width, since
+ * the toolkit draws that outline only once it has decided focus should be visible;
+ * a border colour paints in both desktop themes. ACCENT again, and on a ToolItem this
+ * is the first focus marker it has ever carried. */
+button:focus {
+	border-color: '#com-vogella-themes-ACCENT';
 }
 
 /* ############################## Scrollbars ############################## */
@@ -390,4 +478,79 @@ printdialog notebook header {
 	background-color: '#com-vogella-themes-BG_WINDOW';
 	background-image: none;
 	color: '#com-vogella-themes-FG';
+}
+
+/* ############################## Inactive windows ############################## */
+
+/* The one place where priority is not enough, so it needs saying carefully.
+ *
+ * GTK puts a toplevel and its whole subtree into ':backdrop' when it stops being the
+ * active window, and a desktop theme repaints text for that state. Breeze does it on
+ * the label node directly:
+ *
+ *     label:backdrop {color: @theme_unfocused_text_color_breeze;}
+ *     label:disabled:backdrop {color: rgba(32,35,37,0.35);}
+ *
+ * where that first colour is #232629, a near black, on a near black surface.
+ *
+ * Everything above in this file wins by being at PRIORITY_USER against SWT's 600 and
+ * the theme's 200. This one does not, and the reason is inheritance rather than
+ * priority. 'color' is an inherited property, and a direct declaration on a node beats
+ * a value the node inherited from its parent whatever provider each came from;
+ * priority only orders declarations that are both direct. So a label that has a colour
+ * of its own is safe in every state, and a label that merely inherits one from the
+ * Composite above it loses it the moment the window goes to the back.
+ *
+ * Which labels own a colour and which only inherit one is not about how deep they sit,
+ * and the answer is a short circuit in SWT. Control.setForeground begins
+ *
+ *     boolean set = !getForeground().equals(color);
+ *
+ * and getForeground reads getContextColorGdkRGBA, the colour the style context has
+ * computed, inherited values included. The e4 engine walks top down, so by the time it
+ * reaches a Label inside an already coloured Composite that label computes FG already,
+ * 'set' is false, and SWT writes no CSS on it at all. The widget looked right, so it
+ * was skipped, and being skipped is exactly what leaves it with nothing of its own to
+ * survive the backdrop state. A bare 'Label' selector in structure.css does not help,
+ * because the rule matched and the assignment was still dropped.
+ *
+ * That is why the split falls where it does: a Tree or a page title computes something
+ * other than FG when the engine asks and therefore gets a rule written for it, while
+ * the description text, the group captions and the button captions of
+ * Preferences > General > Appearance > Label Decorations do not.
+ *
+ * Measured with gtk_style_context_get_color under GTK_THEME=Breeze, GitHub Dark, on a
+ * label whose colour is inherited: '#E6EDF3' for GTK_STATE_FLAG_NORMAL and '#232629'
+ * for GTK_STATE_FLAG_BACKDROP, 1.35:1 against BG_WINDOW. With the rules below both
+ * read '#E6EDF3', 17.38:1, in all six palettes and under Breeze, Breeze-Dark, Adwaita
+ * and Dracula. On a label that owns its colour every state reads '#E6EDF3' before and
+ * after, so nothing that was already right moves.
+ *
+ * Confirmed against the pixels rather than only the model: in the report this came
+ * from, the description text, the group captions and the button captions all painted
+ * '#232629' exactly, 1.17:1, while the tree rows, the page title and the navigation
+ * tree beside them painted VS Code Dark's FG '#CCCCCC' at 11.06:1. Those are precisely
+ * the two sets, the ones that inherit a colour and the ones that own one.
+ *
+ * The disabled state is the same fault and does not need the window to be inactive:
+ * Breeze declares 'label:disabled' too, so an inherited label reads '#202325' while
+ * its window still has the focus, 1.09:1, which is worse than the case above. Both
+ * disabled rules go to FG_MUTED rather than FG, which is what this file already does
+ * for a disabled menu item, and it keeps disabled text distinguishable from enabled
+ * text in both states instead of only one.
+ *
+ * The cost. Naming a state here outranks SWT's 600 for that state, so a label SWT
+ * deliberately coloured something else, an error message in red for one, comes out FG
+ * while its window is inactive, and a disabled one comes out FG_MUTED. That is the
+ * trade for the rules being unable to ask whether the colour underneath was owned or
+ * inherited. Fixing it in structure.css instead would mean a descendant selector in
+ * place of its two child ones, and that reaches every Text, Combo and List as well and
+ * outranks the rules written for them. This is the narrower change. */
+label:backdrop {
+	color: '#com-vogella-themes-FG';
+}
+
+label:disabled,
+label:disabled:backdrop {
+	color: '#com-vogella-themes-FG_MUTED';
 }

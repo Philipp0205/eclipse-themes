@@ -157,6 +157,43 @@ DrillDownComposite {
 	background-color: '#com-vogella-themes-BG_EDITOR';
 }
 
+/* ############################## Buttons ############################## */
+
+/* A push button has to read as raised, and nothing here said so. The surface rules at
+ * the top of this file and the '.MPart' block above give every Button the colour of the
+ * page it sits on, so an "Apply and Close" was a rectangle of the same shade as the
+ * dialog, outlined by whatever the desktop GTK theme happened to draw. Measured under
+ * Breeze on the VS Code Dark palette: the fill BG_PART, the outline #BCBEBF, a light
+ * grey no palette here names.
+ *
+ * BG_RAISED is the step the palette already has for something lifted off the page, the
+ * one the popups, the fields and the drop down lists use. It is a small step by the
+ * numbers, 1.09:1 to 1.21:1 against BG_PART, so the label is what carries the control:
+ * FG on BG_RAISED is 6.39:1 in nord and up to 14.64:1 elsewhere, clearing AA in all
+ * six palettes. A disabled label lands on it too, FG_MUTED at 1.68:1 in nord, and
+ * stays there because WCAG 1.4.3 exempts an inactive control. The outline is not
+ * expressible here, the e4 engine has no border property for a Button, and is set on
+ * BORDER in css/gtk.css instead.
+ *
+ * PUSH and TOGGLE only. A check box or a radio button is a caption with an indicator
+ * beside it, and a fill of its own would draw a rectangle behind the caption;
+ * Button.setBackgroundGdkRGBA injects '* {background}' on the indicator nodes as well,
+ * which is what the 'check' and 'radio' rules in css/gtk.css exist to undo.
+ *
+ * Placed after the parts section on purpose. '.MPart Composite > *' and '.MPart Button'
+ * are (0,1,1), the same as an element with one attribute, so the tie goes to import
+ * order and this has to come later; the '.MPart' copies at (0,1,2) hold it against a
+ * bundle sheet loaded after this one. Verified in a running IDE by painting the pair
+ * unmistakable colours: with the attribute rule in place a chat view push button
+ * reported declared and computed #00ff00, so the selector does match. */
+Button[style~='SWT.PUSH'],
+Button[style~='SWT.TOGGLE'],
+.MPart Button[style~='SWT.PUSH'],
+.MPart Button[style~='SWT.TOGGLE'] {
+	background-color: '#com-vogella-themes-BG_RAISED';
+	color: '#com-vogella-themes-FG';
+}
+
 /* ############################## Tabs ############################## */
 
 .MPartStack {

@@ -163,8 +163,15 @@ No shipped theme uses `:checked`, which is consistent with it never having worke
 Worked around here by setting the background on `ToolItem` unconditionally rather than on the
 checked state.
 Verified: the fill follows the palette and GTK does not paint over it.
-GTK still draws its own border around a toggled item, which is left alone deliberately, since
-once the fill matches the toolbar that outline is the only thing marking the item as toggled.
+
+That left the toggled state marked by GTK's own border around the item and by nothing else,
+which was accepted here for a while and should not have been: the border is the desktop theme's,
+so what marks a toggled item depended on which desktop the IDE was started on. Measured on the
+VS Code Dark palette, the fill of a toggled item came out `#19191A` on a `#181818` bar, 1.01:1,
+so the outline really was carrying all of it. The state is now read from GTK instead, where
+`:checked` is real, and marked with an `ACCENT` ring from `css/gtk.css`; `ACCENT` clears 3:1
+against every surface in all six palettes, which a fill could not do without pushing the label
+below AA. No system property is involved on that path.
 
 Why the workaround holds: `ToolItem.updateStyle` emits `button { background-image: none;
 background-color: <rgba>; }` at `PRIORITY_APPLICATION` on the inner button's style context.

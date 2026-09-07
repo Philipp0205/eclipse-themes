@@ -120,9 +120,17 @@ The provider is attached at `GTK_STYLE_PROVIDER_PRIORITY_USER`, 800, because GTK
 Measured: a screen provider at 201 loses to that rule and one at 800 wins, so 800 is the only priority at which the file does anything.
 The cost is that anything named there also outranks the e4 cascade.
 
-So a declaration may only name something SWT provably never emits, which is one of three things: a widget state, a node type SWT has no colour API for, or a node that exists only inside a native dialog.
-Never a bare `label`, `button`, `entry`, `treeview`, `widget` or `window` rule: SWT emits `* { background-color }` and `* { color }` on all of those from whatever the e4 cascade resolved, and a rule here would flatten the BG_WINDOW, BG_PART, BG_EDITOR and BG_RAISED distinctions `structure.css` spends six hundred lines making.
+So a declaration may only name something SWT provably never emits, which is one of four things: a widget state, a property SWT has no API for, a node type SWT has no colour API for, or a node that exists only inside a native dialog.
+Never a bare `label`, `button`, `entry`, `treeview`, `widget` or `window` rule that declares `background-color` or `color`: SWT emits `* { background-color }` and `* { color }` on all of those from whatever the e4 cascade resolved, and such a rule would flatten the BG_WINDOW, BG_PART, BG_EDITOR and BG_RAISED distinctions `structure.css` spends six hundred lines making.
 Before adding one, read the widget's `setBackgroundGdkRGBA` and `updateCss` in the SWT sources and see what CSS it writes.
+
+The property half of that is what makes the `button` section possible, and it is the only bare node rule in the file.
+SWT never writes a `border-*`, a `box-shadow` or an `outline-*`, so those cannot flatten a surface: they do not name one.
+A push button's fill therefore stays with `structure.css`, which is where the BG_RAISED step and its contrast numbers live, while the outline, the hover, the pressed and checked ring and the focus border are set here, in states and properties SWT leaves empty.
+Two traps came out of measuring it, and both are the kind that one desktop theme hides.
+A desktop theme keeps a toolbar button flat by painting its border transparent rather than by leaving it out, so `button { border-color }` boxed every toolbar icon under Adwaita and changed nothing under Breeze; measure any bare rule under at least two.
+And `outline-color` is inert on a GTK 3 button, zero pixels with an unmistakable colour and a width, because the toolkit draws that outline only once it has decided focus should be visible, so focus is marked with `border-color` instead.
+Overriding the resting border also overrides the desktop theme's focus border, which is how a change that only meant to recolour an outline can quietly remove the focus marker: check `:focus` whenever `border-color` is touched.
 
 Where the e4 engine drops a whole sheet over one unknown token, GTK skips the rule and carries on, so a mistake here is neither a build failure nor a runtime failure, only a widget that kept the desktop theme's colour.
 `releng/check-gtk-stylesheet.py` is the answer to that: it resolves the template against all six palettes and parses each result with a real `GtkCssProvider`, failing on any diagnostic, including the warnings GTK would otherwise only write to stderr.

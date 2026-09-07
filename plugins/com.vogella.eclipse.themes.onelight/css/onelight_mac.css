@@ -28,7 +28,12 @@
 @import url("platform:/plugin/com.vogella.eclipse.themes.onelight/css/onelight_jdt.css");
 
 /* structure.css gives Button a background, which stops cocoa from drawing it
- * natively; e4_default_mac.css leaves it alone, so restore the unset last. */
-Button {
+ * natively; e4_default_mac.css leaves it alone, so restore the unset last.
+ * The push and toggle rule in structure.css is (0,1,1) and outranks a bare 'Button'
+ * at (0,0,1), so the unset has to name it as well or a cocoa button comes back with
+ * a BG_RAISED rectangle painted over it. */
+Button,
+Button[style~='SWT.PUSH'],
+Button[style~='SWT.TOGGLE'] {
 	background-color: unset;
 }

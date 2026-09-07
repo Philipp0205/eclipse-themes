@@ -52,6 +52,21 @@ Measured on GTK 3.24 with a live check button: the indicator resolves to `#FFFFF
 The outline needs `box-shadow: inset`, not `border-color`: the desktop theme draws it from a `border-image`, so `border-color` recolours nothing, and `border-width` does paint but grows the indicator and closes the gap to the label, because a provider change repaints without re-laying out.
 The SWT fix is still the right one, since it would carry the checked state's own drawing and every platform.
 
+## A Button has no border, and no hover, pressed or checked state
+
+`background-color` and `color` are the whole of what the engine offers for a `Button`.
+There is no border property, so the outline around a push button is the desktop GTK theme's; and there is no state at all, so hover and pressed cannot be expressed, while `:checked` exists only on `ToolItemElement` and is dead unless `-Dorg.eclipse.e4.ui.css.dynamic=true` is set.
+The consequence is that a fully themed IDE still shows desktop chrome on every button.
+
+Measured on the VS Code Dark palette with the providers layered the way a running IDE layers them.
+Under Breeze a push button was outlined in `#BCBEBF` and under Adwaita in `#CDC7C2`, each with a white line inside the top edge, and that outline turned Breeze's accent `#3DAEE9` on hover and on focus.
+Hover changed no fill anywhere, because `Button.setBackgroundGdkRGBA` writes `* { background: <colour> }` with no state qualifier and that declaration, at `PRIORITY_APPLICATION`, holds the fill through every state.
+A toggled `ToolItem` measured `#19191A` on a `#181818` bar, 1.01:1, so the desktop outline was the only thing marking it; under Adwaita a hovered one came out `#F8F8F7`, a near white box on near black trim.
+
+Worked around on GTK, and it is the one case where the stylesheet names a bare node.
+Because SWT never writes a `border-*` or a `box-shadow`, those properties cannot flatten a surface distinction the way a `background-color` would, so `button { border-color }`, `button:hover`, `button:active`, `button:checked` and `button:focus` are safe at `PRIORITY_USER` while the fill stays with the e4 cascade.
+Two things had to be measured rather than reasoned about: a desktop theme keeps a toolbar button flat by painting its border transparent rather than by leaving it out, so the bare rule boxed every toolbar icon under Adwaita and changed nothing under Breeze; and `outline-color` is inert on a GTK 3 button, zero pixels with an unmistakable colour, so keyboard focus has to be marked with a border colour instead.
+
 ## Widget specific gaps found while building these themes
 
 - `CTabItem` busy state has only a color hook; no italic or icon override.

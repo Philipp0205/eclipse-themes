@@ -28,7 +28,12 @@
 @import url("platform:/plugin/com.vogella.eclipse.themes.dracula/css/dracula_jdt.css");
 
 /* e4-dark_mac.css unsets this so cocoa keeps drawing buttons natively;
- * structure.css re-imposes a background, so restore the unset last. */
-Button {
+ * structure.css re-imposes a background, so restore the unset last.
+ * The push and toggle rule in structure.css is (0,1,1) and outranks a bare 'Button'
+ * at (0,0,1), so the unset has to name it as well or a cocoa button comes back with
+ * a BG_RAISED rectangle painted over it. */
+Button,
+Button[style~='SWT.PUSH'],
+Button[style~='SWT.TOGGLE'] {
 	background-color: unset;
 }
