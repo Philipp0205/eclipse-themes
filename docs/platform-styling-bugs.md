@@ -92,7 +92,45 @@ needs every viewer in the IDE to opt in, so it is not a theming strategy.
 What to ask the platform for: an SWT API for selection colours, or a GTK CSS provider owned by
 the theme engine. SWT's own theming-fix CSS says colour information does not belong in it.
 
-Recorded in [styling-limits.md](styling-limits.md) as a limit for theme authors.
+### Resolved here by owning the provider
+
+The second of those two asks is what `com.vogella.eclipse.themes.common` does, with the theme
+owning the provider instead of the engine. It creates one `GtkCssProvider`, attaches it to the
+Eclipse display and reloads it whenever the active theme changes, which is the part
+`gtk.cssFile` cannot do.
+
+The priority is the whole of it. SWT installs the rule above at
+`GTK_STYLE_PROVIDER_PRIORITY_APPLICATION`, 600, on the tree's own style context, and GTK
+resolves a property across providers by priority before specificity. Measured on GTK 3.24
+against a live `GtkTreeView`:
+
+```
+no provider                 (8, 96, 242)     the desktop accent
+swt context 600 only        (255, 0, 0)      SWT's rule, standing in for the accent
+screen 201 vs context 600   (255, 0, 0)      a low priority provider loses
+screen 800 vs context 600   (0, 255, 0)      PRIORITY_USER wins
+unselected, swt owns it     (40, 42, 54)     naming only ':selected' leaves this alone
+```
+
+The last line is what makes the two layers coexist: the sheet names states and node types SWT
+never emits, so the surfaces the CSS engine resolves per widget, BG_WINDOW against BG_PART
+against BG_EDITOR, survive underneath it. Verified with the production classes against a live
+SWT `Tree` on all six palettes: the selected row measured `#0860F2` before and each theme's own
+`SELECTION_BG` after, and `#0860F2` again once the sheet is cleared.
+
+Two things had to be measured rather than reasoned about. GTK does not queue a redraw when a
+provider on the screen changes, and a shell wide `redraw(0, 0, width, height, true)` does not
+reach a `Tree`, which draws its rows into a `GdkWindow` of its own; the walk has to ask every
+control. And the palette cannot be read from the workbench colour registry, because
+`ThemeEngine.setTheme` sends `THEME_CHANGED` before it calls `reapply()`, so at that moment the
+registry still holds the previous theme's colours.
+
+None of this replaces the platform ask. A provider owned by the theme engine would not need
+reflection into `org.eclipse.swt.internal.gtk*`, would not have to guess which declarations SWT
+emits, and would cover the platform's own themes too.
+
+Recorded in [styling-limits.md](styling-limits.md) as a limit for theme authors, now with the
+GTK escape route beside it.
 
 ## The ToolItem ':checked' pseudo-class is dead unless a system property is set
 
@@ -125,8 +163,15 @@ No shipped theme uses `:checked`, which is consistent with it never having worke
 Worked around here by setting the background on `ToolItem` unconditionally rather than on the
 checked state.
 Verified: the fill follows the palette and GTK does not paint over it.
-GTK still draws its own border around a toggled item, which is left alone deliberately, since
-once the fill matches the toolbar that outline is the only thing marking the item as toggled.
+
+That left the toggled state marked by GTK's own border around the item and by nothing else,
+which was accepted here for a while and should not have been: the border is the desktop theme's,
+so what marks a toggled item depended on which desktop the IDE was started on. Measured on the
+VS Code Dark palette, the fill of a toggled item came out `#19191A` on a `#181818` bar, 1.01:1,
+so the outline really was carrying all of it. The state is now read from GTK instead, where
+`:checked` is real, and marked with an `ACCENT` ring from `css/gtk.css`; `ACCENT` clears 3:1
+against every surface in all six palettes, which a fill could not do without pushing the label
+below AA. No system property is involved on that path.
 
 Why the workaround holds: `ToolItem.updateStyle` emits `button { background-image: none;
 background-color: <rgba>; }` at `PRIORITY_APPLICATION` on the inner button's style context.
