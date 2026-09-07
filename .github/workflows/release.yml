@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  pages: write
 
 # two runs must not race the gh-pages publish
 concurrency:
@@ -32,28 +33,51 @@ jobs:
           java-version: 25
           cache: maven
 
+      # The same three checks the build workflow runs. A push to main publishes
+      # straight to the update site, so the checks that would have caught a
+      # drifted palette or an unparseable GTK rule have to run here too.
       - name: Check token references
         run: ./releng/check-tokens.sh
 
-      # The vogella release key, an organization secret. An unsigned site would
-      # make p2 warn every user who installs from it, so a missing key fails the
-      # release rather than publishing one.
+      - name: Check the GTK palettes against the palette stylesheets
+        run: ./releng/check-gtk-palettes.sh
+
+      - name: Check the GTK stylesheet parses
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y python3-gi gir1.2-gtk-3.0 xvfb
+          xvfb-run -a ./releng/check-gtk-stylesheet.py
+
+      # The vogella release key, an organization secret. The official site
+      # refuses to publish unsigned; a fork without the secret publishes a
+      # snapshot and p2 will warn on install, which is the honest outcome.
       - name: Prepare the PGP signing key
+        id: gpg
         env:
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
         run: |
           if [ -z "$MAVEN_GPG_KEY" ]; then
-            echo "MAVEN_GPG_KEY is not set, refusing to publish an unsigned site" >&2
-            exit 1
+            if [ "${{ github.repository }}" = "vogellacompany/eclipse-themes" ]; then
+              echo "MAVEN_GPG_KEY is not set, refusing to publish an unsigned site" >&2
+              exit 1
+            fi
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "MAVEN_GPG_KEY is not set, publishing an unsigned snapshot"
+            exit 0
           fi
           printf '%s\n' "$MAVEN_GPG_KEY" > "$RUNNER_TEMP/signing-key.asc"
+          echo "present=true" >> "$GITHUB_OUTPUT"
 
       - name: Build and sign
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
         run: |
-          mvn -B clean verify -Dgpg.skip=false \
-            -Dtycho.pgp.signer.bc.secretKeys=$RUNNER_TEMP/signing-key.asc
+          if [ "${{ steps.gpg.outputs.present }}" = true ]; then
+            mvn -B clean verify -Dgpg.skip=false \
+              -Dtycho.pgp.signer.bc.secretKeys=$RUNNER_TEMP/signing-key.asc
+          else
+            mvn -B clean verify
+          fi
 
       # The directory is named after what was actually built, qualifier included,
       # so a rebuild of the same version never lands on an existing URL. All six
@@ -69,13 +93,21 @@ jobs:
           fi
           echo "value=$(basename "$jar" .jar | sed 's/.*\.feature_//')" >> "$GITHUB_OUTPUT"
 
-      - name: Check out the update site
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
+      - name: Fetch the update site
+        run: |
+          token_url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null; then
+            git clone --depth 1 --branch gh-pages "$token_url" gh-pages
+          else
+            mkdir gh-pages
+            git -C gh-pages init
+            git -C gh-pages checkout -b gh-pages
+            git -C gh-pages remote add origin "$token_url"
+          fi
 
       - name: Add the build to the update site
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           version="${{ steps.version.outputs.value }}"
           rm -rf "gh-pages/releases/$version"
@@ -97,7 +129,16 @@ jobs:
             exit 0
           fi
           git commit -m "Publish ${{ steps.version.outputs.value }}"
-          git push
+          git push -u origin HEAD:gh-pages
+
+      - name: Enable GitHub Pages from gh-pages
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/${{ github.repository }}/pages" \
+            -f 'source[branch]=gh-pages' -f 'source[path]=/' \
+            || true
 
       - name: Attach the repository archive to the release
         if: startsWith(github.ref, 'refs/tags/')

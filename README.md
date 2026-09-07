@@ -18,6 +18,7 @@ Every theme is a feature of its own, so install one, several or all six.
 Then switch under *Preferences > General > Appearance* to the installed theme.
 
 The site carries the newest build and nothing else, published from `main` by the [Release workflow](.github/workflows/release.yml).
+A fork of this repository publishes to `https://<owner>.github.io/<repository>/` on the same workflow, once GitHub Pages is serving the `gh-pages` branch.
 Older versions are not supported: the previous build is dropped when a new one is published, so update rather than pin.
 
 To install from your own build rather than the hosted site, see [Building](#building), then point *Add > Local* at
@@ -180,7 +181,8 @@ The site carries one build at a time: `releng/update-composite-site.sh` writes t
 A tag of the form `v*` additionally attaches the repository archive to a GitHub release.
 
 The published artifacts are PGP signed with the vogella release key, held in the `MAVEN_GPG_KEY`
-and `MAVEN_GPG_PASSPHRASE` organization secrets. Signing is off in a plain `mvn clean verify`; to
+and `MAVEN_GPG_PASSPHRASE` organization secrets. A fork without those secrets still publishes,
+unsigned. Signing is off in a plain `mvn clean verify`; to
 exercise it locally, point Tycho at an exported secret key:
 
 ```

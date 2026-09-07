@@ -4,13 +4,15 @@
 # directories present under <site>/releases, optionally dropping older releases
 # first.
 #
-# Usage: releng/update-composite-site.sh [--keep <n>] [--only <version>] <site-directory>
+# Usage: releng/update-composite-site.sh [--keep <n>] [--only <version>] [--url <url>] [--source <url>] <site-directory>
 
 set -euo pipefail
 
-usage="Usage: $0 [--keep <n>] [--only <version>] <site-directory>"
+usage="Usage: $0 [--keep <n>] [--only <version>] [--url <url>] [--source <url>] <site-directory>"
 keep=
 only=
+url=
+source=
 
 while [ $# -gt 0 ]; do
 	case $1 in
@@ -23,6 +25,14 @@ while [ $# -gt 0 ]; do
 		;;
 	--only)
 		only=${2:?$usage}
+		shift 2
+		;;
+	--url)
+		url=${2:?$usage}
+		shift 2
+		;;
+	--source)
+		source=${2:?$usage}
 		shift 2
 		;;
 	-*)
@@ -120,7 +130,21 @@ EOF
 # keeps GitHub Pages from running the content through Jekyll
 touch "$site/.nojekyll"
 
-base_url=https://vogellacompany.github.io/eclipse-themes
+if [ -z "$url" ]; then
+	if [ -n "${GITHUB_REPOSITORY:-}" ]; then
+		url="https://${GITHUB_REPOSITORY%/*}.github.io/${GITHUB_REPOSITORY#*/}"
+	else
+		url=https://vogellacompany.github.io/eclipse-themes
+	fi
+fi
+if [ -z "$source" ]; then
+	if [ -n "${GITHUB_REPOSITORY:-}" ]; then
+		source="https://github.com/${GITHUB_REPOSITORY}"
+	else
+		source=https://github.com/vogellacompany/eclipse-themes
+	fi
+fi
+source_label=${source#https://}
 {
 	cat <<EOF
 <!doctype html>
@@ -138,7 +162,7 @@ base_url=https://vogellacompany.github.io/eclipse-themes
 <h1>vogella Eclipse Themes</h1>
 <p>Six themes for the Eclipse IDE: GitHub Dark, Dracula, One Light, Nord, AI Neon and VS Code Dark.</p>
 <p>Install them in Eclipse with <em>Help &gt; Install New Software</em>, using the update site</p>
-<p><code>$base_url/</code></p>
+<p><code>$url/</code></p>
 <p>Each theme is a feature of its own, so you can install one, several or all six.</p>
 <p>This site carries the newest build and nothing else. Older versions are not supported: the previous build is dropped when a new one is published, so update rather than pin.</p>
 <p>Currently published:</p>
@@ -149,7 +173,7 @@ EOF
 	done
 	cat <<EOF
 </ul>
-<p>Sources and documentation: <a href="https://github.com/vogellacompany/eclipse.themes">github.com/vogellacompany/eclipse.themes</a></p>
+<p>Sources and documentation: <a href="$source">$source_label</a></p>
 </body>
 </html>
 EOF
