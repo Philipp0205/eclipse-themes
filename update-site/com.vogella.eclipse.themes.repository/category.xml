@@ -20,10 +20,6 @@
    </feature>
    <!-- Explicit root, so that the resolution picks this variant and not the legacy one -->
    <feature id="com.vogella.eclipse.themes.modern.feature" version="0.0.0"/>
-   <!-- Explicit root for the same reason: every theme feature includes this one
-        optionally, and p2 drops an optional include from the repository unless
-        something asks for it outright. -->
-   <feature id="com.vogella.eclipse.themes.gtk.feature" version="0.0.0"/>
    <category-def name="com.vogella.eclipse.themes" label="vogella Eclipse Themes">
       <description>
          Additional themes for the Eclipse IDE.
