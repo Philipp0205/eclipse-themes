@@ -532,25 +532,35 @@ printdialog notebook header {
  * tree beside them painted VS Code Dark's FG '#CCCCCC' at 11.06:1. Those are precisely
  * the two sets, the ones that inherit a colour and the ones that own one.
  *
- * The disabled state is the same fault and does not need the window to be inactive:
- * Breeze declares 'label:disabled' too, so an inherited label reads '#202325' while
- * its window still has the focus, 1.09:1, which is worse than the case above. Both
- * disabled rules go to FG_MUTED rather than FG, which is what this file already does
- * for a disabled menu item, and it keeps disabled text distinguishable from enabled
- * text in both states instead of only one.
+ * The disabled state is the same fault and does not even need the window to be
+ * inactive, because Breeze declares 'label:disabled' as well: an inherited label reads
+ * '#202325' while its window still has the focus, 1.09:1, which is worse than the case
+ * that prompted this. It is listed here rather than left alone because it is the same
+ * one line fault, not a second decision.
+ *
+ * All three go to FG and none to FG_MUTED, which is worth stating because muting
+ * disabled text is the more obvious choice and is the wrong one for this file. The job
+ * of a rule here is to stop the desktop theme overriding what the e4 cascade resolved,
+ * not to add state styling of its own, and a label that owns its colour renders FG in
+ * every state today. Sending these to FG makes the inherited case match the owned case
+ * and changes nothing else. FG_MUTED was measured first and rejected: it would have
+ * dimmed disabled labels that read correctly today, and on BG_RAISED it comes to
+ * 1.68:1 in Nord and 2.51:1 in Dracula, so the disabled text would have gone from
+ * readable to invisible in the name of looking disabled.
+ *
+ * Where this file does deliberately mute a disabled thing the deliberate rule still
+ * wins on specificity, 'menuitem:disabled label' being (0,1,2) against (0,1,1) here,
+ * so disabled menu items keep FG_MUTED and calendars keep theirs on the calendar node.
  *
  * The cost. Naming a state here outranks SWT's 600 for that state, so a label SWT
  * deliberately coloured something else, an error message in red for one, comes out FG
- * while its window is inactive, and a disabled one comes out FG_MUTED. That is the
- * trade for the rules being unable to ask whether the colour underneath was owned or
- * inherited. Fixing it in structure.css instead would mean a descendant selector in
- * place of its two child ones, and that reaches every Text, Combo and List as well and
- * outranks the rules written for them. This is the narrower change. */
-label:backdrop {
-	color: '#com-vogella-themes-FG';
-}
-
+ * while its window is inactive or while it is disabled. That is the trade for a rule
+ * being unable to ask whether the colour underneath it was owned or inherited. Fixing
+ * it in structure.css instead would mean a descendant selector in place of its two
+ * child ones, and that reaches every Text, Combo and List as well and outranks the
+ * rules written for them. This is the narrower change. */
+label:backdrop,
 label:disabled,
 label:disabled:backdrop {
-	color: '#com-vogella-themes-FG_MUTED';
+	color: '#com-vogella-themes-FG';
 }
